@@ -1,4 +1,7 @@
 {
-  "/shop/page": "app/shop/page.js",
-  "/login/page": "app/login/page.js"
+  "/page": "app/page.js",
+  "/login/page": "app/login/page.js",
+  "/api/admin/products/route": "app/api/admin/products/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/page": "app/admin/page.js"
 }

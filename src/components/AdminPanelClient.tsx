@@ -2,18 +2,24 @@
 
 import { useEffect, useState } from 'react';
 import { Perfume } from '@/types';
-// NOTE: Assuming primary-dark is a very dark color (e.g., #0A0A0A)
-// and accent-gold is a rich gold (e.g., #D4AF37)
 
+// Helper to create an empty product
 function emptyProduct(): Partial<Perfume & { imageData?: string }> {
-  return { name: '', category: 'unisex', image: '/placeholder.jpg', sizes: [{ size: '100ml', price: 0 }], description: '', notes: '', imageData: undefined };
+  return {
+    name: '',
+    category: 'unisex',
+    image: '/placeholder.jpg',
+    sizes: [{ size: '100ml', price: 0 }],
+    description: '',
+    notes: '',
+    imageData: undefined
+  };
 }
 
-// Reusable Input/Select/Textarea class for consistency and better look
-const INPUT_CLASS = "p-3 rounded-lg bg-primary-darker/50 border border-accent-gold/20 text-white placeholder-gray-500 focus:border-accent-gold focus:ring-1 focus:ring-accent-gold/50 outline-none transition duration-300 shadow-inner";
-
-// Reusable Label/Span class
-const LABEL_SPAN_CLASS = "mb-1 text-accent-gold/90 font-semibold tracking-wider uppercase text-xs";
+// Reusable Styles
+const INPUT_CLASS = "w-full p-3 rounded-xl bg-primary-dark border border-white/10 text-white placeholder-gray-500 focus:border-accent-gold focus:ring-1 focus:ring-accent-gold/50 outline-none transition duration-300 shadow-inner";
+const LABEL_CLASS = "block mb-2 text-accent-gold/90 font-bold tracking-wider uppercase text-xs";
+const CARD_CLASS = "bg-primary-darker rounded-2xl border border-white/5 shadow-xl overflow-hidden";
 
 export default function AdminPanelClient() {
   const [items, setItems] = useState<Perfume[]>([]);
@@ -37,7 +43,7 @@ export default function AdminPanelClient() {
 
   useEffect(() => { fetchList(); }, []);
 
-  // --- Handlers (Logic remains the same) ---
+  // --- Handlers ---
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
@@ -52,7 +58,6 @@ export default function AdminPanelClient() {
       return;
     }
 
-    // Ensure price is not 0 for creation
     const hasValidPrice = payload.sizes.every(s => s.price > 0);
     if (!hasValidPrice) {
       alert('All sizes must have a price greater than 0.');
@@ -78,7 +83,7 @@ export default function AdminPanelClient() {
       return;
     }
 
-    const hasValidPrice = editing.sizes.every(s => s.price >= 0); // Allow 0 for updates if logic allows
+    const hasValidPrice = editing.sizes.every(s => s.price >= 0);
     if (!hasValidPrice) {
       alert('All sizes must have a valid price.');
       return;
@@ -104,363 +109,344 @@ export default function AdminPanelClient() {
   }
 
   return (
-    <div className="min-h-screen p-4 sm:p-8 bg-primary-darkest"> {/* New dark background for the page */}
-      <div className="max-w-7xl mx-auto rounded-3xl bg-primary-dark/80 backdrop-blur-sm border border-accent-gold/10 shadow-[0_0_50px_rgba(212,175,55,0.1)] p-6 sm:p-10">
+    <div className="min-h-screen bg-primary-dark text-white p-4 md:p-8 font-sans">
+      <div className="max-w-7xl mx-auto">
 
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row items-center justify-between mb-10 border-b border-accent-gold/20 pb-4 gap-4 text-center md:text-left">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-accent-gold tracking-tighter">✨ Product Administration</h2>
-            <p className="text-sm md:text-base text-gray-300 mt-2 font-light">Efficiently manage your entire perfume catalog.</p>
+        {/* --- Header --- */}
+        <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-6">
+          <div className="text-center md:text-left">
+            <h1 className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-accent-gold to-yellow-200 mb-2">
+              Dashboard
+            </h1>
+            <p className="text-gray-400 text-sm md:text-base">Manage your exclusive fragrance collection.</p>
           </div>
-          <div className="w-full md:w-auto flex justify-center md:justify-end">
-            {creating ? (
-              <button onClick={() => { setCreating(false); setEditing(null); }} className="px-5 py-2 rounded-full bg-gray-600 text-white font-medium hover:bg-gray-700 transition duration-300 shadow-lg">
-                Cancel Creation
-              </button>
-            ) : (
-              <button onClick={() => { setCreating(true); setEditing(emptyProduct()); }} className="px-6 py-3 rounded-full bg-gradient-to-r from-accent-gold to-yellow-400 text-primary-dark font-bold shadow-2xl shadow-accent-gold/30 hover:opacity-95 transition duration-300 transform hover:scale-[1.02]">
-                + New Product
-              </button>
-            )}
-          </div>
-        </div>
 
-        {/* --- Create Product Panel (New Styling) --- */}
-        {(creating || (editing && !creating)) && (
-          <form
-            onSubmit={creating ? handleCreate : (e) => { e.preventDefault(); handleUpdate(editing?.id!) }}
-            className="mb-12 w-full rounded-2xl bg-primary-darker/60 border border-accent-gold/20 p-8 shadow-3xl shadow-primary-darker"
+          <button
+            onClick={() => {
+              if (creating) {
+                setCreating(false);
+                setEditing(null);
+              } else {
+                setCreating(true);
+                setEditing(emptyProduct());
+              }
+            }}
+            className={`
+              px-8 py-3 rounded-full font-bold shadow-lg transform transition-all duration-300 hover:scale-105
+              ${creating
+                ? 'bg-gray-700 text-white hover:bg-gray-600'
+                : 'bg-gradient-to-r from-accent-gold to-yellow-500 text-primary-dark hover:shadow-accent-gold/20'}
+            `}
           >
-            <h3 className="text-2xl font-bold text-accent-gold mb-8">{creating ? 'Create New Product' : 'Edit Product'}</h3>
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
-
-              {/* LEFT: Image Upload */}
-              <div className="col-span-1 flex flex-col items-center gap-6 p-4 bg-primary-dark/30 rounded-xl border border-gray-700/50">
-
-                {/* Preview Card */}
-                <div className="w-full aspect-square max-w-[200px] rounded-2xl overflow-hidden bg-primary-darker/50 border-2 border-accent-gold/30 shadow-xl flex items-center justify-center">
-                  {editing?.image ? (
-                    <img src={editing.image} alt="preview" className="w-full h-full object-cover transition-opacity duration-500" />
-                  ) : (
-                    <div className="text-gray-500 text-sm font-light">Image Preview</div>
-                  )}
-                </div>
-
-                {/* Upload Input */}
-                <label className="w-full text-xs text-gray-300 flex flex-col gap-2">
-                  <span className={LABEL_SPAN_CLASS}>Image File (Max 2MB) *</span>
-                  <input
-                    onChange={async (e) => {
-                      const file = e.target.files?.[0];
-                      if (!file) return;
-                      if (file.size > 2 * 1024 * 1024) return alert("Image must be smaller than 2MB");
-                      const reader = new FileReader();
-                      reader.onload = () =>
-                        setEditing({
-                          ...editing,
-                          imageData: reader.result as string,
-                          image: reader.result as string, // For immediate preview
-                        });
-                      reader.readAsDataURL(file);
-                    }}
-                    type="file"
-                    accept="image/*"
-                    className="block w-full text-gray-300 text-sm bg-primary-darker/50 border border-accent-gold/20 rounded-lg p-2 focus:outline-none file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-accent-gold/80 file:text-primary-dark hover:file:bg-accent-gold transition"
-                  />
-                </label>
-              </div>
-
-              {/* RIGHT: Fields (takes 3/4 of space) */}
-              <div className="lg:col-span-3 space-y-6">
-
-                {/* Name + Category */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <label className="flex flex-col text-xs text-gray-300">
-                    <span className={LABEL_SPAN_CLASS}>Name *</span>
-                    <input
-                      value={editing?.name ?? ""}
-                      onChange={(e) => setEditing({ ...editing, name: e.target.value })}
-                      className={INPUT_CLASS}
-                      placeholder="Ex: Vanilla Bloom"
-                    />
-                  </label>
-
-                  <label className="flex flex-col text-xs text-gray-300">
-                    <span className={LABEL_SPAN_CLASS}>Category</span>
-                    <select
-                      value={editing?.category ?? 'unisex'}
-                      onChange={(e) => setEditing({ ...editing, category: e.target.value })}
-                      className={`${INPUT_CLASS} appearance-none cursor-pointer`}
-                    >
-                      <option value="men" className='bg-primary-dark'>Men</option>
-                      <option value="women" className='bg-primary-dark'>Women</option>
-                      <option value="unisex" className='bg-primary-dark'>Unisex</option>
-                    </select>
-                  </label>
-                </div>
-
-                {/* Description */}
-                <label className="flex flex-col text-xs text-gray-300">
-                  <span className={LABEL_SPAN_CLASS}>Description</span>
-                  <input
-                    value={editing?.description ?? ""}
-                    onChange={(e) => setEditing({ ...editing, description: e.target.value })}
-                    placeholder="A captivating short description..."
-                    className={INPUT_CLASS}
-                  />
-                </label>
-
-                {/* Notes */}
-                <label className="flex flex-col text-xs text-gray-300">
-                  <span className={LABEL_SPAN_CLASS}>Fragrance Notes</span>
-                  <textarea
-                    value={editing?.notes ?? ""}
-                    onChange={(e) => setEditing({ ...editing, notes: e.target.value })}
-                    placeholder="Top: Bergamot, Pink Pepper. Middle: Rose, Jasmine. Base: Amber, Musk..."
-                    className={`${INPUT_CLASS} h-28 resize-none`}
-                  />
-                </label>
-
-                {/* Sizes */}
-                <div className="rounded-xl bg-primary-dark/50 border border-accent-gold/20 p-5 shadow-inner">
-                  <div className="flex items-center justify-between mb-4 border-b border-gray-700/50 pb-2">
-                    <h4 className="text-sm text-accent-gold font-bold tracking-wider">Available Sizes & Prices *</h4>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setEditing({
-                          ...editing,
-                          sizes: [...(editing?.sizes || []), { size: "50ml", price: 0 }],
-                        })
-                      }
-                      className="text-xs px-4 py-1.5 rounded-full bg-accent-gold text-primary-dark font-semibold hover:bg-yellow-400 transition"
-                    >
-                      + Add Size
-                    </button>
-                  </div>
-
-                  <div className="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
-                    {(editing?.sizes || []).map((s, idx) => (
-                      <div key={idx} className="flex gap-3 items-center bg-primary-darker/40 p-2 rounded-lg border border-gray-700/50">
-                        <input
-                          value={s.size}
-                          onChange={(e) => {
-                            const newSizes = (editing!.sizes || []).map((ss, i) =>
-                              i === idx ? { ...ss, size: e.target.value } : ss
-                            );
-                            setEditing({ ...editing!, sizes: newSizes });
-                          }}
-                          placeholder="Size (e.g., 100ml)"
-                          className={`${INPUT_CLASS} p-2 text-sm flex-1`}
-                        />
-                        <div className="relative">
-                          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 font-semibold">$</span>
-                          <input
-                            type="number"
-                            value={s.price}
-                            onChange={(e) => {
-                              const newSizes = (editing!.sizes || []).map((ss, i) =>
-                                i === idx ? { ...ss, price: Number(e.target.value) } : ss
-                              );
-                              setEditing({ ...editing!, sizes: newSizes });
-                            }}
-                            placeholder="Price"
-                            className={`${INPUT_CLASS} p-2 pl-6 w-28 text-sm`}
-                            step="0.01"
-                            min="0"
-                          />
-                        </div>
-
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const newSizes = (editing!.sizes || []).filter((_, i) => i !== idx);
-                            setEditing({ ...editing!, sizes: newSizes });
-                          }}
-                          className="px-3 py-1.5 rounded-md bg-red-700/80 text-white text-xs font-medium hover:bg-red-600 transition"
-                        >
-                          <span className='hidden sm:inline'>Remove</span>
-                          <span className='sm:hidden'>🗑️</span>
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex justify-end gap-4 pt-4">
-                  <button
-                    type="button"
-                    onClick={() => { setCreating(false); setEditing(null); }}
-                    className="px-6 py-2.5 rounded-full bg-gray-700 text-white font-medium shadow-md hover:bg-gray-600 transition"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-8 py-2.5 rounded-full bg-gradient-to-r from-accent-gold to-yellow-400 text-primary-dark font-bold shadow-lg hover:opacity-95 transition duration-300 transform hover:scale-105"
-                  >
-                    {creating ? 'Create Product' : 'Save Changes'}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
-        )}
-
-        {/* Separator if editing/creating */}
-        {(creating || (editing && !creating)) && (
-          <hr className="border-accent-gold/10 my-10" />
-        )}
-
-        {/* --- Product List (Responsive) --- */}
-        <h3 className="text-2xl font-bold text-gray-300 mb-6">Product List</h3>
-
-        {/* Desktop Table View (Hidden on Mobile) */}
-        <div className="hidden md:block overflow-x-auto w-full rounded-xl border border-accent-gold/10 shadow-lg bg-primary-darker/50">
-          <table className="w-full text-left table-auto">
-            <thead className="bg-primary-darker/70">
-              <tr className="text-sm text-accent-gold uppercase tracking-wider">
-                <th className="p-4 rounded-tl-xl">Image</th>
-                <th className="p-4">Name</th>
-                <th className="p-4 hidden sm:table-cell">Category</th>
-                <th className="p-4 hidden md:table-cell">Sizes & Prices</th>
-                <th className="p-4 rounded-tr-xl">Actions</th>
-              </tr>
-            </thead>
-            <tbody className='text-white/80'>
-              {loading ? (
-                <tr><td colSpan={5} className="py-10 text-center text-gray-400">Loading products...</td></tr>
-              ) : items.length === 0 ? (
-                <tr><td colSpan={5} className="py-10 text-center text-gray-500 font-medium">No products found. Click "+ New Product" to start.</td></tr>
-              ) : (
-                items.map((p) => (
-                  <tr key={p.id} className="border-t border-accent-gold/10 hover:bg-primary-dark/30 transition duration-150">
-                    <td className="py-4 px-4"><img src={p.image} alt={p.name} className="w-20 h-14 object-cover rounded-md border border-gray-700/50 shadow-md" /></td>
-                    <td className="py-4 px-4 font-semibold">{p.name}</td>
-                    <td className="py-4 px-4 capitalize hidden sm:table-cell text-accent-gold/70">{p.category}</td>
-                    <td className="py-4 px-4 text-xs text-gray-400 hidden md:table-cell">
-                      {(p.sizes || []).map(s => <span key={s.size} className="inline-block bg-primary-darker/70 rounded-full px-3 py-1 mr-2 mb-1 border border-accent-gold/10">{s.size} **${s.price.toFixed(2)}**</span>)}
-                    </td>
-                    <td className="py-4 px-4 flex gap-3">
-                      <button
-                        onClick={() => { setEditing(p); setCreating(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                        className="px-4 py-1.5 rounded-full bg-accent-gold/20 text-accent-gold text-sm font-medium hover:bg-accent-gold/30 transition shadow-sm"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => setConfirmDelete(p)}
-                        className="px-4 py-1.5 rounded-full bg-red-700/30 text-red-400 text-sm font-medium hover:bg-red-700/40 transition shadow-sm"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+            {creating ? 'Cancel' : '+ New Product'}
+          </button>
         </div>
 
-        {/* Mobile Card View (Hidden on Desktop) */}
-        <div className="md:hidden space-y-4">
-          {loading ? (
-            <div className="text-center text-gray-400 py-10">Loading products...</div>
-          ) : items.length === 0 ? (
-            <div className="text-center text-gray-500 py-10">No products found.</div>
-          ) : (
-            items.map((p) => (
-              <div key={p.id} className="bg-primary-darker/60 border border-accent-gold/10 rounded-xl p-4 shadow-lg flex flex-col gap-4">
-                <div className="flex gap-4">
-                  <img src={p.image} alt={p.name} className="w-24 h-24 object-cover rounded-lg border border-gray-700/50 shadow-sm" />
-                  <div className="flex-1">
-                    <h4 className="text-lg font-bold text-white">{p.name}</h4>
-                    <span className="inline-block px-2 py-0.5 rounded-full bg-accent-gold/10 text-accent-gold text-xs uppercase tracking-wide mb-2 border border-accent-gold/20">
-                      {p.category}
-                    </span>
-                    <div className="flex flex-wrap gap-1">
-                      {(p.sizes || []).map(s => (
-                        <span key={s.size} className="text-xs text-gray-400 bg-primary-dark/50 px-2 py-1 rounded-md border border-gray-700">
-                          {s.size}: ${s.price}
-                        </span>
+        {/* --- Editor Section --- */}
+        {(creating || (editing && !creating)) && (
+          <div className={`${CARD_CLASS} p-6 md:p-8 mb-12 animate-fade-in border-accent-gold/20`}>
+            <h2 className="text-2xl font-bold text-accent-gold mb-8 pb-4 border-b border-white/10">
+              {creating ? 'Create New Product' : 'Edit Product'}
+            </h2>
+
+            <form onSubmit={creating ? handleCreate : (e) => { e.preventDefault(); handleUpdate(editing?.id!) }}>
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+                {/* Image Section (4 cols) */}
+                <div className="lg:col-span-4 space-y-4">
+                  <div className="aspect-square rounded-2xl overflow-hidden bg-black/40 border-2 border-dashed border-gray-700 flex items-center justify-center relative group">
+                    {editing?.image ? (
+                      <img src={editing.image} alt="Preview" className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-gray-500">No Image</span>
+                    )}
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <p className="text-white text-sm font-medium">Change Image</p>
+                    </div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="absolute inset-0 opacity-0 cursor-pointer"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          if (file.size > 2 * 1024 * 1024) return alert("Image max 2MB");
+                          const reader = new FileReader();
+                          reader.onload = () => setEditing({ ...editing, imageData: reader.result as string, image: reader.result as string });
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
+                  </div>
+                  <p className="text-xs text-center text-gray-500">Click to upload (Max 2MB)</p>
+                </div>
+
+                {/* Details Section (8 cols) */}
+                <div className="lg:col-span-8 space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className={LABEL_CLASS}>Product Name</label>
+                      <input
+                        value={editing?.name ?? ""}
+                        onChange={e => setEditing({ ...editing, name: e.target.value })}
+                        className={INPUT_CLASS}
+                        placeholder="e.g. Midnight Rose"
+                      />
+                    </div>
+                    <div>
+                      <label className={LABEL_CLASS}>Category</label>
+                      <select
+                        value={editing?.category ?? 'unisex'}
+                        onChange={e => setEditing({ ...editing, category: e.target.value })}
+                        className={`${INPUT_CLASS} appearance-none cursor-pointer`}
+                      >
+                        <option value="men">Men</option>
+                        <option value="women">Women</option>
+                        <option value="unisex">Unisex</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className={LABEL_CLASS}>Description</label>
+                    <input
+                      value={editing?.description ?? ""}
+                      onChange={e => setEditing({ ...editing, description: e.target.value })}
+                      className={INPUT_CLASS}
+                      placeholder="Short engaging description..."
+                    />
+                  </div>
+
+                  <div>
+                    <label className={LABEL_CLASS}>Fragrance Notes</label>
+                    <textarea
+                      value={editing?.notes ?? ""}
+                      onChange={e => setEditing({ ...editing, notes: e.target.value })}
+                      className={`${INPUT_CLASS} h-24 resize-none`}
+                      placeholder="Top: ... Middle: ... Base: ..."
+                    />
+                  </div>
+
+                  {/* Sizes & Prices */}
+                  <div className="bg-primary-dark/50 rounded-xl p-4 border border-white/5">
+                    <div className="flex justify-between items-center mb-4">
+                      <label className={LABEL_CLASS}>Sizes & Prices</label>
+                      <button
+                        type="button"
+                        onClick={() => setEditing({ ...editing, sizes: [...(editing?.sizes || []), { size: '50ml', price: 0 }] })}
+                        className="text-xs bg-accent-gold text-primary-dark px-3 py-1 rounded-full font-bold hover:bg-yellow-400 transition whitespace-nowrap"
+                      >
+                        + Add Variant
+                      </button>
+                    </div>
+                    <div className="space-y-4 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
+                      {(editing?.sizes || []).map((s, idx) => (
+                        <div key={idx} className="flex items-start gap-3 p-2 bg-black/20 rounded-lg">
+                          {/* Input container: Stacks vertically on small screens, uses grid for 2 columns */}
+                          <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {/* Size Input */}
+                            <input
+                              value={s.size}
+                              onChange={e => {
+                                const newSizes = [...(editing?.sizes || [])];
+                                newSizes[idx].size = e.target.value;
+                                setEditing({ ...editing, sizes: newSizes });
+                              }}
+                              className={`${INPUT_CLASS} py-2`}
+                              placeholder="Size (e.g. 50ml)"
+                            />
+                            {/* Price Input */}
+                            <input
+                              type="number"
+                              value={s.price}
+                              onChange={e => {
+                                const newSizes = [...(editing?.sizes || [])];
+                                newSizes[idx].price = Number(e.target.value);
+                                setEditing({ ...editing, sizes: newSizes });
+                              }}
+                              className={`${INPUT_CLASS} py-2`}
+                              placeholder="Price (e.g. 120)"
+                            />
+                          </div>
+
+                          {/* Delete Button */}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const newSizes = (editing?.sizes || []).filter((_, i) => i !== idx);
+                              setEditing({ ...editing, sizes: newSizes });
+                            }}
+                            // Use ml-auto to push it to the right, self-center for vertical alignment with the stacked inputs
+                            className="text-red-400 hover:text-red-300 p-2 self-center flex-shrink-0"
+                          >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                          </button>
+                        </div>
                       ))}
                     </div>
                   </div>
+
+                  <div className="flex justify-end pt-4">
+                    <button
+                      type="submit"
+                      className="w-full md:w-auto px-8 py-3 bg-accent-gold text-primary-dark font-bold rounded-xl shadow-lg hover:bg-yellow-400 transition transform hover:scale-[1.02]"
+                    >
+                      {creating ? 'Create Product' : 'Save Changes'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        )}
+
+        {/* --- Product List --- */}
+
+        {/* Mobile Cards (Visible < md) */}
+        <div className="md:hidden space-y-6">
+          {loading ? <p className="text-center text-gray-500">Loading...</p> : items.map(p => (
+            <div key={p.id} className={`${CARD_CLASS} flex flex-col`}>
+              <div className="relative h-48 w-full">
+                <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+                <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-accent-gold border border-accent-gold/20 uppercase">
+                  {p.category}
+                </div>
+              </div>
+              <div className="p-5 flex-1 flex flex-col">
+                <h3 className="text-xl font-bold text-white mb-1">{p.name}</h3>
+                <p className="text-gray-400 text-sm mb-4 line-clamp-2">{p.description}</p>
+
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {p.sizes.map(s => (
+                    <span key={s.size} className="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded-md text-gray-300">
+                      {s.size} • ${s.price}
+                    </span>
+                  ))}
                 </div>
 
-                <div className="flex gap-3 mt-2 border-t border-gray-700/50 pt-3">
+                <div className="mt-auto grid grid-cols-2 gap-3">
                   <button
                     onClick={() => { setEditing(p); setCreating(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                    className="flex-1 py-2 rounded-lg bg-accent-gold/20 text-accent-gold font-medium hover:bg-accent-gold/30 transition text-sm"
+                    className="py-2.5 rounded-lg bg-white/5 text-white font-medium hover:bg-white/10 transition border border-white/5"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => setConfirmDelete(p)}
-                    className="flex-1 py-2 rounded-lg bg-red-700/20 text-red-400 font-medium hover:bg-red-700/30 transition text-sm"
+                    className="py-2.5 rounded-lg bg-red-500/10 text-red-400 font-medium hover:bg-red-500/20 transition border border-red-500/10"
                   >
                     Delete
                   </button>
                 </div>
               </div>
-            ))
-          )}
+            </div>
+          ))}
         </div>
 
-        {/* --- Delete confirmation modal (Refined Styling) --- */}
-        {confirmDelete && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setConfirmDelete(null)}></div>
-            <div className="relative bg-primary-darker border border-red-500/30 rounded-xl p-8 w-full max-w-md z-10 shadow-2xl">
-              <div className="flex flex-col items-center text-center gap-4">
-                <div className="w-16 h-16 bg-red-700/20 rounded-full flex items-center justify-center mb-2">
-                  <span className="text-3xl text-red-400">⚠️</span>
-                </div>
-                <h3 className="text-xl font-bold text-red-400">Confirm Deletion</h3>
-                <p className="text-sm text-gray-300">
-                  Are you absolutely sure you want to permanently remove <strong className="text-white font-bold">{confirmDelete.name}</strong>?
-                  This action cannot be undone.
-                </p>
-              </div>
+        {/* Desktop Table (Visible >= md) */}
+        <div className="hidden md:block">
+          <div className={`${CARD_CLASS} overflow-hidden`}>
+            <table className="w-full text-left">
+              <thead className="bg-white/5 text-accent-gold text-xs uppercase tracking-wider">
+                <tr>
+                  <th className="p-6 font-bold">Product</th>
+                  <th className="p-6 font-bold">Category</th>
+                  <th className="p-6 font-bold">Variants</th>
+                  <th className="p-6 font-bold text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {loading ? (
+                  <tr><td colSpan={4} className="p-8 text-center text-gray-500">Loading...</td></tr>
+                ) : items.map(p => (
+                  <tr key={p.id} className="hover:bg-white/5 transition duration-150 group">
+                    <td className="p-4">
+                      <div className="flex items-center gap-4">
+                        <img src={p.image} alt={p.name} className="w-16 h-16 rounded-lg object-cover bg-gray-800" />
+                        <div>
+                          <p className="font-bold text-white group-hover:text-accent-gold transition">{p.name}</p>
+                          <p className="text-xs text-gray-500 truncate max-w-[200px]">{p.description}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-4">
+                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-white/5 text-gray-300 border border-white/10 uppercase">
+                        {p.category}
+                      </span>
+                    </td>
+                    <td className="p-4">
+                      <div className="flex flex-wrap gap-2">
+                        {p.sizes.map(s => (
+                          <span key={s.size} className="text-xs text-gray-400 bg-black/20 px-2 py-1 rounded">
+                            {s.size} <span className="text-gray-500">/</span> ${s.price}
+                          </span>
+                        ))}
+                      </div>
+                    </td>
+                    <td className="p-4 text-right">
+                      <div className="flex justify-end gap-3 opacity-60 group-hover:opacity-100 transition">
+                        <button
+                          onClick={() => { setEditing(p); setCreating(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                          className="p-2 hover:bg-accent-gold/20 rounded-lg text-accent-gold transition"
+                          title="Edit"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                        </button>
+                        <button
+                          onClick={() => setConfirmDelete(p)}
+                          className="p-2 hover:bg-red-500/20 rounded-lg text-red-400 transition"
+                          title="Delete"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-              <div className="flex justify-center gap-4 mt-6">
-                <button
-                  onClick={() => setConfirmDelete(null)}
-                  className="px-5 py-2 rounded-full bg-gray-600 text-white font-medium hover:bg-gray-700 transition"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={async () => { await handleDelete(confirmDelete.id); setConfirmDelete(null); }}
-                  className="px-5 py-2 rounded-full bg-red-600 text-white font-bold hover:bg-red-700 transition shadow-lg"
-                >
-                  Yes, Delete
-                </button>
+        {/* --- Delete Modal --- */}
+        {confirmDelete && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+            <div className="bg-primary-darker border border-red-500/20 rounded-2xl p-8 max-w-sm w-full shadow-2xl transform scale-100 transition-all">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Delete Product?</h3>
+                <p className="text-gray-400 text-sm mb-6">
+                  Are you sure you want to delete <span className="text-white font-semibold">{confirmDelete.name}</span>? This action cannot be undone.
+                </p>
+                <div className="grid grid-cols-2 gap-4">
+                  <button
+                    onClick={() => setConfirmDelete(null)}
+                    className="py-2.5 rounded-xl bg-gray-700 text-white font-medium hover:bg-gray-600 transition"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={async () => { await handleDelete(confirmDelete.id); setConfirmDelete(null); }}
+                    className="py-2.5 rounded-xl bg-red-600 text-white font-bold hover:bg-red-500 transition shadow-lg shadow-red-900/20"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         )}
 
       </div>
-      {/* Style for the custom scrollbar (usually requires global CSS but can sometimes work inline/tailwind custom setup) */}
+
       <style jsx global>{`
-            .custom-scrollbar::-webkit-scrollbar {
-                width: 8px;
-            }
-            .custom-scrollbar::-webkit-scrollbar-track {
-                background: rgba(0, 0, 0, 0.2);
-                border-radius: 10px;
-            }
-            .custom-scrollbar::-webkit-scrollbar-thumb {
-                background: #D4AF3740; /* accent-gold/40 */
-                border-radius: 10px;
-            }
-            .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                background: #D4AF3780; /* accent-gold/80 */
-            }
-        `}</style>
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.3); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(212,175,55,0.5); }
+      `}</style>
     </div>
   );
 }
