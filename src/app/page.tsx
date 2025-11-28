@@ -163,7 +163,7 @@ export default function HomePage() {
           <Link href="/shop?category=unisex">
             <div className="group relative h-64 bg-primary-light rounded-lg overflow-hidden hover:shadow-2xl hover:shadow-accent-gold/20 transition cursor-pointer">
               <Image
-                src=""
+                src="/unisexcollection.jpg"
                 alt="Unisex Fragrances"
                 fill
                 className="object-cover group-hover:scale-110 transition-transform duration-500"
