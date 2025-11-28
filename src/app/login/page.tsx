@@ -34,7 +34,9 @@ export default function LoginPage() {
       login(data.user);
 
       // Redirect based on role. For non-admin users we simply go home and the header will show a welcome.
-      if (data.user.role !== 'ADMIN') router.push('/');
+      // Redirect based on role. For non-admin users we simply go home and the header will show a welcome.
+      const role = (data.user.role || '').toUpperCase();
+      if (role !== 'ADMIN') router.push('/shop');
       else router.push('/admin');
     } catch (err) {
       setError('Failed to login');
@@ -85,8 +87,6 @@ export default function LoginPage() {
               {loading ? 'Signing in...' : 'Sign in'}
             </button>
           </div>
-
-          <div className="text-xs text-gray-300/80 mt-4">Demo accounts — admin@example.com / adminpass | user@example.com / userpass</div>
         </form>
       </div>
     </div>

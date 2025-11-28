@@ -619,9 +619,6 @@ video {
 .mt-20 {
   margin-top: 5rem;
 }
-.mt-4 {
-  margin-top: 1rem;
-}
 .mt-6 {
   margin-top: 1.5rem;
 }
@@ -1284,9 +1281,6 @@ video {
 .text-gray-300 {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity, 1));
-}
-.text-gray-300\/80 {
-  color: rgb(209 213 219 / 0.8);
 }
 .text-gray-400 {
   --tw-text-opacity: 1;

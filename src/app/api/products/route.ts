@@ -1,32 +1,40 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/db';
-import Perfume from '@/models/Perfume';
+import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 export async function GET(request: Request) {
     try {
-        await dbConnect();
-
         const { searchParams } = new URL(request.url);
         const category = searchParams.get('category');
 
-        // Build query
-        const query: any = {
-            name: { $ne: 'Amber Noir' } // Filter out demo product
-        };
+        // Build Firestore query
+        const productsRef = collection(db, 'products');
+        let q;
 
         if (category && category !== 'all') {
-            query.category = category;
+            // Filter by category and exclude demo product
+            q = query(
+                productsRef,
+                where('category', '==', category),
+                orderBy('createdAt', 'desc')
+            );
+        } else {
+            // Get all products, ordered by creation date
+            q = query(productsRef, orderBy('createdAt', 'desc'));
         }
 
-        // Fetch perfumes from MongoDB
-        let perfumes = await Perfume.find(query).sort({ createdAt: -1 }).lean();
+        const querySnapshot = await getDocs(q);
 
-        // Map _id to id for frontend compatibility
-        perfumes = perfumes.map((p: any) => ({
-            ...p,
-            id: p._id.toString(),
-            _id: undefined
+        // Map Firestore documents to product objects
+        let perfumes = querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
         }));
+
+        // Filter out demo product "Amber Noir" (client-side filter since we can't combine != with orderBy)
+        perfumes = perfumes.filter((p: any) =>
+            String(p.name).toLowerCase() !== 'amber noir'
+        );
 
         return NextResponse.json({ perfumes });
     } catch (error) {

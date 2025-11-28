@@ -13,16 +13,6 @@ exports.id = "app/api/auth/login/route";
 exports.ids = ["app/api/auth/login/route"];
 exports.modules = {
 
-/***/ "mongoose":
-/*!***************************!*\
-  !*** external "mongoose" ***!
-  \***************************/
-/***/ ((module) => {
-
-module.exports = require("mongoose");
-
-/***/ }),
-
 /***/ "next/dist/compiled/next-server/app-page.runtime.dev.js":
 /*!*************************************************************************!*\
   !*** external "next/dist/compiled/next-server/app-page.runtime.dev.js" ***!
@@ -43,6 +33,156 @@ module.exports = require("next/dist/compiled/next-server/app-route.runtime.dev.j
 
 /***/ }),
 
+/***/ "crypto":
+/*!*************************!*\
+  !*** external "crypto" ***!
+  \*************************/
+/***/ ((module) => {
+
+module.exports = require("crypto");
+
+/***/ }),
+
+/***/ "dns":
+/*!**********************!*\
+  !*** external "dns" ***!
+  \**********************/
+/***/ ((module) => {
+
+module.exports = require("dns");
+
+/***/ }),
+
+/***/ "events":
+/*!*************************!*\
+  !*** external "events" ***!
+  \*************************/
+/***/ ((module) => {
+
+module.exports = require("events");
+
+/***/ }),
+
+/***/ "fs":
+/*!*********************!*\
+  !*** external "fs" ***!
+  \*********************/
+/***/ ((module) => {
+
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ "http":
+/*!***********************!*\
+  !*** external "http" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("http");
+
+/***/ }),
+
+/***/ "http2":
+/*!************************!*\
+  !*** external "http2" ***!
+  \************************/
+/***/ ((module) => {
+
+module.exports = require("http2");
+
+/***/ }),
+
+/***/ "net":
+/*!**********************!*\
+  !*** external "net" ***!
+  \**********************/
+/***/ ((module) => {
+
+module.exports = require("net");
+
+/***/ }),
+
+/***/ "os":
+/*!*********************!*\
+  !*** external "os" ***!
+  \*********************/
+/***/ ((module) => {
+
+module.exports = require("os");
+
+/***/ }),
+
+/***/ "path":
+/*!***********************!*\
+  !*** external "path" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("path");
+
+/***/ }),
+
+/***/ "process":
+/*!**************************!*\
+  !*** external "process" ***!
+  \**************************/
+/***/ ((module) => {
+
+module.exports = require("process");
+
+/***/ }),
+
+/***/ "stream":
+/*!*************************!*\
+  !*** external "stream" ***!
+  \*************************/
+/***/ ((module) => {
+
+module.exports = require("stream");
+
+/***/ }),
+
+/***/ "tls":
+/*!**********************!*\
+  !*** external "tls" ***!
+  \**********************/
+/***/ ((module) => {
+
+module.exports = require("tls");
+
+/***/ }),
+
+/***/ "url":
+/*!**********************!*\
+  !*** external "url" ***!
+  \**********************/
+/***/ ((module) => {
+
+module.exports = require("url");
+
+/***/ }),
+
+/***/ "util":
+/*!***********************!*\
+  !*** external "util" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("util");
+
+/***/ }),
+
+/***/ "zlib":
+/*!***********************!*\
+  !*** external "zlib" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("zlib");
+
+/***/ }),
+
 /***/ "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fauth%2Flogin%2Froute&page=%2Fapi%2Fauth%2Flogin%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fauth%2Flogin%2Froute.ts&appDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fauth%2Flogin%2Froute&page=%2Fapi%2Fauth%2Flogin%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fauth%2Flogin%2Froute.ts&appDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D! ***!
@@ -59,27 +199,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   POST: () => (/* binding */ POST)\n/* harmony export */ });\n/* harmony import */ var next_server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/server */ \"(rsc)/./node_modules/next/dist/api/server.js\");\n/* harmony import */ var _lib_db__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/db */ \"(rsc)/./src/lib/db.ts\");\n/* harmony import */ var _models_User__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/models/User */ \"(rsc)/./src/models/User.ts\");\n\n\n\nasync function POST(request) {\n    try {\n        await (0,_lib_db__WEBPACK_IMPORTED_MODULE_1__[\"default\"])();\n        const body = await request.json();\n        const { email, password } = body;\n        // Demo admin shortcut: allow the demo admin to login even when DB is unavailable\n        // For MongoDB, we will actually upsert this admin user if not found, or just check against DB.\n        // But to keep the \"demo\" feel if DB is empty, we can seed it here or just check.\n        // Check if user exists\n        let user = await _models_User__WEBPACK_IMPORTED_MODULE_2__[\"default\"].findOne({\n            email\n        });\n        // If admin@example.com doesn't exist, create it (seeding)\n        if (!user && email === \"admin@example.com\" && password === \"adminpass\") {\n            user = await _models_User__WEBPACK_IMPORTED_MODULE_2__[\"default\"].create({\n                email: \"admin@example.com\",\n                password: \"adminpass\",\n                role: \"ADMIN\"\n            });\n        }\n        if (!user) {\n            // For this demo app, if user doesn't exist, we create a regular user\n            // In a real app, you'd return \"Invalid credentials\" or have a register flow.\n            // The original code created a user if not found.\n            user = await _models_User__WEBPACK_IMPORTED_MODULE_2__[\"default\"].create({\n                email,\n                password,\n                role: \"USER\"\n            });\n        }\n        // Check password (simple string comparison as per original code)\n        if (user.password !== password) {\n            return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                error: \"Invalid credentials\"\n            }, {\n                status: 401\n            });\n        }\n        const userData = {\n            id: user._id.toString(),\n            email: user.email,\n            role: user.role\n        };\n        const res = next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n            user: userData\n        });\n        res.cookies.set(\"user\", JSON.stringify(userData), {\n            path: \"/\",\n            maxAge: 60 * 60 * 24 * 7,\n            httpOnly: true,\n            sameSite: \"lax\",\n            secure: \"development\" === \"production\"\n        });\n        return res;\n    } catch (err) {\n        console.error(\"Login error:\", err);\n        return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n            error: \"Invalid request\"\n        }, {\n            status: 400\n        });\n    }\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9zcmMvYXBwL2FwaS9hdXRoL2xvZ2luL3JvdXRlLnRzIiwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFBMkM7QUFDVjtBQUNBO0FBRTFCLGVBQWVHLEtBQUtDLE9BQWdCO0lBQ3pDLElBQUk7UUFDRixNQUFNSCxtREFBU0E7UUFDZixNQUFNSSxPQUFPLE1BQU1ELFFBQVFFLElBQUk7UUFDL0IsTUFBTSxFQUFFQyxLQUFLLEVBQUVDLFFBQVEsRUFBRSxHQUFHSDtRQUU1QixpRkFBaUY7UUFDakYsK0ZBQStGO1FBQy9GLGlGQUFpRjtRQUVqRix1QkFBdUI7UUFDdkIsSUFBSUksT0FBTyxNQUFNUCxvREFBSUEsQ0FBQ1EsT0FBTyxDQUFDO1lBQUVIO1FBQU07UUFFdEMsMERBQTBEO1FBQzFELElBQUksQ0FBQ0UsUUFBUUYsVUFBVSx1QkFBdUJDLGFBQWEsYUFBYTtZQUN0RUMsT0FBTyxNQUFNUCxvREFBSUEsQ0FBQ1MsTUFBTSxDQUFDO2dCQUN2QkosT0FBTztnQkFDUEMsVUFBVTtnQkFDVkksTUFBTTtZQUNSO1FBQ0Y7UUFFQSxJQUFJLENBQUNILE1BQU07WUFDVCxxRUFBcUU7WUFDckUsNkVBQTZFO1lBQzdFLGlEQUFpRDtZQUNqREEsT0FBTyxNQUFNUCxvREFBSUEsQ0FBQ1MsTUFBTSxDQUFDO2dCQUN2Qko7Z0JBQ0FDO2dCQUNBSSxNQUFNO1lBQ1I7UUFDRjtRQUVBLGlFQUFpRTtRQUNqRSxJQUFJSCxLQUFLRCxRQUFRLEtBQUtBLFVBQVU7WUFDOUIsT0FBT1IscURBQVlBLENBQUNNLElBQUksQ0FBQztnQkFBRU8sT0FBTztZQUFzQixHQUFHO2dCQUFFQyxRQUFRO1lBQUk7UUFDM0U7UUFFQSxNQUFNQyxXQUFXO1lBQUVDLElBQUlQLEtBQUtRLEdBQUcsQ0FBQ0MsUUFBUTtZQUFJWCxPQUFPRSxLQUFLRixLQUFLO1lBQUVLLE1BQU1ILEtBQUtHLElBQUk7UUFBQztRQUUvRSxNQUFNTyxNQUFNbkIscURBQVlBLENBQUNNLElBQUksQ0FBQztZQUFFRyxNQUFNTTtRQUFTO1FBRS9DSSxJQUFJQyxPQUFPLENBQUNDLEdBQUcsQ0FBQyxRQUFRQyxLQUFLQyxTQUFTLENBQUNSLFdBQVc7WUFDaERTLE1BQU07WUFDTkMsUUFBUSxLQUFLLEtBQUssS0FBSztZQUN2QkMsVUFBVTtZQUNWQyxVQUFVO1lBQ1ZDLFFBQVFDLGtCQUF5QjtRQUNuQztRQUNBLE9BQU9WO0lBQ1QsRUFBRSxPQUFPVyxLQUFLO1FBQ1pDLFFBQVFsQixLQUFLLENBQUMsZ0JBQWdCaUI7UUFDOUIsT0FBTzlCLHFEQUFZQSxDQUFDTSxJQUFJLENBQUM7WUFBRU8sT0FBTztRQUFrQixHQUFHO1lBQUVDLFFBQVE7UUFBSTtJQUN2RTtBQUNGIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vcGVyZnVtZS1lY29tbWVyY2UvLi9zcmMvYXBwL2FwaS9hdXRoL2xvZ2luL3JvdXRlLnRzP2QzMWEiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgTmV4dFJlc3BvbnNlIH0gZnJvbSAnbmV4dC9zZXJ2ZXInO1xyXG5pbXBvcnQgZGJDb25uZWN0IGZyb20gJ0AvbGliL2RiJztcclxuaW1wb3J0IFVzZXIgZnJvbSAnQC9tb2RlbHMvVXNlcic7XHJcblxyXG5leHBvcnQgYXN5bmMgZnVuY3Rpb24gUE9TVChyZXF1ZXN0OiBSZXF1ZXN0KSB7XHJcbiAgdHJ5IHtcclxuICAgIGF3YWl0IGRiQ29ubmVjdCgpO1xyXG4gICAgY29uc3QgYm9keSA9IGF3YWl0IHJlcXVlc3QuanNvbigpO1xyXG4gICAgY29uc3QgeyBlbWFpbCwgcGFzc3dvcmQgfSA9IGJvZHk7XHJcblxyXG4gICAgLy8gRGVtbyBhZG1pbiBzaG9ydGN1dDogYWxsb3cgdGhlIGRlbW8gYWRtaW4gdG8gbG9naW4gZXZlbiB3aGVuIERCIGlzIHVuYXZhaWxhYmxlXHJcbiAgICAvLyBGb3IgTW9uZ29EQiwgd2Ugd2lsbCBhY3R1YWxseSB1cHNlcnQgdGhpcyBhZG1pbiB1c2VyIGlmIG5vdCBmb3VuZCwgb3IganVzdCBjaGVjayBhZ2FpbnN0IERCLlxyXG4gICAgLy8gQnV0IHRvIGtlZXAgdGhlIFwiZGVtb1wiIGZlZWwgaWYgREIgaXMgZW1wdHksIHdlIGNhbiBzZWVkIGl0IGhlcmUgb3IganVzdCBjaGVjay5cclxuXHJcbiAgICAvLyBDaGVjayBpZiB1c2VyIGV4aXN0c1xyXG4gICAgbGV0IHVzZXIgPSBhd2FpdCBVc2VyLmZpbmRPbmUoeyBlbWFpbCB9KTtcclxuXHJcbiAgICAvLyBJZiBhZG1pbkBleGFtcGxlLmNvbSBkb2Vzbid0IGV4aXN0LCBjcmVhdGUgaXQgKHNlZWRpbmcpXHJcbiAgICBpZiAoIXVzZXIgJiYgZW1haWwgPT09ICdhZG1pbkBleGFtcGxlLmNvbScgJiYgcGFzc3dvcmQgPT09ICdhZG1pbnBhc3MnKSB7XHJcbiAgICAgIHVzZXIgPSBhd2FpdCBVc2VyLmNyZWF0ZSh7XHJcbiAgICAgICAgZW1haWw6ICdhZG1pbkBleGFtcGxlLmNvbScsXHJcbiAgICAgICAgcGFzc3dvcmQ6ICdhZG1pbnBhc3MnLFxyXG4gICAgICAgIHJvbGU6ICdBRE1JTicsXHJcbiAgICAgIH0pO1xyXG4gICAgfVxyXG5cclxuICAgIGlmICghdXNlcikge1xyXG4gICAgICAvLyBGb3IgdGhpcyBkZW1vIGFwcCwgaWYgdXNlciBkb2Vzbid0IGV4aXN0LCB3ZSBjcmVhdGUgYSByZWd1bGFyIHVzZXJcclxuICAgICAgLy8gSW4gYSByZWFsIGFwcCwgeW91J2QgcmV0dXJuIFwiSW52YWxpZCBjcmVkZW50aWFsc1wiIG9yIGhhdmUgYSByZWdpc3RlciBmbG93LlxyXG4gICAgICAvLyBUaGUgb3JpZ2luYWwgY29kZSBjcmVhdGVkIGEgdXNlciBpZiBub3QgZm91bmQuXHJcbiAgICAgIHVzZXIgPSBhd2FpdCBVc2VyLmNyZWF0ZSh7XHJcbiAgICAgICAgZW1haWwsXHJcbiAgICAgICAgcGFzc3dvcmQsXHJcbiAgICAgICAgcm9sZTogJ1VTRVInLFxyXG4gICAgICB9KTtcclxuICAgIH1cclxuXHJcbiAgICAvLyBDaGVjayBwYXNzd29yZCAoc2ltcGxlIHN0cmluZyBjb21wYXJpc29uIGFzIHBlciBvcmlnaW5hbCBjb2RlKVxyXG4gICAgaWYgKHVzZXIucGFzc3dvcmQgIT09IHBhc3N3b3JkKSB7XHJcbiAgICAgIHJldHVybiBOZXh0UmVzcG9uc2UuanNvbih7IGVycm9yOiAnSW52YWxpZCBjcmVkZW50aWFscycgfSwgeyBzdGF0dXM6IDQwMSB9KTtcclxuICAgIH1cclxuXHJcbiAgICBjb25zdCB1c2VyRGF0YSA9IHsgaWQ6IHVzZXIuX2lkLnRvU3RyaW5nKCksIGVtYWlsOiB1c2VyLmVtYWlsLCByb2xlOiB1c2VyLnJvbGUgfTtcclxuXHJcbiAgICBjb25zdCByZXMgPSBOZXh0UmVzcG9uc2UuanNvbih7IHVzZXI6IHVzZXJEYXRhIH0pO1xyXG5cclxuICAgIHJlcy5jb29raWVzLnNldCgndXNlcicsIEpTT04uc3RyaW5naWZ5KHVzZXJEYXRhKSwge1xyXG4gICAgICBwYXRoOiAnLycsXHJcbiAgICAgIG1heEFnZTogNjAgKiA2MCAqIDI0ICogNyxcclxuICAgICAgaHR0cE9ubHk6IHRydWUsXHJcbiAgICAgIHNhbWVTaXRlOiAnbGF4JyxcclxuICAgICAgc2VjdXJlOiBwcm9jZXNzLmVudi5OT0RFX0VOViA9PT0gJ3Byb2R1Y3Rpb24nLFxyXG4gICAgfSk7XHJcbiAgICByZXR1cm4gcmVzO1xyXG4gIH0gY2F0Y2ggKGVycikge1xyXG4gICAgY29uc29sZS5lcnJvcignTG9naW4gZXJyb3I6JywgZXJyKTtcclxuICAgIHJldHVybiBOZXh0UmVzcG9uc2UuanNvbih7IGVycm9yOiAnSW52YWxpZCByZXF1ZXN0JyB9LCB7IHN0YXR1czogNDAwIH0pO1xyXG4gIH1cclxufVxyXG4iXSwibmFtZXMiOlsiTmV4dFJlc3BvbnNlIiwiZGJDb25uZWN0IiwiVXNlciIsIlBPU1QiLCJyZXF1ZXN0IiwiYm9keSIsImpzb24iLCJlbWFpbCIsInBhc3N3b3JkIiwidXNlciIsImZpbmRPbmUiLCJjcmVhdGUiLCJyb2xlIiwiZXJyb3IiLCJzdGF0dXMiLCJ1c2VyRGF0YSIsImlkIiwiX2lkIiwidG9TdHJpbmciLCJyZXMiLCJjb29raWVzIiwic2V0IiwiSlNPTiIsInN0cmluZ2lmeSIsInBhdGgiLCJtYXhBZ2UiLCJodHRwT25seSIsInNhbWVTaXRlIiwic2VjdXJlIiwicHJvY2VzcyIsImVyciIsImNvbnNvbGUiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./src/app/api/auth/login/route.ts\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   POST: () => (/* binding */ POST)\n/* harmony export */ });\n/* harmony import */ var next_server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/server */ \"(rsc)/./node_modules/next/dist/api/server.js\");\n/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/firestore */ \"(rsc)/./node_modules/firebase/firestore/dist/index.mjs\");\n/* harmony import */ var _lib_firebase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/firebase */ \"(rsc)/./src/lib/firebase.ts\");\n\n\n\nasync function POST(request) {\n    try {\n        const body = await request.json();\n        const { email, password } = body;\n        if (!email || !password) {\n            return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                error: \"Email and password are required\"\n            }, {\n                status: 400\n            });\n        }\n        // Use Firebase REST API for server-side authentication\n        const FIREBASE_API_KEY = \"AIzaSyCUbB-RryWiUw7rBOk7dwirbJBIZTU2mwM\";\n        const authResponse = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_API_KEY}`, {\n            method: \"POST\",\n            headers: {\n                \"Content-Type\": \"application/json\"\n            },\n            body: JSON.stringify({\n                email,\n                password,\n                returnSecureToken: true\n            })\n        });\n        const authData = await authResponse.json();\n        if (!authResponse.ok) {\n            // Check for specific Firebase error codes\n            if (authData.error && authData.error.message === \"EMAIL_NOT_FOUND\") {\n                // Allow guest login for emails not in Firebase\n                const guestUser = {\n                    id: \"guest_\" + Date.now(),\n                    email: email,\n                    role: \"user\"\n                };\n                const res = next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                    user: guestUser\n                });\n                res.cookies.set(\"user\", JSON.stringify(guestUser), {\n                    path: \"/\",\n                    maxAge: 60 * 60 * 24 * 7,\n                    httpOnly: true,\n                    sameSite: \"lax\",\n                    secure: \"development\" === \"production\"\n                });\n                return res;\n            }\n            console.error(\"Firebase Auth error:\", authData);\n            return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n                error: \"Invalid email or password\"\n            }, {\n                status: 401\n            });\n        }\n        const firebaseUid = authData.localId;\n        // Get user role from Firestore\n        const userDocRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.doc)(_lib_firebase__WEBPACK_IMPORTED_MODULE_2__.db, \"users\", firebaseUid);\n        const userDoc = await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.getDoc)(userDocRef);\n        let role = \"user\";\n        if (userDoc.exists()) {\n            const userData = userDoc.data();\n            role = userData.role || \"user\";\n        } else {\n            // If user document doesn't exist in Firestore, create it with default role\n            await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.setDoc)(userDocRef, {\n                email: email,\n                role: \"user\"\n            });\n        }\n        const userData = {\n            id: firebaseUid,\n            email: email,\n            role: role\n        };\n        const res = next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n            user: userData\n        });\n        // Set cookie for session management\n        res.cookies.set(\"user\", JSON.stringify(userData), {\n            path: \"/\",\n            maxAge: 60 * 60 * 24 * 7,\n            httpOnly: true,\n            sameSite: \"lax\",\n            secure: \"development\" === \"production\"\n        });\n        return res;\n    } catch (err) {\n        console.error(\"Login error:\", err);\n        return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n            error: \"Login failed. Please try again.\"\n        }, {\n            status: 400\n        });\n    }\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,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T0FBTy9DLHFEQUFZQSxDQUFDUSxJQUFJLENBQUM7WUFBRUcsT0FBTztRQUFrQyxHQUFHO1lBQUVDLFFBQVE7UUFBSTtJQUN2RjtBQUNGIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vcGVyZnVtZS1lY29tbWVyY2UvLi9zcmMvYXBwL2FwaS9hdXRoL2xvZ2luL3JvdXRlLnRzP2QzMWEiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgTmV4dFJlc3BvbnNlIH0gZnJvbSAnbmV4dC9zZXJ2ZXInO1xyXG5pbXBvcnQgeyBkb2MsIGdldERvYywgc2V0RG9jIH0gZnJvbSAnZmlyZWJhc2UvZmlyZXN0b3JlJztcclxuaW1wb3J0IHsgZGIgfSBmcm9tICdAL2xpYi9maXJlYmFzZSc7XHJcblxyXG5leHBvcnQgYXN5bmMgZnVuY3Rpb24gUE9TVChyZXF1ZXN0OiBSZXF1ZXN0KSB7XHJcbiAgdHJ5IHtcclxuICAgIGNvbnN0IGJvZHkgPSBhd2FpdCByZXF1ZXN0Lmpzb24oKTtcclxuICAgIGNvbnN0IHsgZW1haWwsIHBhc3N3b3JkIH0gPSBib2R5O1xyXG5cclxuICAgIGlmICghZW1haWwgfHwgIXBhc3N3b3JkKSB7XHJcbiAgICAgIHJldHVybiBOZXh0UmVzcG9uc2UuanNvbih7IGVycm9yOiAnRW1haWwgYW5kIHBhc3N3b3JkIGFyZSByZXF1aXJlZCcgfSwgeyBzdGF0dXM6IDQwMCB9KTtcclxuICAgIH1cclxuXHJcbiAgICAvLyBVc2UgRmlyZWJhc2UgUkVTVCBBUEkgZm9yIHNlcnZlci1zaWRlIGF1dGhlbnRpY2F0aW9uXHJcbiAgICBjb25zdCBGSVJFQkFTRV9BUElfS0VZID0gXCJBSXphU3lDVWJCLVJyeVdpVXc3ckJPazdkd2lyYkpCSVpUVTJtd01cIjtcclxuICAgIGNvbnN0IGF1dGhSZXNwb25zZSA9IGF3YWl0IGZldGNoKFxyXG4gICAgICBgaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vdjEvYWNjb3VudHM6c2lnbkluV2l0aFBhc3N3b3JkP2tleT0ke0ZJUkVCQVNFX0FQSV9LRVl9YCxcclxuICAgICAge1xyXG4gICAgICAgIG1ldGhvZDogJ1BPU1QnLFxyXG4gICAgICAgIGhlYWRlcnM6IHtcclxuICAgICAgICAgICdDb250ZW50LVR5cGUnOiAnYXBwbGljYXRpb24vanNvbicsXHJcbiAgICAgICAgfSxcclxuICAgICAgICBib2R5OiBKU09OLnN0cmluZ2lmeSh7XHJcbiAgICAgICAgICBlbWFpbCxcclxuICAgICAgICAgIHBhc3N3b3JkLFxyXG4gICAgICAgICAgcmV0dXJuU2VjdXJlVG9rZW46IHRydWUsXHJcbiAgICAgICAgfSksXHJcbiAgICAgIH1cclxuICAgICk7XHJcblxyXG4gICAgY29uc3QgYXV0aERhdGEgPSBhd2FpdCBhdXRoUmVzcG9uc2UuanNvbigpO1xyXG5cclxuICAgIGlmICghYXV0aFJlc3BvbnNlLm9rKSB7XHJcbiAgICAgIC8vIENoZWNrIGZvciBzcGVjaWZpYyBGaXJlYmFzZSBlcnJvciBjb2Rlc1xyXG4gICAgICBpZiAoYXV0aERhdGEuZXJyb3IgJiYgYXV0aERhdGEuZXJyb3IubWVzc2FnZSA9PT0gJ0VNQUlMX05PVF9GT1VORCcpIHtcclxuICAgICAgICAvLyBBbGxvdyBndWVzdCBsb2dpbiBmb3IgZW1haWxzIG5vdCBpbiBGaXJlYmFzZVxyXG4gICAgICAgIGNvbnN0IGd1ZXN0VXNlciA9IHtcclxuICAgICAgICAgIGlkOiAnZ3Vlc3RfJyArIERhdGUubm93KCksXHJcbiAgICAgICAgICBlbWFpbDogZW1haWwsXHJcbiAgICAgICAgICByb2xlOiAndXNlcidcclxuICAgICAgICB9O1xyXG5cclxuICAgICAgICBjb25zdCByZXMgPSBOZXh0UmVzcG9uc2UuanNvbih7IHVzZXI6IGd1ZXN0VXNlciB9KTtcclxuICAgICAgICByZXMuY29va2llcy5zZXQoJ3VzZXInLCBKU09OLnN0cmluZ2lmeShndWVzdFVzZXIpLCB7XHJcbiAgICAgICAgICBwYXRoOiAnLycsXHJcbiAgICAgICAgICBtYXhBZ2U6IDYwICogNjAgKiAyNCAqIDcsIC8vIDcgZGF5c1xyXG4gICAgICAgICAgaHR0cE9ubHk6IHRydWUsXHJcbiAgICAgICAgICBzYW1lU2l0ZTogJ2xheCcsXHJcbiAgICAgICAgICBzZWN1cmU6IHByb2Nlc3MuZW52Lk5PREVfRU5WID09PSAncHJvZHVjdGlvbicsXHJcbiAgICAgICAgfSk7XHJcbiAgICAgICAgcmV0dXJuIHJlcztcclxuICAgICAgfVxyXG5cclxuICAgICAgY29uc29sZS5lcnJvcignRmlyZWJhc2UgQXV0aCBlcnJvcjonLCBhdXRoRGF0YSk7XHJcbiAgICAgIHJldHVybiBOZXh0UmVzcG9uc2UuanNvbih7IGVycm9yOiAnSW52YWxpZCBlbWFpbCBvciBwYXNzd29yZCcgfSwgeyBzdGF0dXM6IDQwMSB9KTtcclxuICAgIH1cclxuXHJcbiAgICBjb25zdCBmaXJlYmFzZVVpZCA9IGF1dGhEYXRhLmxvY2FsSWQ7XHJcblxyXG4gICAgLy8gR2V0IHVzZXIgcm9sZSBmcm9tIEZpcmVzdG9yZVxyXG4gICAgY29uc3QgdXNlckRvY1JlZiA9IGRvYyhkYiwgJ3VzZXJzJywgZmlyZWJhc2VVaWQpO1xyXG4gICAgY29uc3QgdXNlckRvYyA9IGF3YWl0IGdldERvYyh1c2VyRG9jUmVmKTtcclxuXHJcbiAgICBsZXQgcm9sZSA9ICd1c2VyJztcclxuXHJcbiAgICBpZiAodXNlckRvYy5leGlzdHMoKSkge1xyXG4gICAgICBjb25zdCB1c2VyRGF0YSA9IHVzZXJEb2MuZGF0YSgpO1xyXG4gICAgICByb2xlID0gdXNlckRhdGEucm9sZSB8fCAndXNlcic7XHJcbiAgICB9IGVsc2Uge1xyXG4gICAgICAvLyBJZiB1c2VyIGRvY3VtZW50IGRvZXNuJ3QgZXhpc3QgaW4gRmlyZXN0b3JlLCBjcmVhdGUgaXQgd2l0aCBkZWZhdWx0IHJvbGVcclxuICAgICAgYXdhaXQgc2V0RG9jKHVzZXJEb2NSZWYsIHtcclxuICAgICAgICBlbWFpbDogZW1haWwsXHJcbiAgICAgICAgcm9sZTogJ3VzZXInLFxyXG4gICAgICB9KTtcclxuICAgIH1cclxuXHJcbiAgICBjb25zdCB1c2VyRGF0YSA9IHtcclxuICAgICAgaWQ6IGZpcmViYXNlVWlkLFxyXG4gICAgICBlbWFpbDogZW1haWwsXHJcbiAgICAgIHJvbGU6IHJvbGVcclxuICAgIH07XHJcblxyXG4gICAgY29uc3QgcmVzID0gTmV4dFJlc3BvbnNlLmpzb24oeyB1c2VyOiB1c2VyRGF0YSB9KTtcclxuXHJcbiAgICAvLyBTZXQgY29va2llIGZvciBzZXNzaW9uIG1hbmFnZW1lbnRcclxuICAgIHJlcy5jb29raWVzLnNldCgndXNlcicsIEpTT04uc3RyaW5naWZ5KHVzZXJEYXRhKSwge1xyXG4gICAgICBwYXRoOiAnLycsXHJcbiAgICAgIG1heEFnZTogNjAgKiA2MCAqIDI0ICogNywgLy8gNyBkYXlzXHJcbiAgICAgIGh0dHBPbmx5OiB0cnVlLFxyXG4gICAgICBzYW1lU2l0ZTogJ2xheCcsXHJcbiAgICAgIHNlY3VyZTogcHJvY2Vzcy5lbnYuTk9ERV9FTlYgPT09ICdwcm9kdWN0aW9uJyxcclxuICAgIH0pO1xyXG5cclxuICAgIHJldHVybiByZXM7XHJcbiAgfSBjYXRjaCAoZXJyOiBhbnkpIHtcclxuICAgIGNvbnNvbGUuZXJyb3IoJ0xvZ2luIGVycm9yOicsIGVycik7XHJcbiAgICByZXR1cm4gTmV4dFJlc3BvbnNlLmpzb24oeyBlcnJvcjogJ0xvZ2luIGZhaWxlZC4gUGxlYXNlIHRyeSBhZ2Fpbi4nIH0sIHsgc3RhdHVzOiA0MDAgfSk7XHJcbiAgfVxyXG59XHJcbiJdLCJuYW1lcyI6WyJOZXh0UmVzcG9uc2UiLCJkb2MiLCJnZXREb2MiLCJzZXREb2MiLCJkYiIsIlBPU1QiLCJyZXF1ZXN0IiwiYm9keSIsImpzb24iLCJlbWFpbCIsInBhc3N3b3JkIiwiZXJyb3IiLCJzdGF0dXMiLCJGSVJFQkFTRV9BUElfS0VZIiwiYXV0aFJlc3BvbnNlIiwiZmV0Y2giLCJtZXRob2QiLCJoZWFkZXJzIiwiSlNPTiIsInN0cmluZ2lmeSIsInJldHVyblNlY3VyZVRva2VuIiwiYXV0aERhdGEiLCJvayIsIm1lc3NhZ2UiLCJndWVzdFVzZXIiLCJpZCIsIkRhdGUiLCJub3ciLCJyb2xlIiwicmVzIiwidXNlciIsImNvb2tpZXMiLCJzZXQiLCJwYXRoIiwibWF4QWdlIiwiaHR0cE9ubHkiLCJzYW1lU2l0ZSIsInNlY3VyZSIsInByb2Nlc3MiLCJjb25zb2xlIiwiZmlyZWJhc2VVaWQiLCJsb2NhbElkIiwidXNlckRvY1JlZiIsInVzZXJEb2MiLCJleGlzdHMiLCJ1c2VyRGF0YSIsImRhdGEiLCJlcnIiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./src/app/api/auth/login/route.ts\n");
 
 /***/ }),
 
-/***/ "(rsc)/./src/lib/db.ts":
-/*!***********************!*\
-  !*** ./src/lib/db.ts ***!
-  \***********************/
+/***/ "(rsc)/./src/lib/firebase.ts":
+/*!*****************************!*\
+  !*** ./src/lib/firebase.ts ***!
+  \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mongoose */ \"mongoose\");\n/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mongoose__WEBPACK_IMPORTED_MODULE_0__);\n\nconst MONGODB_URI = process.env.MONGODB_URI;\nif (!MONGODB_URI) {\n    throw new Error(\"Please define the MONGODB_URI environment variable inside .env.local or in your Vercel project settings\");\n}\n/**\r\n * Global is used here to maintain a cached connection across hot reloads\r\n * in development. This prevents connections growing exponentially\r\n * during API Route usage.\r\n */ let cached = global.mongoose;\nif (!cached) {\n    cached = global.mongoose = {\n        conn: null,\n        promise: null\n    };\n}\nasync function dbConnect() {\n    if (cached.conn) {\n        return cached.conn;\n    }\n    if (!cached.promise) {\n        const opts = {\n            bufferCommands: false\n        };\n        cached.promise = mongoose__WEBPACK_IMPORTED_MODULE_0___default().connect(MONGODB_URI, opts).then((mongoose)=>{\n            return mongoose;\n        });\n    }\n    try {\n        cached.conn = await cached.promise;\n    } catch (e) {\n        cached.promise = null;\n        throw e;\n    }\n    return cached.conn;\n}\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (dbConnect);\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9zcmMvbGliL2RiLnRzIiwibWFwcGluZ3MiOiI7Ozs7OztBQUFnQztBQUVoQyxNQUFNQyxjQUFjQyxRQUFRQyxHQUFHLENBQUNGLFdBQVc7QUFFM0MsSUFBSSxDQUFDQSxhQUFhO0lBQ2hCLE1BQU0sSUFBSUcsTUFDUjtBQUVKO0FBRUE7Ozs7Q0FJQyxHQUNELElBQUlDLFNBQVMsT0FBZ0JMLFFBQVE7QUFFckMsSUFBSSxDQUFDSyxRQUFRO0lBQ1hBLFNBQVMsT0FBZ0JMLFFBQVEsR0FBRztRQUFFTyxNQUFNO1FBQU1DLFNBQVM7SUFBSztBQUNsRTtBQUVBLGVBQWVDO0lBQ2IsSUFBSUosT0FBT0UsSUFBSSxFQUFFO1FBQ2YsT0FBT0YsT0FBT0UsSUFBSTtJQUNwQjtJQUVBLElBQUksQ0FBQ0YsT0FBT0csT0FBTyxFQUFFO1FBQ25CLE1BQU1FLE9BQU87WUFDWEMsZ0JBQWdCO1FBQ2xCO1FBRUFOLE9BQU9HLE9BQU8sR0FBR1IsdURBQWdCLENBQUNDLGFBQXVCUyxNQUFNRyxJQUFJLENBQUMsQ0FBQ2I7WUFDbkUsT0FBT0E7UUFDVDtJQUNGO0lBQ0EsSUFBSTtRQUNGSyxPQUFPRSxJQUFJLEdBQUcsTUFBTUYsT0FBT0csT0FBTztJQUNwQyxFQUFFLE9BQU9NLEdBQUc7UUFDVlQsT0FBT0csT0FBTyxHQUFHO1FBQ2pCLE1BQU1NO0lBQ1I7SUFFQSxPQUFPVCxPQUFPRSxJQUFJO0FBQ3BCO0FBRUEsaUVBQWVFLFNBQVNBLEVBQUMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9wZXJmdW1lLWVjb21tZXJjZS8uL3NyYy9saWIvZGIudHM/OWU0ZiJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgbW9uZ29vc2UgZnJvbSAnbW9uZ29vc2UnO1xyXG5cclxuY29uc3QgTU9OR09EQl9VUkkgPSBwcm9jZXNzLmVudi5NT05HT0RCX1VSSTtcclxuXHJcbmlmICghTU9OR09EQl9VUkkpIHtcclxuICB0aHJvdyBuZXcgRXJyb3IoXHJcbiAgICAnUGxlYXNlIGRlZmluZSB0aGUgTU9OR09EQl9VUkkgZW52aXJvbm1lbnQgdmFyaWFibGUgaW5zaWRlIC5lbnYubG9jYWwgb3IgaW4geW91ciBWZXJjZWwgcHJvamVjdCBzZXR0aW5ncydcclxuICApO1xyXG59XHJcblxyXG4vKipcclxuICogR2xvYmFsIGlzIHVzZWQgaGVyZSB0byBtYWludGFpbiBhIGNhY2hlZCBjb25uZWN0aW9uIGFjcm9zcyBob3QgcmVsb2Fkc1xyXG4gKiBpbiBkZXZlbG9wbWVudC4gVGhpcyBwcmV2ZW50cyBjb25uZWN0aW9ucyBncm93aW5nIGV4cG9uZW50aWFsbHlcclxuICogZHVyaW5nIEFQSSBSb3V0ZSB1c2FnZS5cclxuICovXHJcbmxldCBjYWNoZWQgPSAoZ2xvYmFsIGFzIGFueSkubW9uZ29vc2U7XHJcblxyXG5pZiAoIWNhY2hlZCkge1xyXG4gIGNhY2hlZCA9IChnbG9iYWwgYXMgYW55KS5tb25nb29zZSA9IHsgY29ubjogbnVsbCwgcHJvbWlzZTogbnVsbCB9O1xyXG59XHJcblxyXG5hc3luYyBmdW5jdGlvbiBkYkNvbm5lY3QoKSB7XHJcbiAgaWYgKGNhY2hlZC5jb25uKSB7XHJcbiAgICByZXR1cm4gY2FjaGVkLmNvbm47XHJcbiAgfVxyXG5cclxuICBpZiAoIWNhY2hlZC5wcm9taXNlKSB7XHJcbiAgICBjb25zdCBvcHRzID0ge1xyXG4gICAgICBidWZmZXJDb21tYW5kczogZmFsc2UsXHJcbiAgICB9O1xyXG5cclxuICAgIGNhY2hlZC5wcm9taXNlID0gbW9uZ29vc2UuY29ubmVjdChNT05HT0RCX1VSSSBhcyBzdHJpbmcsIG9wdHMpLnRoZW4oKG1vbmdvb3NlKSA9PiB7XHJcbiAgICAgIHJldHVybiBtb25nb29zZTtcclxuICAgIH0pO1xyXG4gIH1cclxuICB0cnkge1xyXG4gICAgY2FjaGVkLmNvbm4gPSBhd2FpdCBjYWNoZWQucHJvbWlzZTtcclxuICB9IGNhdGNoIChlKSB7XHJcbiAgICBjYWNoZWQucHJvbWlzZSA9IG51bGw7XHJcbiAgICB0aHJvdyBlO1xyXG4gIH1cclxuXHJcbiAgcmV0dXJuIGNhY2hlZC5jb25uO1xyXG59XHJcblxyXG5leHBvcnQgZGVmYXVsdCBkYkNvbm5lY3Q7XHJcbiJdLCJuYW1lcyI6WyJtb25nb29zZSIsIk1PTkdPREJfVVJJIiwicHJvY2VzcyIsImVudiIsIkVycm9yIiwiY2FjaGVkIiwiZ2xvYmFsIiwiY29ubiIsInByb21pc2UiLCJkYkNvbm5lY3QiLCJvcHRzIiwiYnVmZmVyQ29tbWFuZHMiLCJjb25uZWN0IiwidGhlbiIsImUiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./src/lib/db.ts\n");
-
-/***/ }),
-
-/***/ "(rsc)/./src/models/User.ts":
-/*!****************************!*\
-  !*** ./src/models/User.ts ***!
-  \****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mongoose */ \"mongoose\");\n/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mongoose__WEBPACK_IMPORTED_MODULE_0__);\n\nconst UserSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__.Schema({\n    email: {\n        type: String,\n        required: [\n            true,\n            \"Please provide an email\"\n        ],\n        unique: true\n    },\n    password: {\n        type: String,\n        required: [\n            true,\n            \"Please provide a password\"\n        ]\n    },\n    role: {\n        type: String,\n        default: \"USER\",\n        enum: [\n            \"USER\",\n            \"ADMIN\"\n        ]\n    }\n}, {\n    timestamps: true\n});\nconst User = mongoose__WEBPACK_IMPORTED_MODULE_0__.models.User || (0,mongoose__WEBPACK_IMPORTED_MODULE_0__.model)(\"User\", UserSchema);\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (User);\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9zcmMvbW9kZWxzL1VzZXIudHMiLCJtYXBwaW5ncyI6Ijs7Ozs7O0FBQWlEO0FBRWpELE1BQU1HLGFBQWEsSUFBSUgsNENBQU1BLENBQUM7SUFDMUJJLE9BQU87UUFDSEMsTUFBTUM7UUFDTkMsVUFBVTtZQUFDO1lBQU07U0FBMEI7UUFDM0NDLFFBQVE7SUFDWjtJQUNBQyxVQUFVO1FBQ05KLE1BQU1DO1FBQ05DLFVBQVU7WUFBQztZQUFNO1NBQTRCO0lBQ2pEO0lBQ0FHLE1BQU07UUFDRkwsTUFBTUM7UUFDTkssU0FBUztRQUNUQyxNQUFNO1lBQUM7WUFBUTtTQUFRO0lBQzNCO0FBQ0osR0FBRztJQUNDQyxZQUFZO0FBQ2hCO0FBRUEsTUFBTUMsT0FBT1osNENBQU1BLENBQUNZLElBQUksSUFBSWIsK0NBQUtBLENBQUMsUUFBUUU7QUFFMUMsaUVBQWVXLElBQUlBLEVBQUMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9wZXJmdW1lLWVjb21tZXJjZS8uL3NyYy9tb2RlbHMvVXNlci50cz8wOTZkIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IFNjaGVtYSwgbW9kZWwsIG1vZGVscyB9IGZyb20gJ21vbmdvb3NlJztcclxuXHJcbmNvbnN0IFVzZXJTY2hlbWEgPSBuZXcgU2NoZW1hKHtcclxuICAgIGVtYWlsOiB7XHJcbiAgICAgICAgdHlwZTogU3RyaW5nLFxyXG4gICAgICAgIHJlcXVpcmVkOiBbdHJ1ZSwgJ1BsZWFzZSBwcm92aWRlIGFuIGVtYWlsJ10sXHJcbiAgICAgICAgdW5pcXVlOiB0cnVlLFxyXG4gICAgfSxcclxuICAgIHBhc3N3b3JkOiB7XHJcbiAgICAgICAgdHlwZTogU3RyaW5nLFxyXG4gICAgICAgIHJlcXVpcmVkOiBbdHJ1ZSwgJ1BsZWFzZSBwcm92aWRlIGEgcGFzc3dvcmQnXSxcclxuICAgIH0sXHJcbiAgICByb2xlOiB7XHJcbiAgICAgICAgdHlwZTogU3RyaW5nLFxyXG4gICAgICAgIGRlZmF1bHQ6ICdVU0VSJyxcclxuICAgICAgICBlbnVtOiBbJ1VTRVInLCAnQURNSU4nXSxcclxuICAgIH0sXHJcbn0sIHtcclxuICAgIHRpbWVzdGFtcHM6IHRydWUsXHJcbn0pO1xyXG5cclxuY29uc3QgVXNlciA9IG1vZGVscy5Vc2VyIHx8IG1vZGVsKCdVc2VyJywgVXNlclNjaGVtYSk7XHJcblxyXG5leHBvcnQgZGVmYXVsdCBVc2VyO1xyXG4iXSwibmFtZXMiOlsiU2NoZW1hIiwibW9kZWwiLCJtb2RlbHMiLCJVc2VyU2NoZW1hIiwiZW1haWwiLCJ0eXBlIiwiU3RyaW5nIiwicmVxdWlyZWQiLCJ1bmlxdWUiLCJwYXNzd29yZCIsInJvbGUiLCJkZWZhdWx0IiwiZW51bSIsInRpbWVzdGFtcHMiLCJVc2VyIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(rsc)/./src/models/User.ts\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   auth: () => (/* binding */ auth),\n/* harmony export */   db: () => (/* binding */ db),\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__),\n/* harmony export */   storage: () => (/* binding */ storage)\n/* harmony export */ });\n/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/app */ \"(rsc)/./node_modules/firebase/app/dist/index.mjs\");\n/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/auth */ \"(rsc)/./node_modules/firebase/auth/dist/index.mjs\");\n/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase/firestore */ \"(rsc)/./node_modules/firebase/firestore/dist/index.mjs\");\n/* harmony import */ var firebase_storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! firebase/storage */ \"(rsc)/./node_modules/firebase/storage/dist/index.mjs\");\n// Firebase Client Configuration\n\n\n\n\nconst firebaseConfig = {\n    apiKey: \"AIzaSyCUbB-RryWiUw7rBOk7dwirbJBIZTU2mwM\",\n    authDomain: \"waheed-fragrance.firebaseapp.com\",\n    projectId: \"waheed-fragrance\",\n    storageBucket: \"waheed-fragrance.firebasestorage.app\",\n    messagingSenderId: \"871970223770\",\n    appId: \"1:871970223770:web:115d4965144b1470f01123\",\n    measurementId: \"G-7GZSS1HPE5\"\n};\n// Initialize Firebase (only once)\nconst app = (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.getApps)().length === 0 ? (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.initializeApp)(firebaseConfig) : (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.getApps)()[0];\n// Initialize services\nconst auth = (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.getAuth)(app);\nconst db = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.getFirestore)(app);\nconst storage = (0,firebase_storage__WEBPACK_IMPORTED_MODULE_3__.getStorage)(app);\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (app);\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9zcmMvbGliL2ZpcmViYXNlLnRzIiwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7O0FBQUEsZ0NBQWdDO0FBQ3NCO0FBQ2Q7QUFDVTtBQUNKO0FBRTlDLE1BQU1LLGlCQUFpQjtJQUNuQkMsUUFBUTtJQUNSQyxZQUFZO0lBQ1pDLFdBQVc7SUFDWEMsZUFBZTtJQUNmQyxtQkFBbUI7SUFDbkJDLE9BQU87SUFDUEMsZUFBZTtBQUNuQjtBQUVBLGtDQUFrQztBQUNsQyxNQUFNQyxNQUFNWixxREFBT0EsR0FBR2EsTUFBTSxLQUFLLElBQUlkLDJEQUFhQSxDQUFDSyxrQkFBa0JKLHFEQUFPQSxFQUFFLENBQUMsRUFBRTtBQUVqRixzQkFBc0I7QUFDZixNQUFNYyxPQUFPYixzREFBT0EsQ0FBQ1csS0FBSztBQUMxQixNQUFNRyxLQUFLYixnRUFBWUEsQ0FBQ1UsS0FBSztBQUM3QixNQUFNSSxVQUFVYiw0REFBVUEsQ0FBQ1MsS0FBSztBQUV2QyxpRUFBZUEsR0FBR0EsRUFBQyIsInNvdXJjZXMiOlsid2VicGFjazovL3BlcmZ1bWUtZWNvbW1lcmNlLy4vc3JjL2xpYi9maXJlYmFzZS50cz8xNTQwIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIEZpcmViYXNlIENsaWVudCBDb25maWd1cmF0aW9uXHJcbmltcG9ydCB7IGluaXRpYWxpemVBcHAsIGdldEFwcHMgfSBmcm9tICdmaXJlYmFzZS9hcHAnO1xyXG5pbXBvcnQgeyBnZXRBdXRoIH0gZnJvbSAnZmlyZWJhc2UvYXV0aCc7XHJcbmltcG9ydCB7IGdldEZpcmVzdG9yZSB9IGZyb20gJ2ZpcmViYXNlL2ZpcmVzdG9yZSc7XHJcbmltcG9ydCB7IGdldFN0b3JhZ2UgfSBmcm9tICdmaXJlYmFzZS9zdG9yYWdlJztcclxuXHJcbmNvbnN0IGZpcmViYXNlQ29uZmlnID0ge1xyXG4gICAgYXBpS2V5OiBcIkFJemFTeUNVYkItUnJ5V2lVdzdyQk9rN2R3aXJiSkJJWlRVMm13TVwiLFxyXG4gICAgYXV0aERvbWFpbjogXCJ3YWhlZWQtZnJhZ3JhbmNlLmZpcmViYXNlYXBwLmNvbVwiLFxyXG4gICAgcHJvamVjdElkOiBcIndhaGVlZC1mcmFncmFuY2VcIixcclxuICAgIHN0b3JhZ2VCdWNrZXQ6IFwid2FoZWVkLWZyYWdyYW5jZS5maXJlYmFzZXN0b3JhZ2UuYXBwXCIsXHJcbiAgICBtZXNzYWdpbmdTZW5kZXJJZDogXCI4NzE5NzAyMjM3NzBcIixcclxuICAgIGFwcElkOiBcIjE6ODcxOTcwMjIzNzcwOndlYjoxMTVkNDk2NTE0NGIxNDcwZjAxMTIzXCIsXHJcbiAgICBtZWFzdXJlbWVudElkOiBcIkctN0daU1MxSFBFNVwiXHJcbn07XHJcblxyXG4vLyBJbml0aWFsaXplIEZpcmViYXNlIChvbmx5IG9uY2UpXHJcbmNvbnN0IGFwcCA9IGdldEFwcHMoKS5sZW5ndGggPT09IDAgPyBpbml0aWFsaXplQXBwKGZpcmViYXNlQ29uZmlnKSA6IGdldEFwcHMoKVswXTtcclxuXHJcbi8vIEluaXRpYWxpemUgc2VydmljZXNcclxuZXhwb3J0IGNvbnN0IGF1dGggPSBnZXRBdXRoKGFwcCk7XHJcbmV4cG9ydCBjb25zdCBkYiA9IGdldEZpcmVzdG9yZShhcHApO1xyXG5leHBvcnQgY29uc3Qgc3RvcmFnZSA9IGdldFN0b3JhZ2UoYXBwKTtcclxuXHJcbmV4cG9ydCBkZWZhdWx0IGFwcDtcclxuIl0sIm5hbWVzIjpbImluaXRpYWxpemVBcHAiLCJnZXRBcHBzIiwiZ2V0QXV0aCIsImdldEZpcmVzdG9yZSIsImdldFN0b3JhZ2UiLCJmaXJlYmFzZUNvbmZpZyIsImFwaUtleSIsImF1dGhEb21haW4iLCJwcm9qZWN0SWQiLCJzdG9yYWdlQnVja2V0IiwibWVzc2FnaW5nU2VuZGVySWQiLCJhcHBJZCIsIm1lYXN1cmVtZW50SWQiLCJhcHAiLCJsZW5ndGgiLCJhdXRoIiwiZGIiLCJzdG9yYWdlIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(rsc)/./src/lib/firebase.ts\n");
 
 /***/ })
 
@@ -90,7 +220,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 var __webpack_require__ = require("../../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/next"], () => (__webpack_exec__("(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fauth%2Flogin%2Froute&page=%2Fapi%2Fauth%2Flogin%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fauth%2Flogin%2Froute.ts&appDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!")));
+var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/next","vendor-chunks/@firebase","vendor-chunks/@grpc","vendor-chunks/firebase","vendor-chunks/protobufjs","vendor-chunks/long","vendor-chunks/@protobufjs","vendor-chunks/lodash.camelcase","vendor-chunks/idb"], () => (__webpack_exec__("(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fauth%2Flogin%2Froute&page=%2Fapi%2Fauth%2Flogin%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fauth%2Flogin%2Froute.ts&appDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!")));
 module.exports = __webpack_exports__;
 
 })();

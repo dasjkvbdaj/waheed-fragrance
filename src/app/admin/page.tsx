@@ -11,10 +11,10 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (!user) router.push('/login');
-    else if (user.role != 'ADMIN') router.push('/');
+    else if ((user.role || '').toUpperCase() !== 'ADMIN') router.push('/');
   }, [user, router]);
 
-  if (!user || user.role !== 'ADMIN') return <div className="min-h-screen flex items-center justify-center">Redirecting…</div>;
+  if (!user || (user.role || '').toUpperCase() !== 'ADMIN') return <div className="min-h-screen flex items-center justify-center">Redirecting…</div>;
 
   return (
     <div className="min-h-screen p-8 bg-gradient-to-br from-primary-darker to-primary-dark">

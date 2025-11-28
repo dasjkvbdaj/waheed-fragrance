@@ -13,16 +13,6 @@ exports.id = "app/api/products/route";
 exports.ids = ["app/api/products/route"];
 exports.modules = {
 
-/***/ "mongoose":
-/*!***************************!*\
-  !*** external "mongoose" ***!
-  \***************************/
-/***/ ((module) => {
-
-module.exports = require("mongoose");
-
-/***/ }),
-
 /***/ "next/dist/compiled/next-server/app-page.runtime.dev.js":
 /*!*************************************************************************!*\
   !*** external "next/dist/compiled/next-server/app-page.runtime.dev.js" ***!
@@ -43,6 +33,156 @@ module.exports = require("next/dist/compiled/next-server/app-route.runtime.dev.j
 
 /***/ }),
 
+/***/ "crypto":
+/*!*************************!*\
+  !*** external "crypto" ***!
+  \*************************/
+/***/ ((module) => {
+
+module.exports = require("crypto");
+
+/***/ }),
+
+/***/ "dns":
+/*!**********************!*\
+  !*** external "dns" ***!
+  \**********************/
+/***/ ((module) => {
+
+module.exports = require("dns");
+
+/***/ }),
+
+/***/ "events":
+/*!*************************!*\
+  !*** external "events" ***!
+  \*************************/
+/***/ ((module) => {
+
+module.exports = require("events");
+
+/***/ }),
+
+/***/ "fs":
+/*!*********************!*\
+  !*** external "fs" ***!
+  \*********************/
+/***/ ((module) => {
+
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ "http":
+/*!***********************!*\
+  !*** external "http" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("http");
+
+/***/ }),
+
+/***/ "http2":
+/*!************************!*\
+  !*** external "http2" ***!
+  \************************/
+/***/ ((module) => {
+
+module.exports = require("http2");
+
+/***/ }),
+
+/***/ "net":
+/*!**********************!*\
+  !*** external "net" ***!
+  \**********************/
+/***/ ((module) => {
+
+module.exports = require("net");
+
+/***/ }),
+
+/***/ "os":
+/*!*********************!*\
+  !*** external "os" ***!
+  \*********************/
+/***/ ((module) => {
+
+module.exports = require("os");
+
+/***/ }),
+
+/***/ "path":
+/*!***********************!*\
+  !*** external "path" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("path");
+
+/***/ }),
+
+/***/ "process":
+/*!**************************!*\
+  !*** external "process" ***!
+  \**************************/
+/***/ ((module) => {
+
+module.exports = require("process");
+
+/***/ }),
+
+/***/ "stream":
+/*!*************************!*\
+  !*** external "stream" ***!
+  \*************************/
+/***/ ((module) => {
+
+module.exports = require("stream");
+
+/***/ }),
+
+/***/ "tls":
+/*!**********************!*\
+  !*** external "tls" ***!
+  \**********************/
+/***/ ((module) => {
+
+module.exports = require("tls");
+
+/***/ }),
+
+/***/ "url":
+/*!**********************!*\
+  !*** external "url" ***!
+  \**********************/
+/***/ ((module) => {
+
+module.exports = require("url");
+
+/***/ }),
+
+/***/ "util":
+/*!***********************!*\
+  !*** external "util" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("util");
+
+/***/ }),
+
+/***/ "zlib":
+/*!***********************!*\
+  !*** external "zlib" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("zlib");
+
+/***/ }),
+
 /***/ "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fproducts%2Froute&page=%2Fapi%2Fproducts%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fproducts%2Froute.ts&appDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fproducts%2Froute&page=%2Fapi%2Fproducts%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fproducts%2Froute.ts&appDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D! ***!
@@ -59,27 +199,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   GET: () => (/* binding */ GET)\n/* harmony export */ });\n/* harmony import */ var next_server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/server */ \"(rsc)/./node_modules/next/dist/api/server.js\");\n/* harmony import */ var _lib_db__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/lib/db */ \"(rsc)/./src/lib/db.ts\");\n/* harmony import */ var _models_Perfume__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/models/Perfume */ \"(rsc)/./src/models/Perfume.ts\");\n\n\n\nasync function GET(request) {\n    try {\n        await (0,_lib_db__WEBPACK_IMPORTED_MODULE_1__[\"default\"])();\n        const { searchParams } = new URL(request.url);\n        const category = searchParams.get(\"category\");\n        // Build query\n        const query = {\n            name: {\n                $ne: \"Amber Noir\"\n            } // Filter out demo product\n        };\n        if (category && category !== \"all\") {\n            query.category = category;\n        }\n        // Fetch perfumes from MongoDB\n        let perfumes = await _models_Perfume__WEBPACK_IMPORTED_MODULE_2__[\"default\"].find(query).sort({\n            createdAt: -1\n        }).lean();\n        // Map _id to id for frontend compatibility\n        perfumes = perfumes.map((p)=>({\n                ...p,\n                id: p._id.toString(),\n                _id: undefined\n            }));\n        return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n            perfumes\n        });\n    } catch (error) {\n        console.error(\"Error fetching products:\", error);\n        return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n            error: \"Failed to fetch products\"\n        }, {\n            status: 500\n        });\n    }\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9zcmMvYXBwL2FwaS9wcm9kdWN0cy9yb3V0ZS50cyIsIm1hcHBpbmdzIjoiOzs7Ozs7O0FBQTJDO0FBQ1Y7QUFDTTtBQUVoQyxlQUFlRyxJQUFJQyxPQUFnQjtJQUN0QyxJQUFJO1FBQ0EsTUFBTUgsbURBQVNBO1FBRWYsTUFBTSxFQUFFSSxZQUFZLEVBQUUsR0FBRyxJQUFJQyxJQUFJRixRQUFRRyxHQUFHO1FBQzVDLE1BQU1DLFdBQVdILGFBQWFJLEdBQUcsQ0FBQztRQUVsQyxjQUFjO1FBQ2QsTUFBTUMsUUFBYTtZQUNmQyxNQUFNO2dCQUFFQyxLQUFLO1lBQWEsRUFBRSwwQkFBMEI7UUFDMUQ7UUFFQSxJQUFJSixZQUFZQSxhQUFhLE9BQU87WUFDaENFLE1BQU1GLFFBQVEsR0FBR0E7UUFDckI7UUFFQSw4QkFBOEI7UUFDOUIsSUFBSUssV0FBVyxNQUFNWCx1REFBT0EsQ0FBQ1ksSUFBSSxDQUFDSixPQUFPSyxJQUFJLENBQUM7WUFBRUMsV0FBVyxDQUFDO1FBQUUsR0FBR0MsSUFBSTtRQUVyRSwyQ0FBMkM7UUFDM0NKLFdBQVdBLFNBQVNLLEdBQUcsQ0FBQyxDQUFDQyxJQUFZO2dCQUNqQyxHQUFHQSxDQUFDO2dCQUNKQyxJQUFJRCxFQUFFRSxHQUFHLENBQUNDLFFBQVE7Z0JBQ2xCRCxLQUFLRTtZQUNUO1FBRUEsT0FBT3ZCLHFEQUFZQSxDQUFDd0IsSUFBSSxDQUFDO1lBQUVYO1FBQVM7SUFDeEMsRUFBRSxPQUFPWSxPQUFPO1FBQ1pDLFFBQVFELEtBQUssQ0FBQyw0QkFBNEJBO1FBQzFDLE9BQU96QixxREFBWUEsQ0FBQ3dCLElBQUksQ0FDcEI7WUFBRUMsT0FBTztRQUEyQixHQUNwQztZQUFFRSxRQUFRO1FBQUk7SUFFdEI7QUFDSiIsInNvdXJjZXMiOlsid2VicGFjazovL3BlcmZ1bWUtZWNvbW1lcmNlLy4vc3JjL2FwcC9hcGkvcHJvZHVjdHMvcm91dGUudHM/MTcwYyJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBOZXh0UmVzcG9uc2UgfSBmcm9tICduZXh0L3NlcnZlcic7XHJcbmltcG9ydCBkYkNvbm5lY3QgZnJvbSAnQC9saWIvZGInO1xyXG5pbXBvcnQgUGVyZnVtZSBmcm9tICdAL21vZGVscy9QZXJmdW1lJztcclxuXHJcbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBHRVQocmVxdWVzdDogUmVxdWVzdCkge1xyXG4gICAgdHJ5IHtcclxuICAgICAgICBhd2FpdCBkYkNvbm5lY3QoKTtcclxuXHJcbiAgICAgICAgY29uc3QgeyBzZWFyY2hQYXJhbXMgfSA9IG5ldyBVUkwocmVxdWVzdC51cmwpO1xyXG4gICAgICAgIGNvbnN0IGNhdGVnb3J5ID0gc2VhcmNoUGFyYW1zLmdldCgnY2F0ZWdvcnknKTtcclxuXHJcbiAgICAgICAgLy8gQnVpbGQgcXVlcnlcclxuICAgICAgICBjb25zdCBxdWVyeTogYW55ID0ge1xyXG4gICAgICAgICAgICBuYW1lOiB7ICRuZTogJ0FtYmVyIE5vaXInIH0gLy8gRmlsdGVyIG91dCBkZW1vIHByb2R1Y3RcclxuICAgICAgICB9O1xyXG5cclxuICAgICAgICBpZiAoY2F0ZWdvcnkgJiYgY2F0ZWdvcnkgIT09ICdhbGwnKSB7XHJcbiAgICAgICAgICAgIHF1ZXJ5LmNhdGVnb3J5ID0gY2F0ZWdvcnk7XHJcbiAgICAgICAgfVxyXG5cclxuICAgICAgICAvLyBGZXRjaCBwZXJmdW1lcyBmcm9tIE1vbmdvREJcclxuICAgICAgICBsZXQgcGVyZnVtZXMgPSBhd2FpdCBQZXJmdW1lLmZpbmQocXVlcnkpLnNvcnQoeyBjcmVhdGVkQXQ6IC0xIH0pLmxlYW4oKTtcclxuXHJcbiAgICAgICAgLy8gTWFwIF9pZCB0byBpZCBmb3IgZnJvbnRlbmQgY29tcGF0aWJpbGl0eVxyXG4gICAgICAgIHBlcmZ1bWVzID0gcGVyZnVtZXMubWFwKChwOiBhbnkpID0+ICh7XHJcbiAgICAgICAgICAgIC4uLnAsXHJcbiAgICAgICAgICAgIGlkOiBwLl9pZC50b1N0cmluZygpLFxyXG4gICAgICAgICAgICBfaWQ6IHVuZGVmaW5lZFxyXG4gICAgICAgIH0pKTtcclxuXHJcbiAgICAgICAgcmV0dXJuIE5leHRSZXNwb25zZS5qc29uKHsgcGVyZnVtZXMgfSk7XHJcbiAgICB9IGNhdGNoIChlcnJvcikge1xyXG4gICAgICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm9yIGZldGNoaW5nIHByb2R1Y3RzOicsIGVycm9yKTtcclxuICAgICAgICByZXR1cm4gTmV4dFJlc3BvbnNlLmpzb24oXHJcbiAgICAgICAgICAgIHsgZXJyb3I6ICdGYWlsZWQgdG8gZmV0Y2ggcHJvZHVjdHMnIH0sXHJcbiAgICAgICAgICAgIHsgc3RhdHVzOiA1MDAgfVxyXG4gICAgICAgICk7XHJcbiAgICB9XHJcbn1cclxuIl0sIm5hbWVzIjpbIk5leHRSZXNwb25zZSIsImRiQ29ubmVjdCIsIlBlcmZ1bWUiLCJHRVQiLCJyZXF1ZXN0Iiwic2VhcmNoUGFyYW1zIiwiVVJMIiwidXJsIiwiY2F0ZWdvcnkiLCJnZXQiLCJxdWVyeSIsIm5hbWUiLCIkbmUiLCJwZXJmdW1lcyIsImZpbmQiLCJzb3J0IiwiY3JlYXRlZEF0IiwibGVhbiIsIm1hcCIsInAiLCJpZCIsIl9pZCIsInRvU3RyaW5nIiwidW5kZWZpbmVkIiwianNvbiIsImVycm9yIiwiY29uc29sZSIsInN0YXR1cyJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(rsc)/./src/app/api/products/route.ts\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   GET: () => (/* binding */ GET)\n/* harmony export */ });\n/* harmony import */ var next_server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/server */ \"(rsc)/./node_modules/next/dist/api/server.js\");\n/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/firestore */ \"(rsc)/./node_modules/firebase/firestore/dist/index.mjs\");\n/* harmony import */ var _lib_firebase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/firebase */ \"(rsc)/./src/lib/firebase.ts\");\n\n\n\nasync function GET(request) {\n    try {\n        const { searchParams } = new URL(request.url);\n        const category = searchParams.get(\"category\");\n        // Build Firestore query\n        const productsRef = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.collection)(_lib_firebase__WEBPACK_IMPORTED_MODULE_2__.db, \"products\");\n        let q;\n        if (category && category !== \"all\") {\n            // Filter by category and exclude demo product\n            q = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.query)(productsRef, (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.where)(\"category\", \"==\", category), (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.orderBy)(\"createdAt\", \"desc\"));\n        } else {\n            // Get all products, ordered by creation date\n            q = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.query)(productsRef, (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.orderBy)(\"createdAt\", \"desc\"));\n        }\n        const querySnapshot = await (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_1__.getDocs)(q);\n        // Map Firestore documents to product objects\n        let perfumes = querySnapshot.docs.map((doc)=>({\n                id: doc.id,\n                ...doc.data()\n            }));\n        // Filter out demo product \"Amber Noir\" (client-side filter since we can't combine != with orderBy)\n        perfumes = perfumes.filter((p)=>String(p.name).toLowerCase() !== \"amber noir\");\n        return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n            perfumes\n        });\n    } catch (error) {\n        console.error(\"Error fetching products:\", error);\n        return next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n            error: \"Failed to fetch products\"\n        }, {\n            status: 500\n        });\n    }\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9zcmMvYXBwL2FwaS9wcm9kdWN0cy9yb3V0ZS50cyIsIm1hcHBpbmdzIjoiOzs7Ozs7O0FBQTJDO0FBQ3FDO0FBQzVDO0FBRTdCLGVBQWVPLElBQUlDLE9BQWdCO0lBQ3RDLElBQUk7UUFDQSxNQUFNLEVBQUVDLFlBQVksRUFBRSxHQUFHLElBQUlDLElBQUlGLFFBQVFHLEdBQUc7UUFDNUMsTUFBTUMsV0FBV0gsYUFBYUksR0FBRyxDQUFDO1FBRWxDLHdCQUF3QjtRQUN4QixNQUFNQyxjQUFjYiw4REFBVUEsQ0FBQ0ssNkNBQUVBLEVBQUU7UUFDbkMsSUFBSVM7UUFFSixJQUFJSCxZQUFZQSxhQUFhLE9BQU87WUFDaEMsOENBQThDO1lBQzlDRyxJQUFJYix5REFBS0EsQ0FDTFksYUFDQVgseURBQUtBLENBQUMsWUFBWSxNQUFNUyxXQUN4QlAsMkRBQU9BLENBQUMsYUFBYTtRQUU3QixPQUFPO1lBQ0gsNkNBQTZDO1lBQzdDVSxJQUFJYix5REFBS0EsQ0FBQ1ksYUFBYVQsMkRBQU9BLENBQUMsYUFBYTtRQUNoRDtRQUVBLE1BQU1XLGdCQUFnQixNQUFNWiwyREFBT0EsQ0FBQ1c7UUFFcEMsNkNBQTZDO1FBQzdDLElBQUlFLFdBQVdELGNBQWNFLElBQUksQ0FBQ0MsR0FBRyxDQUFDQyxDQUFBQSxNQUFRO2dCQUMxQ0MsSUFBSUQsSUFBSUMsRUFBRTtnQkFDVixHQUFHRCxJQUFJRSxJQUFJLEVBQUU7WUFDakI7UUFFQSxtR0FBbUc7UUFDbkdMLFdBQVdBLFNBQVNNLE1BQU0sQ0FBQyxDQUFDQyxJQUN4QkMsT0FBT0QsRUFBRUUsSUFBSSxFQUFFQyxXQUFXLE9BQU87UUFHckMsT0FBTzNCLHFEQUFZQSxDQUFDNEIsSUFBSSxDQUFDO1lBQUVYO1FBQVM7SUFDeEMsRUFBRSxPQUFPWSxPQUFPO1FBQ1pDLFFBQVFELEtBQUssQ0FBQyw0QkFBNEJBO1FBQzFDLE9BQU83QixxREFBWUEsQ0FBQzRCLElBQUksQ0FDcEI7WUFBRUMsT0FBTztRQUEyQixHQUNwQztZQUFFRSxRQUFRO1FBQUk7SUFFdEI7QUFDSiIsInNvdXJjZXMiOlsid2VicGFjazovL3BlcmZ1bWUtZWNvbW1lcmNlLy4vc3JjL2FwcC9hcGkvcHJvZHVjdHMvcm91dGUudHM/MTcwYyJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBOZXh0UmVzcG9uc2UgfSBmcm9tICduZXh0L3NlcnZlcic7XHJcbmltcG9ydCB7IGNvbGxlY3Rpb24sIHF1ZXJ5LCB3aGVyZSwgZ2V0RG9jcywgb3JkZXJCeSB9IGZyb20gJ2ZpcmViYXNlL2ZpcmVzdG9yZSc7XHJcbmltcG9ydCB7IGRiIH0gZnJvbSAnQC9saWIvZmlyZWJhc2UnO1xyXG5cclxuZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIEdFVChyZXF1ZXN0OiBSZXF1ZXN0KSB7XHJcbiAgICB0cnkge1xyXG4gICAgICAgIGNvbnN0IHsgc2VhcmNoUGFyYW1zIH0gPSBuZXcgVVJMKHJlcXVlc3QudXJsKTtcclxuICAgICAgICBjb25zdCBjYXRlZ29yeSA9IHNlYXJjaFBhcmFtcy5nZXQoJ2NhdGVnb3J5Jyk7XHJcblxyXG4gICAgICAgIC8vIEJ1aWxkIEZpcmVzdG9yZSBxdWVyeVxyXG4gICAgICAgIGNvbnN0IHByb2R1Y3RzUmVmID0gY29sbGVjdGlvbihkYiwgJ3Byb2R1Y3RzJyk7XHJcbiAgICAgICAgbGV0IHE7XHJcblxyXG4gICAgICAgIGlmIChjYXRlZ29yeSAmJiBjYXRlZ29yeSAhPT0gJ2FsbCcpIHtcclxuICAgICAgICAgICAgLy8gRmlsdGVyIGJ5IGNhdGVnb3J5IGFuZCBleGNsdWRlIGRlbW8gcHJvZHVjdFxyXG4gICAgICAgICAgICBxID0gcXVlcnkoXHJcbiAgICAgICAgICAgICAgICBwcm9kdWN0c1JlZixcclxuICAgICAgICAgICAgICAgIHdoZXJlKCdjYXRlZ29yeScsICc9PScsIGNhdGVnb3J5KSxcclxuICAgICAgICAgICAgICAgIG9yZGVyQnkoJ2NyZWF0ZWRBdCcsICdkZXNjJylcclxuICAgICAgICAgICAgKTtcclxuICAgICAgICB9IGVsc2Uge1xyXG4gICAgICAgICAgICAvLyBHZXQgYWxsIHByb2R1Y3RzLCBvcmRlcmVkIGJ5IGNyZWF0aW9uIGRhdGVcclxuICAgICAgICAgICAgcSA9IHF1ZXJ5KHByb2R1Y3RzUmVmLCBvcmRlckJ5KCdjcmVhdGVkQXQnLCAnZGVzYycpKTtcclxuICAgICAgICB9XHJcblxyXG4gICAgICAgIGNvbnN0IHF1ZXJ5U25hcHNob3QgPSBhd2FpdCBnZXREb2NzKHEpO1xyXG5cclxuICAgICAgICAvLyBNYXAgRmlyZXN0b3JlIGRvY3VtZW50cyB0byBwcm9kdWN0IG9iamVjdHNcclxuICAgICAgICBsZXQgcGVyZnVtZXMgPSBxdWVyeVNuYXBzaG90LmRvY3MubWFwKGRvYyA9PiAoe1xyXG4gICAgICAgICAgICBpZDogZG9jLmlkLFxyXG4gICAgICAgICAgICAuLi5kb2MuZGF0YSgpXHJcbiAgICAgICAgfSkpO1xyXG5cclxuICAgICAgICAvLyBGaWx0ZXIgb3V0IGRlbW8gcHJvZHVjdCBcIkFtYmVyIE5vaXJcIiAoY2xpZW50LXNpZGUgZmlsdGVyIHNpbmNlIHdlIGNhbid0IGNvbWJpbmUgIT0gd2l0aCBvcmRlckJ5KVxyXG4gICAgICAgIHBlcmZ1bWVzID0gcGVyZnVtZXMuZmlsdGVyKChwOiBhbnkpID0+XHJcbiAgICAgICAgICAgIFN0cmluZyhwLm5hbWUpLnRvTG93ZXJDYXNlKCkgIT09ICdhbWJlciBub2lyJ1xyXG4gICAgICAgICk7XHJcblxyXG4gICAgICAgIHJldHVybiBOZXh0UmVzcG9uc2UuanNvbih7IHBlcmZ1bWVzIH0pO1xyXG4gICAgfSBjYXRjaCAoZXJyb3IpIHtcclxuICAgICAgICBjb25zb2xlLmVycm9yKCdFcnJvciBmZXRjaGluZyBwcm9kdWN0czonLCBlcnJvcik7XHJcbiAgICAgICAgcmV0dXJuIE5leHRSZXNwb25zZS5qc29uKFxyXG4gICAgICAgICAgICB7IGVycm9yOiAnRmFpbGVkIHRvIGZldGNoIHByb2R1Y3RzJyB9LFxyXG4gICAgICAgICAgICB7IHN0YXR1czogNTAwIH1cclxuICAgICAgICApO1xyXG4gICAgfVxyXG59XHJcbiJdLCJuYW1lcyI6WyJOZXh0UmVzcG9uc2UiLCJjb2xsZWN0aW9uIiwicXVlcnkiLCJ3aGVyZSIsImdldERvY3MiLCJvcmRlckJ5IiwiZGIiLCJHRVQiLCJyZXF1ZXN0Iiwic2VhcmNoUGFyYW1zIiwiVVJMIiwidXJsIiwiY2F0ZWdvcnkiLCJnZXQiLCJwcm9kdWN0c1JlZiIsInEiLCJxdWVyeVNuYXBzaG90IiwicGVyZnVtZXMiLCJkb2NzIiwibWFwIiwiZG9jIiwiaWQiLCJkYXRhIiwiZmlsdGVyIiwicCIsIlN0cmluZyIsIm5hbWUiLCJ0b0xvd2VyQ2FzZSIsImpzb24iLCJlcnJvciIsImNvbnNvbGUiLCJzdGF0dXMiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./src/app/api/products/route.ts\n");
 
 /***/ }),
 
-/***/ "(rsc)/./src/lib/db.ts":
-/*!***********************!*\
-  !*** ./src/lib/db.ts ***!
-  \***********************/
+/***/ "(rsc)/./src/lib/firebase.ts":
+/*!*****************************!*\
+  !*** ./src/lib/firebase.ts ***!
+  \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mongoose */ \"mongoose\");\n/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mongoose__WEBPACK_IMPORTED_MODULE_0__);\n\nconst MONGODB_URI = process.env.MONGODB_URI;\nif (!MONGODB_URI) {\n    throw new Error(\"Please define the MONGODB_URI environment variable inside .env.local or in your Vercel project settings\");\n}\n/**\r\n * Global is used here to maintain a cached connection across hot reloads\r\n * in development. This prevents connections growing exponentially\r\n * during API Route usage.\r\n */ let cached = global.mongoose;\nif (!cached) {\n    cached = global.mongoose = {\n        conn: null,\n        promise: null\n    };\n}\nasync function dbConnect() {\n    if (cached.conn) {\n        return cached.conn;\n    }\n    if (!cached.promise) {\n        const opts = {\n            bufferCommands: false\n        };\n        cached.promise = mongoose__WEBPACK_IMPORTED_MODULE_0___default().connect(MONGODB_URI, opts).then((mongoose)=>{\n            return mongoose;\n        });\n    }\n    try {\n        cached.conn = await cached.promise;\n    } catch (e) {\n        cached.promise = null;\n        throw e;\n    }\n    return cached.conn;\n}\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (dbConnect);\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9zcmMvbGliL2RiLnRzIiwibWFwcGluZ3MiOiI7Ozs7OztBQUFnQztBQUVoQyxNQUFNQyxjQUFjQyxRQUFRQyxHQUFHLENBQUNGLFdBQVc7QUFFM0MsSUFBSSxDQUFDQSxhQUFhO0lBQ2hCLE1BQU0sSUFBSUcsTUFDUjtBQUVKO0FBRUE7Ozs7Q0FJQyxHQUNELElBQUlDLFNBQVMsT0FBZ0JMLFFBQVE7QUFFckMsSUFBSSxDQUFDSyxRQUFRO0lBQ1hBLFNBQVMsT0FBZ0JMLFFBQVEsR0FBRztRQUFFTyxNQUFNO1FBQU1DLFNBQVM7SUFBSztBQUNsRTtBQUVBLGVBQWVDO0lBQ2IsSUFBSUosT0FBT0UsSUFBSSxFQUFFO1FBQ2YsT0FBT0YsT0FBT0UsSUFBSTtJQUNwQjtJQUVBLElBQUksQ0FBQ0YsT0FBT0csT0FBTyxFQUFFO1FBQ25CLE1BQU1FLE9BQU87WUFDWEMsZ0JBQWdCO1FBQ2xCO1FBRUFOLE9BQU9HLE9BQU8sR0FBR1IsdURBQWdCLENBQUNDLGFBQXVCUyxNQUFNRyxJQUFJLENBQUMsQ0FBQ2I7WUFDbkUsT0FBT0E7UUFDVDtJQUNGO0lBQ0EsSUFBSTtRQUNGSyxPQUFPRSxJQUFJLEdBQUcsTUFBTUYsT0FBT0csT0FBTztJQUNwQyxFQUFFLE9BQU9NLEdBQUc7UUFDVlQsT0FBT0csT0FBTyxHQUFHO1FBQ2pCLE1BQU1NO0lBQ1I7SUFFQSxPQUFPVCxPQUFPRSxJQUFJO0FBQ3BCO0FBRUEsaUVBQWVFLFNBQVNBLEVBQUMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9wZXJmdW1lLWVjb21tZXJjZS8uL3NyYy9saWIvZGIudHM/OWU0ZiJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgbW9uZ29vc2UgZnJvbSAnbW9uZ29vc2UnO1xyXG5cclxuY29uc3QgTU9OR09EQl9VUkkgPSBwcm9jZXNzLmVudi5NT05HT0RCX1VSSTtcclxuXHJcbmlmICghTU9OR09EQl9VUkkpIHtcclxuICB0aHJvdyBuZXcgRXJyb3IoXHJcbiAgICAnUGxlYXNlIGRlZmluZSB0aGUgTU9OR09EQl9VUkkgZW52aXJvbm1lbnQgdmFyaWFibGUgaW5zaWRlIC5lbnYubG9jYWwgb3IgaW4geW91ciBWZXJjZWwgcHJvamVjdCBzZXR0aW5ncydcclxuICApO1xyXG59XHJcblxyXG4vKipcclxuICogR2xvYmFsIGlzIHVzZWQgaGVyZSB0byBtYWludGFpbiBhIGNhY2hlZCBjb25uZWN0aW9uIGFjcm9zcyBob3QgcmVsb2Fkc1xyXG4gKiBpbiBkZXZlbG9wbWVudC4gVGhpcyBwcmV2ZW50cyBjb25uZWN0aW9ucyBncm93aW5nIGV4cG9uZW50aWFsbHlcclxuICogZHVyaW5nIEFQSSBSb3V0ZSB1c2FnZS5cclxuICovXHJcbmxldCBjYWNoZWQgPSAoZ2xvYmFsIGFzIGFueSkubW9uZ29vc2U7XHJcblxyXG5pZiAoIWNhY2hlZCkge1xyXG4gIGNhY2hlZCA9IChnbG9iYWwgYXMgYW55KS5tb25nb29zZSA9IHsgY29ubjogbnVsbCwgcHJvbWlzZTogbnVsbCB9O1xyXG59XHJcblxyXG5hc3luYyBmdW5jdGlvbiBkYkNvbm5lY3QoKSB7XHJcbiAgaWYgKGNhY2hlZC5jb25uKSB7XHJcbiAgICByZXR1cm4gY2FjaGVkLmNvbm47XHJcbiAgfVxyXG5cclxuICBpZiAoIWNhY2hlZC5wcm9taXNlKSB7XHJcbiAgICBjb25zdCBvcHRzID0ge1xyXG4gICAgICBidWZmZXJDb21tYW5kczogZmFsc2UsXHJcbiAgICB9O1xyXG5cclxuICAgIGNhY2hlZC5wcm9taXNlID0gbW9uZ29vc2UuY29ubmVjdChNT05HT0RCX1VSSSBhcyBzdHJpbmcsIG9wdHMpLnRoZW4oKG1vbmdvb3NlKSA9PiB7XHJcbiAgICAgIHJldHVybiBtb25nb29zZTtcclxuICAgIH0pO1xyXG4gIH1cclxuICB0cnkge1xyXG4gICAgY2FjaGVkLmNvbm4gPSBhd2FpdCBjYWNoZWQucHJvbWlzZTtcclxuICB9IGNhdGNoIChlKSB7XHJcbiAgICBjYWNoZWQucHJvbWlzZSA9IG51bGw7XHJcbiAgICB0aHJvdyBlO1xyXG4gIH1cclxuXHJcbiAgcmV0dXJuIGNhY2hlZC5jb25uO1xyXG59XHJcblxyXG5leHBvcnQgZGVmYXVsdCBkYkNvbm5lY3Q7XHJcbiJdLCJuYW1lcyI6WyJtb25nb29zZSIsIk1PTkdPREJfVVJJIiwicHJvY2VzcyIsImVudiIsIkVycm9yIiwiY2FjaGVkIiwiZ2xvYmFsIiwiY29ubiIsInByb21pc2UiLCJkYkNvbm5lY3QiLCJvcHRzIiwiYnVmZmVyQ29tbWFuZHMiLCJjb25uZWN0IiwidGhlbiIsImUiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./src/lib/db.ts\n");
-
-/***/ }),
-
-/***/ "(rsc)/./src/models/Perfume.ts":
-/*!*******************************!*\
-  !*** ./src/models/Perfume.ts ***!
-  \*******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mongoose */ \"mongoose\");\n/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mongoose__WEBPACK_IMPORTED_MODULE_0__);\n\nconst PerfumeSizeSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__.Schema({\n    size: {\n        type: String,\n        required: true\n    },\n    price: {\n        type: Number,\n        required: true\n    }\n}, {\n    _id: false\n});\nconst PerfumeSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__.Schema({\n    name: {\n        type: String,\n        required: [\n            true,\n            \"Please provide a name\"\n        ]\n    },\n    sizes: [\n        PerfumeSizeSchema\n    ],\n    category: {\n        type: String,\n        required: [\n            true,\n            \"Please provide a category\"\n        ]\n    },\n    image: {\n        type: String,\n        required: [\n            true,\n            \"Please provide an image URL\"\n        ]\n    },\n    description: {\n        type: String\n    },\n    notes: {\n        type: String\n    },\n    price: {\n        type: Number\n    }\n}, {\n    timestamps: true,\n    toJSON: {\n        virtuals: true,\n        versionKey: false,\n        transform: function(_doc, ret) {\n            ret.id = ret._id;\n            delete ret._id;\n        }\n    },\n    toObject: {\n        virtuals: true,\n        versionKey: false,\n        transform: function(_doc, ret) {\n            ret.id = ret._id;\n            delete ret._id;\n        }\n    }\n});\nconst Perfume = mongoose__WEBPACK_IMPORTED_MODULE_0__.models.Perfume || (0,mongoose__WEBPACK_IMPORTED_MODULE_0__.model)(\"Perfume\", PerfumeSchema);\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Perfume);\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9zcmMvbW9kZWxzL1BlcmZ1bWUudHMiLCJtYXBwaW5ncyI6Ijs7Ozs7O0FBQWlEO0FBRWpELE1BQU1HLG9CQUFvQixJQUFJSCw0Q0FBTUEsQ0FBQztJQUNqQ0ksTUFBTTtRQUFFQyxNQUFNQztRQUFRQyxVQUFVO0lBQUs7SUFDckNDLE9BQU87UUFBRUgsTUFBTUk7UUFBUUYsVUFBVTtJQUFLO0FBQzFDLEdBQUc7SUFBRUcsS0FBSztBQUFNO0FBRWhCLE1BQU1DLGdCQUFnQixJQUFJWCw0Q0FBTUEsQ0FBQztJQUM3QlksTUFBTTtRQUNGUCxNQUFNQztRQUNOQyxVQUFVO1lBQUM7WUFBTTtTQUF3QjtJQUM3QztJQUNBTSxPQUFPO1FBQUNWO0tBQWtCO0lBQzFCVyxVQUFVO1FBQ05ULE1BQU1DO1FBQ05DLFVBQVU7WUFBQztZQUFNO1NBQTRCO0lBQ2pEO0lBQ0FRLE9BQU87UUFDSFYsTUFBTUM7UUFDTkMsVUFBVTtZQUFDO1lBQU07U0FBOEI7SUFDbkQ7SUFDQVMsYUFBYTtRQUNUWCxNQUFNQztJQUNWO0lBQ0FXLE9BQU87UUFDSFosTUFBTUM7SUFDVjtJQUNBRSxPQUFPO1FBQ0hILE1BQU1JO0lBQ1Y7QUFDSixHQUFHO0lBQ0NTLFlBQVk7SUFDWkMsUUFBUTtRQUNKQyxVQUFVO1FBQ1ZDLFlBQVk7UUFDWkMsV0FBVyxTQUFVQyxJQUFTLEVBQUVDLEdBQVE7WUFDcENBLElBQUlDLEVBQUUsR0FBR0QsSUFBSWQsR0FBRztZQUNoQixPQUFPYyxJQUFJZCxHQUFHO1FBQ2xCO0lBQ0o7SUFDQWdCLFVBQVU7UUFDTk4sVUFBVTtRQUNWQyxZQUFZO1FBQ1pDLFdBQVcsU0FBVUMsSUFBUyxFQUFFQyxHQUFRO1lBQ3BDQSxJQUFJQyxFQUFFLEdBQUdELElBQUlkLEdBQUc7WUFDaEIsT0FBT2MsSUFBSWQsR0FBRztRQUNsQjtJQUNKO0FBQ0o7QUFFQSxNQUFNaUIsVUFBVXpCLDRDQUFNQSxDQUFDeUIsT0FBTyxJQUFJMUIsK0NBQUtBLENBQUMsV0FBV1U7QUFFbkQsaUVBQWVnQixPQUFPQSxFQUFDIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vcGVyZnVtZS1lY29tbWVyY2UvLi9zcmMvbW9kZWxzL1BlcmZ1bWUudHM/MmExZCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBTY2hlbWEsIG1vZGVsLCBtb2RlbHMgfSBmcm9tICdtb25nb29zZSc7XHJcblxyXG5jb25zdCBQZXJmdW1lU2l6ZVNjaGVtYSA9IG5ldyBTY2hlbWEoe1xyXG4gICAgc2l6ZTogeyB0eXBlOiBTdHJpbmcsIHJlcXVpcmVkOiB0cnVlIH0sXHJcbiAgICBwcmljZTogeyB0eXBlOiBOdW1iZXIsIHJlcXVpcmVkOiB0cnVlIH0sXHJcbn0sIHsgX2lkOiBmYWxzZSB9KTtcclxuXHJcbmNvbnN0IFBlcmZ1bWVTY2hlbWEgPSBuZXcgU2NoZW1hKHtcclxuICAgIG5hbWU6IHtcclxuICAgICAgICB0eXBlOiBTdHJpbmcsXHJcbiAgICAgICAgcmVxdWlyZWQ6IFt0cnVlLCAnUGxlYXNlIHByb3ZpZGUgYSBuYW1lJ10sXHJcbiAgICB9LFxyXG4gICAgc2l6ZXM6IFtQZXJmdW1lU2l6ZVNjaGVtYV0sXHJcbiAgICBjYXRlZ29yeToge1xyXG4gICAgICAgIHR5cGU6IFN0cmluZyxcclxuICAgICAgICByZXF1aXJlZDogW3RydWUsICdQbGVhc2UgcHJvdmlkZSBhIGNhdGVnb3J5J10sXHJcbiAgICB9LFxyXG4gICAgaW1hZ2U6IHtcclxuICAgICAgICB0eXBlOiBTdHJpbmcsXHJcbiAgICAgICAgcmVxdWlyZWQ6IFt0cnVlLCAnUGxlYXNlIHByb3ZpZGUgYW4gaW1hZ2UgVVJMJ10sXHJcbiAgICB9LFxyXG4gICAgZGVzY3JpcHRpb246IHtcclxuICAgICAgICB0eXBlOiBTdHJpbmcsXHJcbiAgICB9LFxyXG4gICAgbm90ZXM6IHtcclxuICAgICAgICB0eXBlOiBTdHJpbmcsXHJcbiAgICB9LFxyXG4gICAgcHJpY2U6IHtcclxuICAgICAgICB0eXBlOiBOdW1iZXIsXHJcbiAgICB9LFxyXG59LCB7XHJcbiAgICB0aW1lc3RhbXBzOiB0cnVlLFxyXG4gICAgdG9KU09OOiB7XHJcbiAgICAgICAgdmlydHVhbHM6IHRydWUsXHJcbiAgICAgICAgdmVyc2lvbktleTogZmFsc2UsXHJcbiAgICAgICAgdHJhbnNmb3JtOiBmdW5jdGlvbiAoX2RvYzogYW55LCByZXQ6IGFueSkge1xyXG4gICAgICAgICAgICByZXQuaWQgPSByZXQuX2lkO1xyXG4gICAgICAgICAgICBkZWxldGUgcmV0Ll9pZDtcclxuICAgICAgICB9XHJcbiAgICB9LFxyXG4gICAgdG9PYmplY3Q6IHtcclxuICAgICAgICB2aXJ0dWFsczogdHJ1ZSxcclxuICAgICAgICB2ZXJzaW9uS2V5OiBmYWxzZSxcclxuICAgICAgICB0cmFuc2Zvcm06IGZ1bmN0aW9uIChfZG9jOiBhbnksIHJldDogYW55KSB7XHJcbiAgICAgICAgICAgIHJldC5pZCA9IHJldC5faWQ7XHJcbiAgICAgICAgICAgIGRlbGV0ZSByZXQuX2lkO1xyXG4gICAgICAgIH1cclxuICAgIH1cclxufSk7XHJcblxyXG5jb25zdCBQZXJmdW1lID0gbW9kZWxzLlBlcmZ1bWUgfHwgbW9kZWwoJ1BlcmZ1bWUnLCBQZXJmdW1lU2NoZW1hKTtcclxuXHJcbmV4cG9ydCBkZWZhdWx0IFBlcmZ1bWU7XHJcbiJdLCJuYW1lcyI6WyJTY2hlbWEiLCJtb2RlbCIsIm1vZGVscyIsIlBlcmZ1bWVTaXplU2NoZW1hIiwic2l6ZSIsInR5cGUiLCJTdHJpbmciLCJyZXF1aXJlZCIsInByaWNlIiwiTnVtYmVyIiwiX2lkIiwiUGVyZnVtZVNjaGVtYSIsIm5hbWUiLCJzaXplcyIsImNhdGVnb3J5IiwiaW1hZ2UiLCJkZXNjcmlwdGlvbiIsIm5vdGVzIiwidGltZXN0YW1wcyIsInRvSlNPTiIsInZpcnR1YWxzIiwidmVyc2lvbktleSIsInRyYW5zZm9ybSIsIl9kb2MiLCJyZXQiLCJpZCIsInRvT2JqZWN0IiwiUGVyZnVtZSJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(rsc)/./src/models/Perfume.ts\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   auth: () => (/* binding */ auth),\n/* harmony export */   db: () => (/* binding */ db),\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__),\n/* harmony export */   storage: () => (/* binding */ storage)\n/* harmony export */ });\n/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/app */ \"(rsc)/./node_modules/firebase/app/dist/index.mjs\");\n/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/auth */ \"(rsc)/./node_modules/firebase/auth/dist/index.mjs\");\n/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase/firestore */ \"(rsc)/./node_modules/firebase/firestore/dist/index.mjs\");\n/* harmony import */ var firebase_storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! firebase/storage */ \"(rsc)/./node_modules/firebase/storage/dist/index.mjs\");\n// Firebase Client Configuration\n\n\n\n\nconst firebaseConfig = {\n    apiKey: \"AIzaSyCUbB-RryWiUw7rBOk7dwirbJBIZTU2mwM\",\n    authDomain: \"waheed-fragrance.firebaseapp.com\",\n    projectId: \"waheed-fragrance\",\n    storageBucket: \"waheed-fragrance.firebasestorage.app\",\n    messagingSenderId: \"871970223770\",\n    appId: \"1:871970223770:web:115d4965144b1470f01123\",\n    measurementId: \"G-7GZSS1HPE5\"\n};\n// Initialize Firebase (only once)\nconst app = (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.getApps)().length === 0 ? (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.initializeApp)(firebaseConfig) : (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.getApps)()[0];\n// Initialize services\nconst auth = (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.getAuth)(app);\nconst db = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.getFirestore)(app);\nconst storage = (0,firebase_storage__WEBPACK_IMPORTED_MODULE_3__.getStorage)(app);\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (app);\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9zcmMvbGliL2ZpcmViYXNlLnRzIiwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7O0FBQUEsZ0NBQWdDO0FBQ3NCO0FBQ2Q7QUFDVTtBQUNKO0FBRTlDLE1BQU1LLGlCQUFpQjtJQUNuQkMsUUFBUTtJQUNSQyxZQUFZO0lBQ1pDLFdBQVc7SUFDWEMsZUFBZTtJQUNmQyxtQkFBbUI7SUFDbkJDLE9BQU87SUFDUEMsZUFBZTtBQUNuQjtBQUVBLGtDQUFrQztBQUNsQyxNQUFNQyxNQUFNWixxREFBT0EsR0FBR2EsTUFBTSxLQUFLLElBQUlkLDJEQUFhQSxDQUFDSyxrQkFBa0JKLHFEQUFPQSxFQUFFLENBQUMsRUFBRTtBQUVqRixzQkFBc0I7QUFDZixNQUFNYyxPQUFPYixzREFBT0EsQ0FBQ1csS0FBSztBQUMxQixNQUFNRyxLQUFLYixnRUFBWUEsQ0FBQ1UsS0FBSztBQUM3QixNQUFNSSxVQUFVYiw0REFBVUEsQ0FBQ1MsS0FBSztBQUV2QyxpRUFBZUEsR0FBR0EsRUFBQyIsInNvdXJjZXMiOlsid2VicGFjazovL3BlcmZ1bWUtZWNvbW1lcmNlLy4vc3JjL2xpYi9maXJlYmFzZS50cz8xNTQwIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIEZpcmViYXNlIENsaWVudCBDb25maWd1cmF0aW9uXHJcbmltcG9ydCB7IGluaXRpYWxpemVBcHAsIGdldEFwcHMgfSBmcm9tICdmaXJlYmFzZS9hcHAnO1xyXG5pbXBvcnQgeyBnZXRBdXRoIH0gZnJvbSAnZmlyZWJhc2UvYXV0aCc7XHJcbmltcG9ydCB7IGdldEZpcmVzdG9yZSB9IGZyb20gJ2ZpcmViYXNlL2ZpcmVzdG9yZSc7XHJcbmltcG9ydCB7IGdldFN0b3JhZ2UgfSBmcm9tICdmaXJlYmFzZS9zdG9yYWdlJztcclxuXHJcbmNvbnN0IGZpcmViYXNlQ29uZmlnID0ge1xyXG4gICAgYXBpS2V5OiBcIkFJemFTeUNVYkItUnJ5V2lVdzdyQk9rN2R3aXJiSkJJWlRVMm13TVwiLFxyXG4gICAgYXV0aERvbWFpbjogXCJ3YWhlZWQtZnJhZ3JhbmNlLmZpcmViYXNlYXBwLmNvbVwiLFxyXG4gICAgcHJvamVjdElkOiBcIndhaGVlZC1mcmFncmFuY2VcIixcclxuICAgIHN0b3JhZ2VCdWNrZXQ6IFwid2FoZWVkLWZyYWdyYW5jZS5maXJlYmFzZXN0b3JhZ2UuYXBwXCIsXHJcbiAgICBtZXNzYWdpbmdTZW5kZXJJZDogXCI4NzE5NzAyMjM3NzBcIixcclxuICAgIGFwcElkOiBcIjE6ODcxOTcwMjIzNzcwOndlYjoxMTVkNDk2NTE0NGIxNDcwZjAxMTIzXCIsXHJcbiAgICBtZWFzdXJlbWVudElkOiBcIkctN0daU1MxSFBFNVwiXHJcbn07XHJcblxyXG4vLyBJbml0aWFsaXplIEZpcmViYXNlIChvbmx5IG9uY2UpXHJcbmNvbnN0IGFwcCA9IGdldEFwcHMoKS5sZW5ndGggPT09IDAgPyBpbml0aWFsaXplQXBwKGZpcmViYXNlQ29uZmlnKSA6IGdldEFwcHMoKVswXTtcclxuXHJcbi8vIEluaXRpYWxpemUgc2VydmljZXNcclxuZXhwb3J0IGNvbnN0IGF1dGggPSBnZXRBdXRoKGFwcCk7XHJcbmV4cG9ydCBjb25zdCBkYiA9IGdldEZpcmVzdG9yZShhcHApO1xyXG5leHBvcnQgY29uc3Qgc3RvcmFnZSA9IGdldFN0b3JhZ2UoYXBwKTtcclxuXHJcbmV4cG9ydCBkZWZhdWx0IGFwcDtcclxuIl0sIm5hbWVzIjpbImluaXRpYWxpemVBcHAiLCJnZXRBcHBzIiwiZ2V0QXV0aCIsImdldEZpcmVzdG9yZSIsImdldFN0b3JhZ2UiLCJmaXJlYmFzZUNvbmZpZyIsImFwaUtleSIsImF1dGhEb21haW4iLCJwcm9qZWN0SWQiLCJzdG9yYWdlQnVja2V0IiwibWVzc2FnaW5nU2VuZGVySWQiLCJhcHBJZCIsIm1lYXN1cmVtZW50SWQiLCJhcHAiLCJsZW5ndGgiLCJhdXRoIiwiZGIiLCJzdG9yYWdlIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(rsc)/./src/lib/firebase.ts\n");
 
 /***/ })
 
@@ -90,7 +220,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 var __webpack_require__ = require("../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/next"], () => (__webpack_exec__("(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fproducts%2Froute&page=%2Fapi%2Fproducts%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fproducts%2Froute.ts&appDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!")));
+var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/next","vendor-chunks/@firebase","vendor-chunks/@grpc","vendor-chunks/firebase","vendor-chunks/protobufjs","vendor-chunks/long","vendor-chunks/@protobufjs","vendor-chunks/lodash.camelcase","vendor-chunks/idb"], () => (__webpack_exec__("(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fproducts%2Froute&page=%2Fapi%2Fproducts%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fproducts%2Froute.ts&appDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!")));
 module.exports = __webpack_exports__;
 
 })();

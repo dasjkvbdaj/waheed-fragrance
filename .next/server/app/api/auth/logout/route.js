@@ -33,6 +33,156 @@ module.exports = require("next/dist/compiled/next-server/app-route.runtime.dev.j
 
 /***/ }),
 
+/***/ "crypto":
+/*!*************************!*\
+  !*** external "crypto" ***!
+  \*************************/
+/***/ ((module) => {
+
+module.exports = require("crypto");
+
+/***/ }),
+
+/***/ "dns":
+/*!**********************!*\
+  !*** external "dns" ***!
+  \**********************/
+/***/ ((module) => {
+
+module.exports = require("dns");
+
+/***/ }),
+
+/***/ "events":
+/*!*************************!*\
+  !*** external "events" ***!
+  \*************************/
+/***/ ((module) => {
+
+module.exports = require("events");
+
+/***/ }),
+
+/***/ "fs":
+/*!*********************!*\
+  !*** external "fs" ***!
+  \*********************/
+/***/ ((module) => {
+
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ "http":
+/*!***********************!*\
+  !*** external "http" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("http");
+
+/***/ }),
+
+/***/ "http2":
+/*!************************!*\
+  !*** external "http2" ***!
+  \************************/
+/***/ ((module) => {
+
+module.exports = require("http2");
+
+/***/ }),
+
+/***/ "net":
+/*!**********************!*\
+  !*** external "net" ***!
+  \**********************/
+/***/ ((module) => {
+
+module.exports = require("net");
+
+/***/ }),
+
+/***/ "os":
+/*!*********************!*\
+  !*** external "os" ***!
+  \*********************/
+/***/ ((module) => {
+
+module.exports = require("os");
+
+/***/ }),
+
+/***/ "path":
+/*!***********************!*\
+  !*** external "path" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("path");
+
+/***/ }),
+
+/***/ "process":
+/*!**************************!*\
+  !*** external "process" ***!
+  \**************************/
+/***/ ((module) => {
+
+module.exports = require("process");
+
+/***/ }),
+
+/***/ "stream":
+/*!*************************!*\
+  !*** external "stream" ***!
+  \*************************/
+/***/ ((module) => {
+
+module.exports = require("stream");
+
+/***/ }),
+
+/***/ "tls":
+/*!**********************!*\
+  !*** external "tls" ***!
+  \**********************/
+/***/ ((module) => {
+
+module.exports = require("tls");
+
+/***/ }),
+
+/***/ "url":
+/*!**********************!*\
+  !*** external "url" ***!
+  \**********************/
+/***/ ((module) => {
+
+module.exports = require("url");
+
+/***/ }),
+
+/***/ "util":
+/*!***********************!*\
+  !*** external "util" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("util");
+
+/***/ }),
+
+/***/ "zlib":
+/*!***********************!*\
+  !*** external "zlib" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("zlib");
+
+/***/ }),
+
 /***/ "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fauth%2Flogout%2Froute&page=%2Fapi%2Fauth%2Flogout%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fauth%2Flogout%2Froute.ts&appDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fauth%2Flogout%2Froute&page=%2Fapi%2Fauth%2Flogout%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fauth%2Flogout%2Froute.ts&appDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D! ***!
@@ -49,7 +199,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   POST: () => (/* binding */ POST)\n/* harmony export */ });\n/* harmony import */ var next_server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/server */ \"(rsc)/./node_modules/next/dist/api/server.js\");\n\nasync function POST() {\n    const res = next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n        ok: true\n    });\n    // Clear cookie, matching same options used when setting it\n    res.cookies.set(\"user\", \"\", {\n        path: \"/\",\n        maxAge: 0,\n        httpOnly: true,\n        sameSite: \"lax\",\n        secure: \"development\" === \"production\"\n    });\n    return res;\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9zcmMvYXBwL2FwaS9hdXRoL2xvZ291dC9yb3V0ZS50cyIsIm1hcHBpbmdzIjoiOzs7OztBQUEyQztBQUVwQyxlQUFlQztJQUNwQixNQUFNQyxNQUFNRixxREFBWUEsQ0FBQ0csSUFBSSxDQUFDO1FBQUVDLElBQUk7SUFBSztJQUN6QywyREFBMkQ7SUFDM0RGLElBQUlHLE9BQU8sQ0FBQ0MsR0FBRyxDQUFDLFFBQVEsSUFBSTtRQUFFQyxNQUFNO1FBQUtDLFFBQVE7UUFBR0MsVUFBVTtRQUFNQyxVQUFVO1FBQU9DLFFBQVFDLGtCQUF5QjtJQUFhO0lBQ25JLE9BQU9WO0FBQ1QiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9wZXJmdW1lLWVjb21tZXJjZS8uL3NyYy9hcHAvYXBpL2F1dGgvbG9nb3V0L3JvdXRlLnRzP2QyNjciXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgTmV4dFJlc3BvbnNlIH0gZnJvbSAnbmV4dC9zZXJ2ZXInO1xyXG5cclxuZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIFBPU1QoKSB7XHJcbiAgY29uc3QgcmVzID0gTmV4dFJlc3BvbnNlLmpzb24oeyBvazogdHJ1ZSB9KTtcclxuICAvLyBDbGVhciBjb29raWUsIG1hdGNoaW5nIHNhbWUgb3B0aW9ucyB1c2VkIHdoZW4gc2V0dGluZyBpdFxyXG4gIHJlcy5jb29raWVzLnNldCgndXNlcicsICcnLCB7IHBhdGg6ICcvJywgbWF4QWdlOiAwLCBodHRwT25seTogdHJ1ZSwgc2FtZVNpdGU6ICdsYXgnLCBzZWN1cmU6IHByb2Nlc3MuZW52Lk5PREVfRU5WID09PSAncHJvZHVjdGlvbicgfSk7XHJcbiAgcmV0dXJuIHJlcztcclxufVxyXG4iXSwibmFtZXMiOlsiTmV4dFJlc3BvbnNlIiwiUE9TVCIsInJlcyIsImpzb24iLCJvayIsImNvb2tpZXMiLCJzZXQiLCJwYXRoIiwibWF4QWdlIiwiaHR0cE9ubHkiLCJzYW1lU2l0ZSIsInNlY3VyZSIsInByb2Nlc3MiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./src/app/api/auth/logout/route.ts\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   POST: () => (/* binding */ POST)\n/* harmony export */ });\n/* harmony import */ var next_server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/server */ \"(rsc)/./node_modules/next/dist/api/server.js\");\n/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/auth */ \"(rsc)/./node_modules/firebase/auth/dist/index.mjs\");\n/* harmony import */ var _lib_firebase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/lib/firebase */ \"(rsc)/./src/lib/firebase.ts\");\n\n\n\nasync function POST() {\n    try {\n        // Sign out from Firebase\n        await (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.signOut)(_lib_firebase__WEBPACK_IMPORTED_MODULE_2__.auth);\n        const res = next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n            ok: true\n        });\n        // Clear cookie\n        res.cookies.set(\"user\", \"\", {\n            path: \"/\",\n            maxAge: 0,\n            httpOnly: true,\n            sameSite: \"lax\",\n            secure: \"development\" === \"production\"\n        });\n        return res;\n    } catch (error) {\n        console.error(\"Logout error:\", error);\n        // Even if Firebase signOut fails, clear the cookie\n        const res = next_server__WEBPACK_IMPORTED_MODULE_0__.NextResponse.json({\n            ok: true\n        });\n        res.cookies.set(\"user\", \"\", {\n            path: \"/\",\n            maxAge: 0,\n            httpOnly: true,\n            sameSite: \"lax\",\n            secure: \"development\" === \"production\"\n        });\n        return res;\n    }\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9zcmMvYXBwL2FwaS9hdXRoL2xvZ291dC9yb3V0ZS50cyIsIm1hcHBpbmdzIjoiOzs7Ozs7O0FBQTJDO0FBQ0g7QUFDRjtBQUUvQixlQUFlRztJQUNwQixJQUFJO1FBQ0YseUJBQXlCO1FBQ3pCLE1BQU1GLHNEQUFPQSxDQUFDQywrQ0FBSUE7UUFFbEIsTUFBTUUsTUFBTUoscURBQVlBLENBQUNLLElBQUksQ0FBQztZQUFFQyxJQUFJO1FBQUs7UUFFekMsZUFBZTtRQUNmRixJQUFJRyxPQUFPLENBQUNDLEdBQUcsQ0FBQyxRQUFRLElBQUk7WUFDMUJDLE1BQU07WUFDTkMsUUFBUTtZQUNSQyxVQUFVO1lBQ1ZDLFVBQVU7WUFDVkMsUUFBUUMsa0JBQXlCO1FBQ25DO1FBRUEsT0FBT1Y7SUFDVCxFQUFFLE9BQU9XLE9BQU87UUFDZEMsUUFBUUQsS0FBSyxDQUFDLGlCQUFpQkE7UUFFL0IsbURBQW1EO1FBQ25ELE1BQU1YLE1BQU1KLHFEQUFZQSxDQUFDSyxJQUFJLENBQUM7WUFBRUMsSUFBSTtRQUFLO1FBQ3pDRixJQUFJRyxPQUFPLENBQUNDLEdBQUcsQ0FBQyxRQUFRLElBQUk7WUFDMUJDLE1BQU07WUFDTkMsUUFBUTtZQUNSQyxVQUFVO1lBQ1ZDLFVBQVU7WUFDVkMsUUFBUUMsa0JBQXlCO1FBQ25DO1FBRUEsT0FBT1Y7SUFDVDtBQUNGIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vcGVyZnVtZS1lY29tbWVyY2UvLi9zcmMvYXBwL2FwaS9hdXRoL2xvZ291dC9yb3V0ZS50cz9kMjY3Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IE5leHRSZXNwb25zZSB9IGZyb20gJ25leHQvc2VydmVyJztcclxuaW1wb3J0IHsgc2lnbk91dCB9IGZyb20gJ2ZpcmViYXNlL2F1dGgnO1xyXG5pbXBvcnQgeyBhdXRoIH0gZnJvbSAnQC9saWIvZmlyZWJhc2UnO1xyXG5cclxuZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIFBPU1QoKSB7XHJcbiAgdHJ5IHtcclxuICAgIC8vIFNpZ24gb3V0IGZyb20gRmlyZWJhc2VcclxuICAgIGF3YWl0IHNpZ25PdXQoYXV0aCk7XHJcblxyXG4gICAgY29uc3QgcmVzID0gTmV4dFJlc3BvbnNlLmpzb24oeyBvazogdHJ1ZSB9KTtcclxuXHJcbiAgICAvLyBDbGVhciBjb29raWVcclxuICAgIHJlcy5jb29raWVzLnNldCgndXNlcicsICcnLCB7XHJcbiAgICAgIHBhdGg6ICcvJyxcclxuICAgICAgbWF4QWdlOiAwLFxyXG4gICAgICBodHRwT25seTogdHJ1ZSxcclxuICAgICAgc2FtZVNpdGU6ICdsYXgnLFxyXG4gICAgICBzZWN1cmU6IHByb2Nlc3MuZW52Lk5PREVfRU5WID09PSAncHJvZHVjdGlvbidcclxuICAgIH0pO1xyXG5cclxuICAgIHJldHVybiByZXM7XHJcbiAgfSBjYXRjaCAoZXJyb3IpIHtcclxuICAgIGNvbnNvbGUuZXJyb3IoJ0xvZ291dCBlcnJvcjonLCBlcnJvcik7XHJcblxyXG4gICAgLy8gRXZlbiBpZiBGaXJlYmFzZSBzaWduT3V0IGZhaWxzLCBjbGVhciB0aGUgY29va2llXHJcbiAgICBjb25zdCByZXMgPSBOZXh0UmVzcG9uc2UuanNvbih7IG9rOiB0cnVlIH0pO1xyXG4gICAgcmVzLmNvb2tpZXMuc2V0KCd1c2VyJywgJycsIHtcclxuICAgICAgcGF0aDogJy8nLFxyXG4gICAgICBtYXhBZ2U6IDAsXHJcbiAgICAgIGh0dHBPbmx5OiB0cnVlLFxyXG4gICAgICBzYW1lU2l0ZTogJ2xheCcsXHJcbiAgICAgIHNlY3VyZTogcHJvY2Vzcy5lbnYuTk9ERV9FTlYgPT09ICdwcm9kdWN0aW9uJ1xyXG4gICAgfSk7XHJcblxyXG4gICAgcmV0dXJuIHJlcztcclxuICB9XHJcbn1cclxuIl0sIm5hbWVzIjpbIk5leHRSZXNwb25zZSIsInNpZ25PdXQiLCJhdXRoIiwiUE9TVCIsInJlcyIsImpzb24iLCJvayIsImNvb2tpZXMiLCJzZXQiLCJwYXRoIiwibWF4QWdlIiwiaHR0cE9ubHkiLCJzYW1lU2l0ZSIsInNlY3VyZSIsInByb2Nlc3MiLCJlcnJvciIsImNvbnNvbGUiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./src/app/api/auth/logout/route.ts\n");
+
+/***/ }),
+
+/***/ "(rsc)/./src/lib/firebase.ts":
+/*!*****************************!*\
+  !*** ./src/lib/firebase.ts ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   auth: () => (/* binding */ auth),\n/* harmony export */   db: () => (/* binding */ db),\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__),\n/* harmony export */   storage: () => (/* binding */ storage)\n/* harmony export */ });\n/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/app */ \"(rsc)/./node_modules/firebase/app/dist/index.mjs\");\n/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/auth */ \"(rsc)/./node_modules/firebase/auth/dist/index.mjs\");\n/* harmony import */ var firebase_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase/firestore */ \"(rsc)/./node_modules/firebase/firestore/dist/index.mjs\");\n/* harmony import */ var firebase_storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! firebase/storage */ \"(rsc)/./node_modules/firebase/storage/dist/index.mjs\");\n// Firebase Client Configuration\n\n\n\n\nconst firebaseConfig = {\n    apiKey: \"AIzaSyCUbB-RryWiUw7rBOk7dwirbJBIZTU2mwM\",\n    authDomain: \"waheed-fragrance.firebaseapp.com\",\n    projectId: \"waheed-fragrance\",\n    storageBucket: \"waheed-fragrance.firebasestorage.app\",\n    messagingSenderId: \"871970223770\",\n    appId: \"1:871970223770:web:115d4965144b1470f01123\",\n    measurementId: \"G-7GZSS1HPE5\"\n};\n// Initialize Firebase (only once)\nconst app = (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.getApps)().length === 0 ? (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.initializeApp)(firebaseConfig) : (0,firebase_app__WEBPACK_IMPORTED_MODULE_0__.getApps)()[0];\n// Initialize services\nconst auth = (0,firebase_auth__WEBPACK_IMPORTED_MODULE_1__.getAuth)(app);\nconst db = (0,firebase_firestore__WEBPACK_IMPORTED_MODULE_2__.getFirestore)(app);\nconst storage = (0,firebase_storage__WEBPACK_IMPORTED_MODULE_3__.getStorage)(app);\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (app);\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9zcmMvbGliL2ZpcmViYXNlLnRzIiwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7O0FBQUEsZ0NBQWdDO0FBQ3NCO0FBQ2Q7QUFDVTtBQUNKO0FBRTlDLE1BQU1LLGlCQUFpQjtJQUNuQkMsUUFBUTtJQUNSQyxZQUFZO0lBQ1pDLFdBQVc7SUFDWEMsZUFBZTtJQUNmQyxtQkFBbUI7SUFDbkJDLE9BQU87SUFDUEMsZUFBZTtBQUNuQjtBQUVBLGtDQUFrQztBQUNsQyxNQUFNQyxNQUFNWixxREFBT0EsR0FBR2EsTUFBTSxLQUFLLElBQUlkLDJEQUFhQSxDQUFDSyxrQkFBa0JKLHFEQUFPQSxFQUFFLENBQUMsRUFBRTtBQUVqRixzQkFBc0I7QUFDZixNQUFNYyxPQUFPYixzREFBT0EsQ0FBQ1csS0FBSztBQUMxQixNQUFNRyxLQUFLYixnRUFBWUEsQ0FBQ1UsS0FBSztBQUM3QixNQUFNSSxVQUFVYiw0REFBVUEsQ0FBQ1MsS0FBSztBQUV2QyxpRUFBZUEsR0FBR0EsRUFBQyIsInNvdXJjZXMiOlsid2VicGFjazovL3BlcmZ1bWUtZWNvbW1lcmNlLy4vc3JjL2xpYi9maXJlYmFzZS50cz8xNTQwIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIEZpcmViYXNlIENsaWVudCBDb25maWd1cmF0aW9uXHJcbmltcG9ydCB7IGluaXRpYWxpemVBcHAsIGdldEFwcHMgfSBmcm9tICdmaXJlYmFzZS9hcHAnO1xyXG5pbXBvcnQgeyBnZXRBdXRoIH0gZnJvbSAnZmlyZWJhc2UvYXV0aCc7XHJcbmltcG9ydCB7IGdldEZpcmVzdG9yZSB9IGZyb20gJ2ZpcmViYXNlL2ZpcmVzdG9yZSc7XHJcbmltcG9ydCB7IGdldFN0b3JhZ2UgfSBmcm9tICdmaXJlYmFzZS9zdG9yYWdlJztcclxuXHJcbmNvbnN0IGZpcmViYXNlQ29uZmlnID0ge1xyXG4gICAgYXBpS2V5OiBcIkFJemFTeUNVYkItUnJ5V2lVdzdyQk9rN2R3aXJiSkJJWlRVMm13TVwiLFxyXG4gICAgYXV0aERvbWFpbjogXCJ3YWhlZWQtZnJhZ3JhbmNlLmZpcmViYXNlYXBwLmNvbVwiLFxyXG4gICAgcHJvamVjdElkOiBcIndhaGVlZC1mcmFncmFuY2VcIixcclxuICAgIHN0b3JhZ2VCdWNrZXQ6IFwid2FoZWVkLWZyYWdyYW5jZS5maXJlYmFzZXN0b3JhZ2UuYXBwXCIsXHJcbiAgICBtZXNzYWdpbmdTZW5kZXJJZDogXCI4NzE5NzAyMjM3NzBcIixcclxuICAgIGFwcElkOiBcIjE6ODcxOTcwMjIzNzcwOndlYjoxMTVkNDk2NTE0NGIxNDcwZjAxMTIzXCIsXHJcbiAgICBtZWFzdXJlbWVudElkOiBcIkctN0daU1MxSFBFNVwiXHJcbn07XHJcblxyXG4vLyBJbml0aWFsaXplIEZpcmViYXNlIChvbmx5IG9uY2UpXHJcbmNvbnN0IGFwcCA9IGdldEFwcHMoKS5sZW5ndGggPT09IDAgPyBpbml0aWFsaXplQXBwKGZpcmViYXNlQ29uZmlnKSA6IGdldEFwcHMoKVswXTtcclxuXHJcbi8vIEluaXRpYWxpemUgc2VydmljZXNcclxuZXhwb3J0IGNvbnN0IGF1dGggPSBnZXRBdXRoKGFwcCk7XHJcbmV4cG9ydCBjb25zdCBkYiA9IGdldEZpcmVzdG9yZShhcHApO1xyXG5leHBvcnQgY29uc3Qgc3RvcmFnZSA9IGdldFN0b3JhZ2UoYXBwKTtcclxuXHJcbmV4cG9ydCBkZWZhdWx0IGFwcDtcclxuIl0sIm5hbWVzIjpbImluaXRpYWxpemVBcHAiLCJnZXRBcHBzIiwiZ2V0QXV0aCIsImdldEZpcmVzdG9yZSIsImdldFN0b3JhZ2UiLCJmaXJlYmFzZUNvbmZpZyIsImFwaUtleSIsImF1dGhEb21haW4iLCJwcm9qZWN0SWQiLCJzdG9yYWdlQnVja2V0IiwibWVzc2FnaW5nU2VuZGVySWQiLCJhcHBJZCIsIm1lYXN1cmVtZW50SWQiLCJhcHAiLCJsZW5ndGgiLCJhdXRoIiwiZGIiLCJzdG9yYWdlIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(rsc)/./src/lib/firebase.ts\n");
 
 /***/ })
 
@@ -60,7 +220,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 var __webpack_require__ = require("../../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/next"], () => (__webpack_exec__("(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fauth%2Flogout%2Froute&page=%2Fapi%2Fauth%2Flogout%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fauth%2Flogout%2Froute.ts&appDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!")));
+var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/next","vendor-chunks/@firebase","vendor-chunks/@grpc","vendor-chunks/firebase","vendor-chunks/protobufjs","vendor-chunks/long","vendor-chunks/@protobufjs","vendor-chunks/lodash.camelcase","vendor-chunks/idb"], () => (__webpack_exec__("(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fauth%2Flogout%2Froute&page=%2Fapi%2Fauth%2Flogout%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fauth%2Flogout%2Froute.ts&appDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5CAli%5CDesktop%5Cwaheed%5Cwaheed-fragrance&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!")));
 module.exports = __webpack_exports__;
 
 })();
