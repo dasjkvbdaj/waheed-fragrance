@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     description: "Discover our curated collection of premium fragrances",
     images: [
       {
-        url: "/seoimage.png",
+        url: "/logo.jpg",
         width: 1200,
         height: 630,
         alt: "Waheed Fragrance",
