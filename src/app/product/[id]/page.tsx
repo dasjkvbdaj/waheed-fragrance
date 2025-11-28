@@ -1,98 +1,85 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import ProductDetail from "@/components/ProductDetail";
-import { notFound } from "next/navigation";
-import dbConnect from "@/lib/db";
-import Perfume from "@/models/Perfume";
 import Link from "next/link";
 import Image from "next/image";
 
-interface ProductPageProps {
-  params: {
-    id: string;
-  };
-}
+export default function ProductPage() {
+  const params = useParams();
+  const id = params?.id as string;
 
-export default async function ProductPage({ params }: ProductPageProps) {
-  await dbConnect();
+  const [perfume, setPerfume] = useState<any>(null);
+  const [relatedPerfumes, setRelatedPerfumes] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Try database first
-  let perfume: any = null;
-  try {
-    perfume = await Perfume.findById(params.id).lean();
-    if (perfume) {
-      perfume.id = perfume._id.toString();
-      delete perfume._id;
-      // Mongoose returns plain objects with lean(), sizes are already included if they are in the schema
-    }
-  } catch (e) {
-    // If ID is not a valid ObjectId, findById throws. Ignore and treat as null.
-  }
+  useEffect(() => {
+    async function fetchProduct() {
+      if (!id) return;
 
-  // If product not in DB (e.g. admin-managed JSON list), attempt to load from adminProducts.json
-  if (!perfume) {
-    try {
-      const fs = await import('fs/promises');
-      const path = await import('path');
-      const DB_FILE = path.join(process.cwd(), 'src', 'data', 'adminProducts.json');
-      const raw = await fs.readFile(DB_FILE, 'utf8');
-      const data = JSON.parse(raw || '[]');
-      if (Array.isArray(data)) {
-        const found = data.find((p: any) => String(p.id) === String(params.id));
-        if (found) {
-          // Ensure sizes array exists and shape matches expected
-          perfume = {
-            ...found,
-            sizes: (found.sizes || []).map((s: any) => ({ size: s.size, price: Number(s.price || 0) })),
-          };
+      try {
+        setLoading(true);
+        const response = await fetch(`/api/products/${id}`);
+
+        if (!response.ok) {
+          if (response.status === 404) {
+            setError('Product not found');
+          } else {
+            throw new Error('Failed to fetch product');
+          }
+          return;
         }
+
+        const data = await response.json();
+        setPerfume(data.perfume);
+        setRelatedPerfumes(data.relatedPerfumes || []);
+      } catch (err) {
+        console.error('Error fetching product:', err);
+        setError('Failed to load product. Please try again later.');
+      } finally {
+        setLoading(false);
       }
-    } catch (e) {
-      // ignore — will handle notFound below
     }
+
+    fetchProduct();
+  }, [id]);
+
+  // Loading State
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-primary-dark pt-24 pb-20">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex justify-center items-center min-h-[400px]">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold mx-auto mb-4"></div>
+              <p className="text-gray-400">Loading product...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
-  if (!perfume) {
-    notFound();
+  // Error State
+  if (error || !perfume) {
+    return (
+      <div className="min-h-screen bg-primary-dark pt-24 pb-20">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="bg-red-900/20 border border-red-500 text-red-200 px-6 py-4 rounded-lg">
+            {error || 'Product not found'}
+          </div>
+          <Link
+            href="/shop"
+            className="inline-block mt-6 text-accent-gold hover:underline"
+          >
+            ← Back to Shop
+          </Link>
+        </div>
+      </div>
+    );
   }
-
-  // If the demo product exists in the DB/seed, treat it as removed
-  if (perfume && String(perfume.name).toLowerCase() === 'amber noir') {
-    notFound();
-  }
-
-  // Also treat anything in the deletedProducts list as not found
-  try {
-    const fsp = await import('fs/promises');
-    const pth = await import('path');
-    const deletedRaw = await fsp.readFile(pth.join(process.cwd(), 'src', 'data', 'deletedProducts.json'), 'utf8');
-    const deletedIds = JSON.parse(deletedRaw || '[]');
-    if (Array.isArray(deletedIds) && deletedIds.includes(String(perfume.id))) {
-      notFound();
-    }
-  } catch { }
-
-  // Fetch related products (same category, excluding current)
-  let relatedPerfumes: any[] = await Perfume.find({
-    category: perfume.category,
-    _id: { $ne: params.id },
-  }).limit(4).lean();
-
-  relatedPerfumes = relatedPerfumes.map((p: any) => {
-    p.id = p._id.toString();
-    delete p._id;
-    return p;
-  });
-
-  // Remove deleted ids and demo product from related list
-  try {
-    const fsp = await import('fs/promises');
-    const pth = await import('path');
-    const deletedRaw = await fsp.readFile(pth.join(process.cwd(), 'src', 'data', 'deletedProducts.json'), 'utf8');
-    const deletedIds = JSON.parse(deletedRaw || '[]');
-    if (Array.isArray(deletedIds) && deletedIds.length > 0) {
-      relatedPerfumes = relatedPerfumes.filter((p: any) => !deletedIds.includes(String(p.id)));
-    }
-  } catch { }
-  relatedPerfumes = relatedPerfumes.filter((p: any) => String(p.name).toLowerCase() !== 'amber noir');
 
   return (
     <div className="min-h-screen bg-primary-dark pt-24 pb-20">

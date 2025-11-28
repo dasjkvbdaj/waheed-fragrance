@@ -1,22 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import dbConnect from "@/lib/db";
 
-export default async function HomePage() {
-  // First try to load any admin-managed products (JSON file) so changes made in admin are visible on home
-  // NOTE: With MongoDB migration, we should ideally just query MongoDB.
-  // However, to preserve the exact logic of "fallback to adminProducts.json", I'll keep it for now,
-  // but the primary source should be MongoDB.
-  // Actually, the previous logic was: try JSON, if empty, try Prisma (which fell back to JSON/seed).
-  // Now we should just use MongoDB.
-
-  await dbConnect();
-
-  // Fetch featured perfumes from MongoDB
-
-  // If MongoDB is empty (fresh install), we might want to seed or show nothing.
-  // The original code had complex fallback logic.
-  // For now, we trust MongoDB has data (or user will add it).
+export default function HomePage() {
+  // This page only displays static content (hero, about us, categories)
+  // No database queries needed here
 
 
   return (

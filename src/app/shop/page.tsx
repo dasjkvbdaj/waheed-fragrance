@@ -1,33 +1,39 @@
+'use client';
+
+import { useEffect, useState, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import ShopCatalogClient from "@/components/ShopCatalogClient";
-import dbConnect from "@/lib/db";
-import Perfume from "@/models/Perfume";
 
-interface Props {
-  searchParams?: { category?: string };
-}
+function CatalogContent() {
+  const searchParams = useSearchParams();
+  const initialCategory = searchParams?.get('category') ?? null;
 
-export default async function CatalogPage({ searchParams }: Props) {
-  // Read initial category from the URL query param (server-side)
-  const initialCategory = searchParams?.category ?? null;
+  const [perfumes, setPerfumes] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  await dbConnect();
+  useEffect(() => {
+    async function fetchPerfumes() {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/products');
 
-  // Fetch perfumes from MongoDB
-  let perfumes = await Perfume.find({
-    name: { $ne: 'Amber Noir' } // Filter out demo product
-  }).sort({ createdAt: -1 }).lean();
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
 
-  // Map _id to id for frontend compatibility
-  perfumes = perfumes.map((p: any) => ({
-    ...p,
-    id: p._id.toString(),
-    _id: undefined
-  }));
+        const data = await response.json();
+        setPerfumes(data.perfumes || []);
+      } catch (err) {
+        console.error('Error fetching perfumes:', err);
+        setError('Failed to load products. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    }
 
-  // If MongoDB is empty, we might want to seed or show nothing.
-  // The original code had complex fallback logic.
-  // For now, we trust MongoDB has data (or user will add it).
-
+    fetchPerfumes();
+  }, []);
 
   return (
     <div className="min-h-screen bg-primary-dark pt-24 pb-20">
@@ -40,9 +46,47 @@ export default async function CatalogPage({ searchParams }: Props) {
           </p>
         </div>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="flex justify-center items-center min-h-[400px]">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold mx-auto mb-4"></div>
+              <p className="text-gray-400">Loading products...</p>
+            </div>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && !loading && (
+          <div className="bg-red-900/20 border border-red-500 text-red-200 px-6 py-4 rounded-lg">
+            {error}
+          </div>
+        )}
+
         {/* Client-rendered filters and product grid */}
-        <ShopCatalogClient perfumes={perfumes as any} initialCategory={initialCategory} />
+        {!loading && !error && (
+          <ShopCatalogClient perfumes={perfumes} initialCategory={initialCategory} />
+        )}
       </div>
     </div>
+  );
+}
+
+export default function CatalogPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-primary-dark pt-24 pb-20">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex justify-center items-center min-h-[400px]">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold mx-auto mb-4"></div>
+              <p className="text-gray-400">Loading...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    }>
+      <CatalogContent />
+    </Suspense>
   );
 }
