@@ -108,12 +108,12 @@ export default function AdminPanelClient() {
       <div className="max-w-7xl mx-auto rounded-3xl bg-primary-dark/80 backdrop-blur-sm border border-accent-gold/10 shadow-[0_0_50px_rgba(212,175,55,0.1)] p-6 sm:p-10">
 
         {/* Header Section */}
-        <div className="flex items-center justify-between mb-10 border-b border-accent-gold/20 pb-4">
+        <div className="flex flex-col md:flex-row items-center justify-between mb-10 border-b border-accent-gold/20 pb-4 gap-4 text-center md:text-left">
           <div>
-            <h2 className="text-4xl font-extrabold text-accent-gold tracking-tighter">✨ Product Administration</h2>
-            <p className="text-base text-gray-300 mt-2 font-light">Efficiently manage your entire perfume catalog.</p>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-accent-gold tracking-tighter">✨ Product Administration</h2>
+            <p className="text-sm md:text-base text-gray-300 mt-2 font-light">Efficiently manage your entire perfume catalog.</p>
           </div>
-          <div>
+          <div className="w-full md:w-auto flex justify-center md:justify-end">
             {creating ? (
               <button onClick={() => { setCreating(false); setEditing(null); }} className="px-5 py-2 rounded-full bg-gray-600 text-white font-medium hover:bg-gray-700 transition duration-300 shadow-lg">
                 Cancel Creation
@@ -314,9 +314,11 @@ export default function AdminPanelClient() {
           <hr className="border-accent-gold/10 my-10" />
         )}
 
-        {/* --- Product List Table --- */}
+        {/* --- Product List (Responsive) --- */}
         <h3 className="text-2xl font-bold text-gray-300 mb-6">Product List</h3>
-        <div className="overflow-x-auto w-full rounded-xl border border-accent-gold/10 shadow-lg bg-primary-darker/50">
+
+        {/* Desktop Table View (Hidden on Mobile) */}
+        <div className="hidden md:block overflow-x-auto w-full rounded-xl border border-accent-gold/10 shadow-lg bg-primary-darker/50">
           <table className="w-full text-left table-auto">
             <thead className="bg-primary-darker/70">
               <tr className="text-sm text-accent-gold uppercase tracking-wider">
@@ -360,6 +362,51 @@ export default function AdminPanelClient() {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Card View (Hidden on Desktop) */}
+        <div className="md:hidden space-y-4">
+          {loading ? (
+            <div className="text-center text-gray-400 py-10">Loading products...</div>
+          ) : items.length === 0 ? (
+            <div className="text-center text-gray-500 py-10">No products found.</div>
+          ) : (
+            items.map((p) => (
+              <div key={p.id} className="bg-primary-darker/60 border border-accent-gold/10 rounded-xl p-4 shadow-lg flex flex-col gap-4">
+                <div className="flex gap-4">
+                  <img src={p.image} alt={p.name} className="w-24 h-24 object-cover rounded-lg border border-gray-700/50 shadow-sm" />
+                  <div className="flex-1">
+                    <h4 className="text-lg font-bold text-white">{p.name}</h4>
+                    <span className="inline-block px-2 py-0.5 rounded-full bg-accent-gold/10 text-accent-gold text-xs uppercase tracking-wide mb-2 border border-accent-gold/20">
+                      {p.category}
+                    </span>
+                    <div className="flex flex-wrap gap-1">
+                      {(p.sizes || []).map(s => (
+                        <span key={s.size} className="text-xs text-gray-400 bg-primary-dark/50 px-2 py-1 rounded-md border border-gray-700">
+                          {s.size}: ${s.price}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-3 mt-2 border-t border-gray-700/50 pt-3">
+                  <button
+                    onClick={() => { setEditing(p); setCreating(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                    className="flex-1 py-2 rounded-lg bg-accent-gold/20 text-accent-gold font-medium hover:bg-accent-gold/30 transition text-sm"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => setConfirmDelete(p)}
+                    className="flex-1 py-2 rounded-lg bg-red-700/20 text-red-400 font-medium hover:bg-red-700/30 transition text-sm"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
         </div>
 
         {/* --- Delete confirmation modal (Refined Styling) --- */}

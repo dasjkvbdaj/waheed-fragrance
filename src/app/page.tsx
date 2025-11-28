@@ -97,20 +97,21 @@ export default function HomePage() {
 
       {/* Benefits Section */}
       <section className="bg-primary-lighter py-20">
+        <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">Key Benefits</h2>
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="text-5xl mb-4">✨</div>
               <h3 className="text-xl font-bold mb-2">Premium Quality</h3>
               <p className="text-gray-400">
-                100% authentic fragrances sourced from authorized distributors worldwide
+                100% authentic fragrances
               </p>
             </div>
             <div className="text-center">
               <div className="text-5xl mb-4">🚚</div>
               <h3 className="text-xl font-bold mb-2">Fast Shipping</h3>
               <p className="text-gray-400">
-                Quick and reliable worldwide delivery with tracking included
+                Quick and reliable delivery all over Lebanon
               </p>
             </div>
             <div className="text-center">
