@@ -128,10 +128,6 @@ export default function ShopCatalogClient({ perfumes, initialCategory = null }: 
         </div>
       </div>
 
-      <p className="text-gray-400 mb-8">
-        Showing {filteredPerfumes.length} product{filteredPerfumes.length !== 1 ? "s" : ""}
-      </p>
-
       {filteredPerfumes.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredPerfumes.map((perfume) => (

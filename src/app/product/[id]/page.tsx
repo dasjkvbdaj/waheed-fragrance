@@ -1,6 +1,7 @@
 import ProductDetail from "@/components/ProductDetail";
 import { notFound } from "next/navigation";
-import prisma from "@/lib/prisma";
+import dbConnect from "@/lib/db";
+import Perfume from "@/models/Perfume";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -11,11 +12,20 @@ interface ProductPageProps {
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
+  await dbConnect();
+
   // Try database first
-  let perfume: any = await prisma.perfume.findUnique({
-    where: { id: params.id },
-    include: { sizes: true },
-  });
+  let perfume: any = null;
+  try {
+    perfume = await Perfume.findById(params.id).lean();
+    if (perfume) {
+      perfume.id = perfume._id.toString();
+      delete perfume._id;
+      // Mongoose returns plain objects with lean(), sizes are already included if they are in the schema
+    }
+  } catch (e) {
+    // If ID is not a valid ObjectId, findById throws. Ignore and treat as null.
+  }
 
   // If product not in DB (e.g. admin-managed JSON list), attempt to load from adminProducts.json
   if (!perfume) {
@@ -58,16 +68,18 @@ export default async function ProductPage({ params }: ProductPageProps) {
     if (Array.isArray(deletedIds) && deletedIds.includes(String(perfume.id))) {
       notFound();
     }
-  } catch {}
+  } catch { }
 
   // Fetch related products (same category, excluding current)
-  let relatedPerfumes: any[] = await prisma.perfume.findMany({
-    where: {
-      category: perfume.category,
-      id: { not: perfume.id },
-    },
-    take: 4,
-    include: { sizes: true },
+  let relatedPerfumes: any[] = await Perfume.find({
+    category: perfume.category,
+    _id: { $ne: params.id },
+  }).limit(4).lean();
+
+  relatedPerfumes = relatedPerfumes.map((p: any) => {
+    p.id = p._id.toString();
+    delete p._id;
+    return p;
   });
 
   // Remove deleted ids and demo product from related list
@@ -79,7 +91,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     if (Array.isArray(deletedIds) && deletedIds.length > 0) {
       relatedPerfumes = relatedPerfumes.filter((p: any) => !deletedIds.includes(String(p.id)));
     }
-  } catch {}
+  } catch { }
   relatedPerfumes = relatedPerfumes.filter((p: any) => String(p.name).toLowerCase() !== 'amber noir');
 
   return (
