@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "id": "1764330544308",
+    "name": "ali",
+    "sizes": [
+      {
+        "size": "100ml",
+        "price": 10
+      }
+    ],
+    "category": "unisex",
+    "image": "/uploads/1764330544305-hylnk9.jpeg",
+    "description": "ali",
+    "notes": "ali"
+  }
+]
