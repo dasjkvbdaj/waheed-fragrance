@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import PerfumeCard from "@/components/PerfumeCard";
 import prisma from "@/lib/prisma";
 
 export default async function HomePage() {
@@ -25,6 +24,18 @@ export default async function HomePage() {
       orderBy: { createdAt: 'desc' }, // Or any other logic
       include: { sizes: true },
     });
+    // Remove any deleted product ids from featured
+    try {
+      const fsp = await import('fs/promises');
+      const pth = await import('path');
+      const deletedRaw = await fsp.readFile(pth.join(process.cwd(), 'src', 'data', 'deletedProducts.json'), 'utf8');
+      const deletedIds = JSON.parse(deletedRaw || '[]');
+      if (Array.isArray(deletedIds) && deletedIds.length > 0) {
+        featuredPerfumes = featuredPerfumes.filter((p: any) => !deletedIds.includes(String(p.id)));
+      }
+    } catch { }
+    // Ensure demo product 'Amber Noir' is not shown even if present in DB
+    featuredPerfumes = featuredPerfumes.filter((p: any) => String(p.name).toLowerCase() !== 'amber noir');
   }
 
   return (
@@ -82,36 +93,38 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Featured Products */}
       <section className="max-w-7xl mx-auto px-4 py-20">
         <div className="mb-12 text-center">
-          <p className="text-accent-gold text-sm uppercase tracking-widest mb-2">Featured</p>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Our Bestsellers</h2>
+          <p className="text-accent-gold text-sm uppercase tracking-widest mb-2">Our Story</p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">About Us</h2>
           <p className="text-gray-400 max-w-md mx-auto">
-            Explore our most loved fragrances, carefully selected by our customers
+            Discover the passion and philosophy behind our exquisite fragrances.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {featuredPerfumes.map((perfume, index) => (
-            <div key={perfume.id} className="animate-fade-in" style={{ animationDelay: `${index * 100}ms` }}>
-              <PerfumeCard perfume={perfume} />
-            </div>
-          ))}
-          {featuredPerfumes.length === 0 && (
-            <div className="col-span-4 text-center text-gray-500">
-              No products found. Check back soon!
-            </div>
-          )}
-        </div>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-12 mb-12">
+          <div className="md:w-1/2">
+            <p className="text-lg text-gray-300 mb-8 leading-relaxed">
+              At Waheed Fragrance, we believe that fragrance is an art form, a personal statement, and a cherished memory waiting to be made.
+              Our journey began with a simple vision: to craft unique and captivating scents that resonate with the individual spirit.
+              Every bottle tells a story of dedication, quality, and a profound love for the world of perfumery.
+            </p>
+            <p className="text-lg text-gray-300 leading-relaxed">
+              We meticulously source the finest ingredients from around the globe, collaborating with master perfumers to create
+              olfactory masterpieces. From the initial spark of inspiration to the final delicate blend,
+              each fragrance is a testament to our commitment to excellence and our desire to bring you an unparalleled sensory experience.
+              Join us in exploring a world where scent transcends the ordinary and becomes an extraordinary part of your life.
+            </p>
+          </div>
+          <div className="md:w-1/2 flex justify-center items-center">
+            {/* Placeholder for the About Us image */}
+            <img
+              src="/about-us-hero.jpg"
+              alt="About Us - Perfume bottles and ingredients"
+              className="rounded-lg shadow-xl max-w-sm w-full h-auto"
+            />
 
-        <div className="text-center">
-          <Link
-            href="/shop"
-            className="inline-block border-2 border-accent-gold text-accent-gold px-8 py-3 rounded-lg font-semibold hover:bg-accent-gold hover:text-primary-dark transition"
-          >
-            View All Products
-          </Link>
+          </div>
         </div>
       </section>
 

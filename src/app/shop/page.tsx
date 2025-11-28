@@ -19,6 +19,16 @@ export default async function CatalogPage({ searchParams }: Props) {
     const data = JSON.parse(raw || '[]');
     if (Array.isArray(data) && data.length > 0) {
       perfumes = data as any[];
+      // remove any deleted product ids
+      try {
+        const deletedRaw = await fs.readFile(path.join(process.cwd(), 'src', 'data', 'deletedProducts.json'), 'utf8');
+        const deletedIds = JSON.parse(deletedRaw || '[]');
+        if (Array.isArray(deletedIds) && deletedIds.length > 0) {
+          perfumes = perfumes.filter((p: any) => !deletedIds.includes(String(p.id)));
+        }
+      } catch {}
+      // remove demo 'Amber Noir' if present
+      perfumes = perfumes.filter((p: any) => String(p.name).toLowerCase() !== 'amber noir');
     }
   } catch (e) {
     // no local admin products
@@ -29,6 +39,18 @@ export default async function CatalogPage({ searchParams }: Props) {
     perfumes = await prisma.perfume.findMany({
       include: { sizes: true },
     }) as any[];
+    // Remove any deleted ids from DB results
+    try {
+      const fsp = await import('fs/promises');
+      const pth = await import('path');
+      const deletedRaw = await fsp.readFile(pth.join(process.cwd(), 'src', 'data', 'deletedProducts.json'), 'utf8');
+      const deletedIds = JSON.parse(deletedRaw || '[]');
+      if (Array.isArray(deletedIds) && deletedIds.length > 0) {
+        perfumes = perfumes.filter((p: any) => !deletedIds.includes(String(p.id)));
+      }
+    } catch {}
+    // remove demo 'Amber Noir' if present in DB
+    perfumes = perfumes.filter((p: any) => String(p.name).toLowerCase() !== 'amber noir');
   }
 
   return (

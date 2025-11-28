@@ -35,7 +35,26 @@ async function writeDB(data: Perfume[]) {
 
 export async function GET() {
   const data = await readDB();
-  return NextResponse.json({ products: data });
+  // Permanently remove any demo item named 'Amber Noir' from the admin DB
+  let filtered = data.filter((p) => String(p.name).toLowerCase() !== 'amber noir');
+
+  // Also filter out any id present in deletedProducts.json and persist if we removed any
+  try {
+    const deletedFile = path.join(process.cwd(), 'src', 'data', 'deletedProducts.json');
+    const raw = await fs.readFile(deletedFile, 'utf8');
+    const deletedIds: string[] = JSON.parse(raw || '[]');
+    if (Array.isArray(deletedIds) && deletedIds.length > 0) {
+      const before = filtered.length;
+      filtered = filtered.filter((p) => !deletedIds.includes(String(p.id)));
+      if (filtered.length !== before) {
+        await writeDB(filtered);
+      }
+    }
+  } catch (e) {
+    // ignore
+  }
+
+  return NextResponse.json({ products: filtered });
 }
 
 export async function POST(req: Request) {
@@ -51,6 +70,11 @@ export async function POST(req: Request) {
     // sanitize and normalize
     const sanitize = (s: any) => String(s ?? '').replace(/[<>]/g, '');
     payload.name = sanitize(payload.name);
+
+    // Disallow creating the demo product
+    if (String(payload.name).toLowerCase() === 'amber noir') {
+      return NextResponse.json({ error: "Adding this demo product is not allowed." }, { status: 400 });
+    }
     payload.category = sanitize(payload.category || 'unisex');
     payload.description = payload.description ? sanitize(payload.description) : '';
     payload.notes = payload.notes ? sanitize(payload.notes) : '';

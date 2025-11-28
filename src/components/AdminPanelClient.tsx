@@ -182,7 +182,7 @@ export default function AdminPanelClient() {
                       value={editing?.name ?? ""}
                       onChange={(e) => setEditing({ ...editing, name: e.target.value })}
                       className={INPUT_CLASS}
-                      placeholder="Ex: Amber Noir"
+                      placeholder="Ex: Vanilla Bloom"
                     />
                   </label>
 

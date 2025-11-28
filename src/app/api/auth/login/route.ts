@@ -8,6 +8,20 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { email, password } = body;
 
+    // Demo admin shortcut: allow the demo admin to login even when DB is unavailable
+    if (email === 'admin@example.com' && password === 'adminpass') {
+      const user = { id: 'admin', email, role: 'ADMIN' };
+      const res = NextResponse.json({ user });
+      res.cookies.set('user', JSON.stringify(user), {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7,
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+      });
+      return res;
+    }
+
     // Ensure a simple users table exists in the local sqlite DB and seed the default admin if missing
     try {
       await prisma.$executeRawUnsafe(`CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY, email TEXT UNIQUE, password TEXT, role TEXT, createdAt TEXT DEFAULT CURRENT_TIMESTAMP)`);

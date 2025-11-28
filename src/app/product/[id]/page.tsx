@@ -44,8 +44,24 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
+  // If the demo product exists in the DB/seed, treat it as removed
+  if (perfume && String(perfume.name).toLowerCase() === 'amber noir') {
+    notFound();
+  }
+
+  // Also treat anything in the deletedProducts list as not found
+  try {
+    const fsp = await import('fs/promises');
+    const pth = await import('path');
+    const deletedRaw = await fsp.readFile(pth.join(process.cwd(), 'src', 'data', 'deletedProducts.json'), 'utf8');
+    const deletedIds = JSON.parse(deletedRaw || '[]');
+    if (Array.isArray(deletedIds) && deletedIds.includes(String(perfume.id))) {
+      notFound();
+    }
+  } catch {}
+
   // Fetch related products (same category, excluding current)
-  const relatedPerfumes = await prisma.perfume.findMany({
+  let relatedPerfumes: any[] = await prisma.perfume.findMany({
     where: {
       category: perfume.category,
       id: { not: perfume.id },
@@ -53,6 +69,18 @@ export default async function ProductPage({ params }: ProductPageProps) {
     take: 4,
     include: { sizes: true },
   });
+
+  // Remove deleted ids and demo product from related list
+  try {
+    const fsp = await import('fs/promises');
+    const pth = await import('path');
+    const deletedRaw = await fsp.readFile(pth.join(process.cwd(), 'src', 'data', 'deletedProducts.json'), 'utf8');
+    const deletedIds = JSON.parse(deletedRaw || '[]');
+    if (Array.isArray(deletedIds) && deletedIds.length > 0) {
+      relatedPerfumes = relatedPerfumes.filter((p: any) => !deletedIds.includes(String(p.id)));
+    }
+  } catch {}
+  relatedPerfumes = relatedPerfumes.filter((p: any) => String(p.name).toLowerCase() !== 'amber noir');
 
   return (
     <div className="min-h-screen bg-primary-dark pt-24 pb-20">
@@ -77,7 +105,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <div className="mt-20 pt-20 border-t border-accent-gold/20">
           <h2 className="text-3xl font-bold mb-8">You May Also Like</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {relatedPerfumes.map((p) => (
+            {relatedPerfumes.map((p: any) => (
               <Link
                 key={p.id}
                 href={`/product/${p.id}`}
@@ -94,7 +122,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 <div className="p-4">
                   <h3 className="font-semibold mb-2">{p.name}</h3>
                   <p className="text-accent-gold font-bold">
-                    ${Math.min(...p.sizes.map((s) => s.price))}
+                    ${Math.min(...p.sizes.map((s: any) => s.price))}
                   </p>
                 </div>
               </Link>
