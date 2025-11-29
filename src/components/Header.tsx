@@ -19,30 +19,30 @@ export default function Header() {
     try { window.location.assign('/login'); } catch { router.push('/login'); }
   };
 
+  const isAdmin = (user?.role || '').toUpperCase() === 'ADMIN';
+
   return (
     <header className="fixed top-0 w-full bg-primary-dark/80 backdrop-blur-md border-b border-white/10 z-50 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0">
+          <Link href={isAdmin ? "/admin" : "/"} className="flex-shrink-0">
             <span className="text-2xl font-serif font-bold text-accent-gold hover:text-white transition-colors duration-300">
-              Waheed Fragrance
+              ✨ Waheed Fragrance
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            {user?.role !== 'ADMIN' && (
-              <>
-                <Link href="/" className="text-sm font-medium text-gray-300 hover:text-accent-gold transition-colors duration-300 uppercase tracking-wider">
-                  Home
-                </Link>
-                <Link href="/shop" className="text-sm font-medium text-gray-300 hover:text-accent-gold transition-colors duration-300 uppercase tracking-wider">
-                  Shop
-                </Link>
-              </>
-            )}
-          </nav>
+          {/* Desktop Navigation (Non-Admin Only) */}
+          {!isAdmin && (
+            <nav className="hidden md:flex items-center gap-8">
+              <Link href="/" className="text-sm font-medium text-gray-300 hover:text-accent-gold transition-colors duration-300 uppercase tracking-wider">
+                Home
+              </Link>
+              <Link href="/shop" className="text-sm font-medium text-gray-300 hover:text-accent-gold transition-colors duration-300 uppercase tracking-wider">
+                Shop
+              </Link>
+            </nav>
+          )}
 
           {/* Right Side Actions */}
           <div className="hidden md:flex items-center gap-6">
@@ -53,7 +53,7 @@ export default function Header() {
                   <span className="text-sm font-medium text-white">{user.email}</span>
                 </div>
 
-                {user.role === 'ADMIN' && (
+                {isAdmin && (
                   <Link
                     href="/admin"
                     className="px-4 py-2 bg-accent-gold/10 border border-accent-gold/50 text-accent-gold rounded-full text-sm font-medium hover:bg-accent-gold hover:text-primary-dark transition-all duration-300"
@@ -75,8 +75,8 @@ export default function Header() {
               </Link>
             )}
 
-            {/* Cart Icon (Non-Admin) */}
-            {user?.role !== 'ADMIN' && (
+            {/* Cart Icon (Non-Admin Only) */}
+            {!isAdmin && (
               <Link
                 href="/cart"
                 className="relative p-2 text-gray-300 hover:text-accent-gold transition-colors duration-300"
@@ -105,56 +105,81 @@ export default function Header() {
 
           {/* Mobile Actions */}
           <div className="flex items-center gap-1 md:hidden">
-            {user?.role !== 'ADMIN' && (
-              <Link
-                href="/cart"
-                className="relative p-2 text-gray-300 hover:text-accent-gold transition-colors duration-300"
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+            {/* Admin Mobile View: Direct Actions, No Menu */}
+            {isAdmin ? (
+              <div className="flex items-center gap-2">
+                <div className="flex flex-col items-end mr-1">
+                  <span className="text-[10px] text-gray-400 uppercase tracking-wide">Welcome</span>
+                  <span className="text-xs text-white font-medium truncate max-w-[120px]">{user?.email}</span>
+                </div>
+                <Link
+                  href="/admin"
+                  className="p-2 text-accent-gold hover:text-white transition-colors"
+                  title="Admin Panel"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                  />
-                </svg>
-                {items.length > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-accent-gold text-primary-dark text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                    {items.length}
-                  </span>
-                )}
-              </Link>
-            )}
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="p-2 text-red-400 hover:text-red-300 transition-colors"
+                  title="Logout"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                </button>
+              </div>
+            ) : (
+              /* Non-Admin Mobile View: Cart + Hamburger */
+              <>
+                <Link
+                  href="/cart"
+                  className="relative p-2 text-gray-300 hover:text-accent-gold transition-colors duration-300"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                    />
+                  </svg>
+                  {items.length > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-accent-gold text-primary-dark text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                      {items.length}
+                    </span>
+                  )}
+                </Link>
 
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-gray-300 hover:text-white transition-colors"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                {isMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
+                <button
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className="p-2 text-gray-300 hover:text-white transition-colors"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    {isMenuOpen ? (
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+                    ) : (
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
+                    )}
+                  </svg>
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu (Non-Admin Only) */}
       <AnimatePresence>
-        {isMenuOpen && (
+        {isMenuOpen && !isAdmin && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
@@ -162,24 +187,20 @@ export default function Header() {
             className="md:hidden bg-primary-darker border-t border-white/10 overflow-hidden"
           >
             <nav className="flex flex-col px-4 py-6 space-y-4">
-              {user?.role !== 'ADMIN' && (
-                <>
-                  <Link
-                    href="/"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="text-lg font-medium text-gray-300 hover:text-accent-gold transition-colors"
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    href="/shop"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="text-lg font-medium text-gray-300 hover:text-accent-gold transition-colors"
-                  >
-                    Shop
-                  </Link>
-                </>
-              )}
+              <Link
+                href="/"
+                onClick={() => setIsMenuOpen(false)}
+                className="text-lg font-medium text-gray-300 hover:text-accent-gold transition-colors"
+              >
+                Home
+              </Link>
+              <Link
+                href="/shop"
+                onClick={() => setIsMenuOpen(false)}
+                className="text-lg font-medium text-gray-300 hover:text-accent-gold transition-colors"
+              >
+                Shop
+              </Link>
 
               {user ? (
                 <div className="pt-4 border-t border-white/10 space-y-4">
@@ -187,16 +208,6 @@ export default function Header() {
                     <span className="text-sm text-gray-400">Signed in as</span>
                     <span className="text-sm font-medium text-white">{user.email}</span>
                   </div>
-
-                  {user.role === 'ADMIN' && (
-                    <Link
-                      href="/admin"
-                      onClick={() => setIsMenuOpen(false)}
-                      className="block w-full text-center px-4 py-3 bg-accent-gold/10 border border-accent-gold/50 text-accent-gold rounded-lg font-medium hover:bg-accent-gold hover:text-primary-dark transition-all"
-                    >
-                      Admin Panel
-                    </Link>
-                  )}
 
                   <button
                     onClick={() => {
