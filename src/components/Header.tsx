@@ -28,7 +28,7 @@ export default function Header() {
           {/* Logo */}
           <Link href={isAdmin ? "/admin" : "/"} className="flex-shrink-0">
             <span className="text-2xl font-serif font-bold text-accent-gold hover:text-white transition-colors duration-300">
-              ✨ Waheed Fragrance
+              Waheed Fragrance
             </span>
           </Link>
 
