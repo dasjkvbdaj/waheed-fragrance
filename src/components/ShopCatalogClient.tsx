@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import PerfumeCard from "@/components/PerfumeCard";
 import type { Perfume } from "@/types";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Props {
   perfumes: Perfume[];
@@ -19,11 +20,9 @@ export default function ShopCatalogClient({ perfumes, initialCategory = null }: 
   const categories = ["men", "women", "unisex"];
 
   useEffect(() => {
-    // keep selectedCategory in sync when initialCategory changes (rare — only initial prop)
     setSelectedCategory(initialCategory ?? null);
   }, [initialCategory]);
 
-  // Client-side override: attempt to fetch admin-managed products to reflect live admin changes
   const [clientList, setClientList] = useState<Perfume[] | null>(null);
 
   useEffect(() => {
@@ -34,70 +33,77 @@ export default function ShopCatalogClient({ perfumes, initialCategory = null }: 
         if (!mounted) return;
         if (Array.isArray(d.products) && d.products.length > 0) setClientList(d.products);
       })
-      .catch(() => {});
+      .catch(() => { });
 
     const bc = typeof window !== 'undefined' ? new BroadcastChannel('admin-products') : null;
     bc?.addEventListener('message', () => {
-      // simple refresh of admin products when admin updates
       fetch('/api/admin/products')
         .then(r => r.json())
         .then(d => { if (Array.isArray(d.products) && d.products.length > 0) setClientList(d.products); })
-        .catch(() => {});
+        .catch(() => { });
     });
 
     return () => { mounted = false; bc?.close(); };
   }, []);
 
+  const getPrice = (p: Perfume) => {
+    if (typeof p.price === 'number') return p.price;
+    if (p.sizes && p.sizes.length > 0) {
+      return Math.min(...p.sizes.map(s => s.price));
+    }
+    return 0;
+  };
+
   const filteredPerfumes = useMemo(() => {
     const source = clientList ?? perfumes;
     let filtered = source;
 
-    // Filter by category
     if (selectedCategory) {
       filtered = filtered.filter((p) => p.category === selectedCategory);
     }
 
-    // Filter by search term
     if (searchTerm) {
       filtered = filtered.filter((p) => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
     }
 
-    // Sort
     const sorted = [...filtered];
-    if (sortBy === "price-low") sorted.sort((a, b) => (a.price ?? 0) - (b.price ?? 0));
-    else if (sortBy === "price-high") sorted.sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
+    if (sortBy === "price-low") sorted.sort((a, b) => getPrice(a) - getPrice(b));
+    else if (sortBy === "price-high") sorted.sort((a, b) => getPrice(b) - getPrice(a));
     else sorted.sort((a, b) => a.name.localeCompare(b.name));
 
     return sorted;
   }, [selectedCategory, searchTerm, sortBy, perfumes, clientList]);
 
-  // choose the list to display — admin-managed if present, otherwise server-supplied perfumes (used within useMemo)
   return (
     <div>
       {/* Filters and Search */}
-      <div className="mb-8 space-y-4">
-        <div>
+      <div className="mb-12 space-y-6">
+        <div className="relative">
           <input
             type="text"
             placeholder="Search by name or brand..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-3 bg-primary-light border border-accent-gold/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-accent-gold transition"
+            className="w-full px-6 py-4 bg-primary-light/50 border border-white/10 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/50 transition-all duration-300 backdrop-blur-sm"
           />
+          <svg className="absolute right-6 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex gap-2 flex-wrap">
+        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+          <div className="flex gap-2 flex-wrap justify-center md:justify-start">
             <button
               onClick={() => {
                 setSelectedCategory(null);
                 router.replace(`/shop`);
               }}
-              className={`px-4 py-2 rounded-lg transition ${
-                selectedCategory === null ? "bg-accent-gold text-primary-dark" : "bg-primary-light text-white hover:bg-primary-light/80"
-              }`}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${selectedCategory === null
+                  ? "bg-accent-gold text-primary-dark shadow-lg shadow-accent-gold/20"
+                  : "bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white"
+                }`}
             >
-              All Categories
+              All
             </button>
 
             {categories.map((category) => (
@@ -107,50 +113,72 @@ export default function ShopCatalogClient({ perfumes, initialCategory = null }: 
                   setSelectedCategory(category as any);
                   router.replace(`/shop?category=${encodeURIComponent(category)}`);
                 }}
-                className={`px-4 py-2 rounded-lg capitalize transition ${
-                  selectedCategory === category ? "bg-accent-gold text-primary-dark" : "bg-primary-light text-white hover:bg-primary-light/80"
-                }`}
+                className={`px-6 py-2 rounded-full capitalize text-sm font-medium transition-all duration-300 ${selectedCategory === category
+                    ? "bg-accent-gold text-primary-dark shadow-lg shadow-accent-gold/20"
+                    : "bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white"
+                  }`}
               >
                 {category}
               </button>
             ))}
           </div>
 
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as any)}
-            className="px-4 py-2 bg-primary-light border border-accent-gold/30 rounded-lg text-white focus:outline-none focus:border-accent-gold transition md:ml-auto"
-          >
-            <option value="name">Sort by Name</option>
-            <option value="price-low">Price: Low to High</option>
-            <option value="price-high">Price: High to Low</option>
-          </select>
+          <div className="relative">
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as any)}
+              className="appearance-none pl-6 pr-12 py-2 bg-primary-light/50 border border-white/10 rounded-full text-white text-sm focus:outline-none focus:border-accent-gold/50 cursor-pointer hover:bg-primary-light transition-colors"
+            >
+              <option value="name">Sort by Name</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+            </select>
+            <svg className="absolute right-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
         </div>
       </div>
 
-      {filteredPerfumes.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredPerfumes.map((perfume) => (
-            <div key={perfume.id} className="animate-fade-in">
-              <PerfumeCard perfume={perfume} />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-20">
-          <p className="text-gray-400 text-lg mb-4">No perfumes found matching your criteria.</p>
-          <button
-            onClick={() => {
-              setSearchTerm("");
-              setSelectedCategory(null);
-              router.replace(`/shop`);
-            }}
-            className="bg-accent-gold text-primary-dark px-6 py-2 rounded-lg font-semibold hover:bg-yellow-400 transition"
-          >
-            Clear Filters
-          </button>
-        </div>
-      )}
+      <motion.div
+        layout
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+      >
+        <AnimatePresence mode="popLayout">
+          {filteredPerfumes.length > 0 ? (
+            filteredPerfumes.map((perfume) => (
+              <motion.div
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+                key={perfume.id}
+              >
+                <PerfumeCard perfume={perfume} />
+              </motion.div>
+            ))
+          ) : (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="col-span-full text-center py-20"
+            >
+              <p className="text-gray-400 text-lg mb-6 font-light">No perfumes found matching your criteria.</p>
+              <button
+                onClick={() => {
+                  setSearchTerm("");
+                  setSelectedCategory(null);
+                  router.replace(`/shop`);
+                }}
+                className="px-8 py-3 bg-accent-gold text-primary-dark rounded-full font-semibold hover:bg-white transition-colors duration-300 shadow-lg shadow-accent-gold/20"
+              >
+                Clear Filters
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
     </div>
   );
 }
