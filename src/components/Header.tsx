@@ -104,7 +104,7 @@ export default function Header() {
           </div>
 
           {/* Mobile Actions */}
-          <div className="flex items-center gap-4 md:hidden">
+          <div className="flex items-center gap-1 md:hidden">
             {user?.role !== 'ADMIN' && (
               <Link
                 href="/cart"

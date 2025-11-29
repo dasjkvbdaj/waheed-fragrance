@@ -46,8 +46,8 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-dark to-primary-darker p-6">
-      <div className="w-full max-w-md bg-primary-light/40 backdrop-blur rounded-3xl border border-accent-gold/20 p-10 shadow-xl">
+    <div className="min-h-screen flex flex-col items-center pt-32 bg-gradient-to-br from-primary-dark to-primary-darker p-6">
+      <div className="w-full max-w-lg bg-primary-light/40 backdrop-blur rounded-3xl border border-accent-gold/20 p-8 md:p-10 shadow-xl">
         <h1 className="text-3xl font-extrabold text-accent-gold mb-2">Welcome back</h1>
         <p className="text-sm text-gray-300 mb-6">Sign in to continue to Waheed Fragrance</p>
 

@@ -132,7 +132,7 @@ export default function AdminPanelClient() {
               }
             }}
             className={`
-              px-8 py-3 rounded-full font-bold shadow-lg transform transition-all duration-300 hover:scale-105
+              w-full md:w-auto px-8 py-3 rounded-full font-bold shadow-lg transform transition-all duration-300 hover:scale-105
               ${creating
                 ? 'bg-gray-700 text-white hover:bg-gray-600'
                 : 'bg-gradient-to-r from-accent-gold to-yellow-500 text-primary-dark hover:shadow-accent-gold/20'}
@@ -305,7 +305,7 @@ export default function AdminPanelClient() {
         {/* Mobile Cards (Visible < md) */}
         <div className="md:hidden space-y-6">
           {loading ? <p className="text-center text-gray-500">Loading...</p> : items.map(p => (
-            <div key={p.id} className={`${CARD_CLASS} flex flex-col`}>
+            <div key={p.id} className={`${CARD_CLASS} flex flex-col border-white/10 shadow-lg`}>
               <div className="relative h-48 w-full">
                 <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
                 <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-accent-gold border border-accent-gold/20 uppercase">
