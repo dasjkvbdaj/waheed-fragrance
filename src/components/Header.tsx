@@ -49,7 +49,7 @@ export default function Header() {
             {user ? (
               <div className="flex items-center gap-6">
                 <div className="flex flex-col items-end">
-                  <span className="text-xs text-gray-400 uppercase tracking-wide">Welcome back</span>
+                  <span className="text-xs text-gray-400 uppercase tracking-wide">Welcome</span>
                   <span className="text-sm font-medium text-white">{user.email}</span>
                 </div>
 
