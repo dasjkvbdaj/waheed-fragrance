@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
+// Enable ISR with 60 second revalidation
+export const revalidate = 60;
+
 export async function GET(request: Request) {
     try {
         const { searchParams } = new URL(request.url);

@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import PerfumeCard from "@/components/PerfumeCard";
 import type { Perfume } from "@/types";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface Props {
   perfumes: Perfume[];
@@ -15,36 +14,12 @@ export default function ShopCatalogClient({ perfumes, initialCategory = null }: 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory ?? null);
   const [sortBy, setSortBy] = useState<"price-low" | "price-high" | "name">("name");
   const [searchTerm, setSearchTerm] = useState("");
-  const router = useRouter();
 
   const categories = ["men", "women", "unisex"];
 
   useEffect(() => {
     setSelectedCategory(initialCategory ?? null);
   }, [initialCategory]);
-
-  const [clientList, setClientList] = useState<Perfume[] | null>(null);
-
-  useEffect(() => {
-    let mounted = true;
-    fetch('/api/admin/products')
-      .then((r) => r.json())
-      .then((d) => {
-        if (!mounted) return;
-        if (Array.isArray(d.products) && d.products.length > 0) setClientList(d.products);
-      })
-      .catch(() => { });
-
-    const bc = typeof window !== 'undefined' ? new BroadcastChannel('admin-products') : null;
-    bc?.addEventListener('message', () => {
-      fetch('/api/admin/products')
-        .then(r => r.json())
-        .then(d => { if (Array.isArray(d.products) && d.products.length > 0) setClientList(d.products); })
-        .catch(() => { });
-    });
-
-    return () => { mounted = false; bc?.close(); };
-  }, []);
 
   const getPrice = (p: Perfume) => {
     if (typeof p.price === 'number') return p.price;
@@ -54,9 +29,15 @@ export default function ShopCatalogClient({ perfumes, initialCategory = null }: 
     return 0;
   };
 
+  const handleCategoryChange = (category: string | null) => {
+    setSelectedCategory(category);
+    // Update URL without navigation for instant response
+    const url = category ? `/shop?category=${encodeURIComponent(category)}` : '/shop';
+    window.history.pushState({}, '', url);
+  };
+
   const filteredPerfumes = useMemo(() => {
-    const source = clientList ?? perfumes;
-    let filtered = source;
+    let filtered = perfumes;
 
     if (selectedCategory) {
       filtered = filtered.filter((p) => p.category === selectedCategory);
@@ -72,7 +53,7 @@ export default function ShopCatalogClient({ perfumes, initialCategory = null }: 
     else sorted.sort((a, b) => a.name.localeCompare(b.name));
 
     return sorted;
-  }, [selectedCategory, searchTerm, sortBy, perfumes, clientList]);
+  }, [selectedCategory, searchTerm, sortBy, perfumes]);
 
   return (
     <div>
@@ -94,13 +75,10 @@ export default function ShopCatalogClient({ perfumes, initialCategory = null }: 
         <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
           <div className="flex gap-2 flex-wrap justify-center md:justify-start">
             <button
-              onClick={() => {
-                setSelectedCategory(null);
-                router.replace(`/shop`);
-              }}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${selectedCategory === null
-                  ? "bg-accent-gold text-primary-dark shadow-lg shadow-accent-gold/20"
-                  : "bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white"
+              onClick={() => handleCategoryChange(null)}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 ${selectedCategory === null
+                ? "bg-accent-gold text-primary-dark shadow-lg shadow-accent-gold/20"
+                : "bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white"
                 }`}
             >
               All
@@ -109,13 +87,10 @@ export default function ShopCatalogClient({ perfumes, initialCategory = null }: 
             {categories.map((category) => (
               <button
                 key={category}
-                onClick={() => {
-                  setSelectedCategory(category as any);
-                  router.replace(`/shop?category=${encodeURIComponent(category)}`);
-                }}
-                className={`px-6 py-2 rounded-full capitalize text-sm font-medium transition-all duration-300 ${selectedCategory === category
-                    ? "bg-accent-gold text-primary-dark shadow-lg shadow-accent-gold/20"
-                    : "bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white"
+                onClick={() => handleCategoryChange(category)}
+                className={`px-6 py-2 rounded-full capitalize text-sm font-medium transition-all duration-200 ${selectedCategory === category
+                  ? "bg-accent-gold text-primary-dark shadow-lg shadow-accent-gold/20"
+                  : "bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white"
                   }`}
               >
                 {category}
@@ -140,45 +115,33 @@ export default function ShopCatalogClient({ perfumes, initialCategory = null }: 
         </div>
       </div>
 
-      <motion.div
-        layout
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-      >
-        <AnimatePresence mode="popLayout">
-          {filteredPerfumes.length > 0 ? (
-            filteredPerfumes.map((perfume) => (
-              <motion.div
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
-                key={perfume.id}
-              >
-                <PerfumeCard perfume={perfume} />
-              </motion.div>
-            ))
-          ) : (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {filteredPerfumes.length > 0 ? (
+          filteredPerfumes.map((perfume) => (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="col-span-full text-center py-20"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.15 }}
+              key={perfume.id}
             >
-              <p className="text-gray-400 text-lg mb-6 font-light">No perfumes found matching your criteria.</p>
-              <button
-                onClick={() => {
-                  setSearchTerm("");
-                  setSelectedCategory(null);
-                  router.replace(`/shop`);
-                }}
-                className="px-8 py-3 bg-accent-gold text-primary-dark rounded-full font-semibold hover:bg-white transition-colors duration-300 shadow-lg shadow-accent-gold/20"
-              >
-                Clear Filters
-              </button>
+              <PerfumeCard perfume={perfume} />
             </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
+          ))
+        ) : (
+          <div className="col-span-full text-center py-20">
+            <p className="text-gray-400 text-lg mb-6 font-light">No perfumes found matching your criteria.</p>
+            <button
+              onClick={() => {
+                setSearchTerm("");
+                handleCategoryChange(null);
+              }}
+              className="px-8 py-3 bg-accent-gold text-primary-dark rounded-full font-semibold hover:bg-white transition-colors duration-300 shadow-lg shadow-accent-gold/20"
+            >
+              Clear Filters
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
