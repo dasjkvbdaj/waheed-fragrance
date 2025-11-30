@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Perfume } from '@/types';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
-import { uploadImage } from '@/utils/firebaseUtils';
+import { uploadImageToSupabase } from '@/utils/supabaseUtils';
 
 // Helper to create an empty product
 function emptyProduct(): Partial<Perfume & { imageData?: string; imageFile?: File }> {
@@ -77,7 +77,7 @@ export default function AdminPanelClient() {
     try {
       let imageUrl = payload.image || "";
       if (payload.imageFile) {
-        imageUrl = await uploadImage(payload.imageFile);
+        imageUrl = await uploadImageToSupabase(payload.imageFile);
       }
 
       // Remove temporary fields
@@ -119,7 +119,7 @@ export default function AdminPanelClient() {
     try {
       let imageUrl = editing.image || "";
       if (editing.imageFile) {
-        imageUrl = await uploadImage(editing.imageFile);
+        imageUrl = await uploadImageToSupabase(editing.imageFile);
       }
 
       // Remove temporary fields and id
