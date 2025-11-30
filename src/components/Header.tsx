@@ -24,39 +24,41 @@ export default function Header() {
   return (
     <header className="fixed top-0 w-full bg-primary-dark/80 backdrop-blur-md border-b border-white/10 z-50 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-20 md:h-20">
           {/* Logo */}
           <Link href={isAdmin ? "/admin" : "/"} className="flex-shrink-0">
-            <span className="text-2xl font-serif font-bold text-accent-gold hover:text-white transition-colors duration-300">
+            <span className="text-xl sm:text-2xl font-serif font-bold text-accent-gold hover:text-white transition-colors duration-300">
               Waheed Fragrance
             </span>
           </Link>
 
           {/* Desktop Navigation (Non-Admin Only) */}
           {!isAdmin && (
-            <nav className="hidden md:flex items-center gap-8">
-              <Link href="/" className="text-sm font-medium text-gray-300 hover:text-accent-gold transition-colors duration-300 uppercase tracking-wider">
+            <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+              <Link href="/" className="text-sm sm:text-base font-medium text-gray-300 hover:text-accent-gold transition-colors duration-300 uppercase tracking-wider">
                 Home
               </Link>
-              <Link href="/shop" className="text-sm font-medium text-gray-300 hover:text-accent-gold transition-colors duration-300 uppercase tracking-wider">
+              <Link href="/shop" className="text-sm sm:text-base font-medium text-gray-300 hover:text-accent-gold transition-colors duration-300 uppercase tracking-wider">
                 Shop
               </Link>
             </nav>
           )}
 
           {/* Right Side Actions */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-4 sm:gap-6">
             {user ? (
-              <div className="flex items-center gap-6">
-                <div className="flex flex-col items-end">
-                  <span className="text-xs text-gray-400 uppercase tracking-wide">Welcome</span>
-                  <span className="text-sm font-medium text-white">{user.email}</span>
-                </div>
+              <div className="flex items-center gap-4 sm:gap-6">
+                {!isAdmin && (
+                  <div className="flex flex-col items-end">
+                    <span className="text-[9px] sm:text-xs text-gray-400 uppercase tracking-wide">Welcome</span>
+                    <span className="text-xs sm:text-sm font-medium text-white truncate max-w-[150px]">{user.email}</span>
+                  </div>
+                )}
 
                 {isAdmin && (
                   <Link
                     href="/admin"
-                    className="px-4 py-2 bg-accent-gold/10 border border-accent-gold/50 text-accent-gold rounded-full text-sm font-medium hover:bg-accent-gold hover:text-primary-dark transition-all duration-300"
+                    className="px-3 sm:px-4 py-1 sm:py-2 bg-accent-gold/10 border border-accent-gold/50 text-accent-gold rounded-full text-xs sm:text-sm font-medium hover:bg-accent-gold hover:text-primary-dark transition-all duration-300"
                   >
                     Admin Panel
                   </Link>
@@ -64,38 +66,27 @@ export default function Header() {
 
                 <button
                   onClick={handleLogout}
-                  className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors duration-300"
+                  className="px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium text-gray-300 hover:text-white transition-colors duration-300"
                 >
                   Logout
                 </button>
               </div>
             ) : (
-              <Link href="/login" className="text-sm font-medium text-gray-300 hover:text-accent-gold transition-colors duration-300 uppercase tracking-wider">
+              <Link href="/login" className="text-xs sm:text-sm font-medium text-gray-300 hover:text-accent-gold transition-colors duration-300 uppercase tracking-wider">
                 Login
               </Link>
             )}
 
-            {/* Cart Icon (Non-Admin Only) */}
             {!isAdmin && (
               <Link
                 href="/cart"
-                className="relative p-2 text-gray-300 hover:text-accent-gold transition-colors duration-300"
+                className="relative p-2 sm:p-3 text-gray-300 hover:text-accent-gold transition-colors duration-300"
               >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                  />
+                <svg className="w-5 sm:w-6 h-5 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg>
                 {items.length > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-accent-gold text-primary-dark text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 bg-accent-gold text-primary-dark text-[8px] sm:text-[10px] font-bold rounded-full w-3 sm:w-4 h-3 sm:h-4 flex items-center justify-center">
                     {items.length}
                   </span>
                 )}
@@ -105,50 +96,34 @@ export default function Header() {
 
           {/* Mobile Actions */}
           <div className="flex items-center gap-1 md:hidden">
-            {/* Admin Mobile View: Direct Actions, No Menu */}
             {isAdmin ? (
-              <div className="flex items-center gap-2">
-                <div className="flex flex-col items-end mr-1">
-                  <span className="text-[10px] text-gray-400 uppercase tracking-wide">Welcome</span>
-                  <span className="text-xs text-white font-medium truncate max-w-[120px]">{user?.email}</span>
-                </div>
+              <div className="flex items-center gap-1 sm:gap-2">
                 <Link
                   href="/admin"
-                  className="p-2 text-accent-gold hover:text-white transition-colors"
+                  className="p-2 sm:p-2.5 text-accent-gold hover:text-white transition-colors"
                   title="Admin Panel"
                 >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                  <svg className="w-5 sm:w-6 h-5 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="p-2 text-red-400 hover:text-red-300 transition-colors"
+                  className="p-2 sm:p-2.5 text-red-400 hover:text-red-300 transition-colors"
                   title="Logout"
                 >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                  <svg className="w-5 sm:w-6 h-5 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                 </button>
               </div>
             ) : (
-              /* Non-Admin Mobile View: Cart + Hamburger */
               <>
                 <Link
                   href="/cart"
-                  className="relative p-2 text-gray-300 hover:text-accent-gold transition-colors duration-300"
+                  className="relative p-2 sm:p-3 text-gray-300 hover:text-accent-gold transition-colors duration-300"
                 >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.5}
-                      d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                    />
+                  <svg className="w-5 sm:w-6 h-5 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                   </svg>
                   {items.length > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-accent-gold text-primary-dark text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                    <span className="absolute -top-1 -right-1 bg-accent-gold text-primary-dark text-[8px] sm:text-[10px] font-bold rounded-full w-3 sm:w-4 h-3 sm:h-4 flex items-center justify-center">
                       {items.length}
                     </span>
                   )}
@@ -156,14 +131,9 @@ export default function Header() {
 
                 <button
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="p-2 text-gray-300 hover:text-white transition-colors"
+                  className="p-2 sm:p-2.5 text-gray-300 hover:text-white transition-colors"
                 >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
+                  <svg className="w-5 sm:w-6 h-5 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     {isMenuOpen ? (
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
                     ) : (
@@ -190,14 +160,14 @@ export default function Header() {
               <Link
                 href="/"
                 onClick={() => setIsMenuOpen(false)}
-                className="text-lg font-medium text-gray-300 hover:text-accent-gold transition-colors"
+                className="text-base sm:text-lg font-medium text-gray-300 hover:text-accent-gold transition-colors"
               >
                 Home
               </Link>
               <Link
                 href="/shop"
                 onClick={() => setIsMenuOpen(false)}
-                className="text-lg font-medium text-gray-300 hover:text-accent-gold transition-colors"
+                className="text-base sm:text-lg font-medium text-gray-300 hover:text-accent-gold transition-colors"
               >
                 Shop
               </Link>
@@ -206,7 +176,7 @@ export default function Header() {
                 <div className="pt-4 border-t border-white/10 space-y-4">
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-400">Signed in as</span>
-                    <span className="text-sm font-medium text-white">{user.email}</span>
+                    <span className="text-sm font-medium text-white truncate max-w-[150px]">{user.email}</span>
                   </div>
 
                   <button
@@ -233,5 +203,6 @@ export default function Header() {
         )}
       </AnimatePresence>
     </header>
+
   );
 }
