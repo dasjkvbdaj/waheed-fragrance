@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 export async function GET(request: Request) {
@@ -12,15 +12,14 @@ export async function GET(request: Request) {
         let q;
 
         if (category && category !== 'all') {
-            // Filter by category and exclude demo product
+            // Filter by category - no orderBy to ensure all products are fetched
             q = query(
                 productsRef,
-                where('category', '==', category),
-                orderBy('createdAt', 'desc')
+                where('category', '==', category)
             );
         } else {
-            // Get all products, ordered by creation date
-            q = query(productsRef, orderBy('createdAt', 'desc'));
+            // Get all products without orderBy constraint
+            q = query(productsRef);
         }
 
         const querySnapshot = await getDocs(q);
@@ -31,10 +30,17 @@ export async function GET(request: Request) {
             ...doc.data()
         }));
 
-        // Filter out demo product "Amber Noir" (client-side filter since we can't combine != with orderBy)
+        // Filter out demo product "Amber Noir"
         perfumes = perfumes.filter((p: any) =>
             String(p.name).toLowerCase() !== 'amber noir'
         );
+
+        // Sort by createdAt in memory (newest first), handling missing createdAt
+        perfumes.sort((a: any, b: any) => {
+            const aTime = a.createdAt?.toMillis?.() || a.createdAt?.seconds * 1000 || 0;
+            const bTime = b.createdAt?.toMillis?.() || b.createdAt?.seconds * 1000 || 0;
+            return bTime - aTime;
+        });
 
         return NextResponse.json({ perfumes });
     } catch (error) {
