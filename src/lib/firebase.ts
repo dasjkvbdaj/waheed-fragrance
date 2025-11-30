@@ -8,7 +8,7 @@ const firebaseConfig = {
     apiKey: "AIzaSyCUbB-RryWiUw7rBOk7dwirbJBIZTU2mwM",
     authDomain: "waheed-fragrance.firebaseapp.com",
     projectId: "waheed-fragrance",
-    storageBucket: "waheed-fragrance.firebasestorage.app",
+    storageBucket: "waheed-fragrance.appspot.com",
     messagingSenderId: "871970223770",
     appId: "1:871970223770:web:115d4965144b1470f01123",
     measurementId: "G-7GZSS1HPE5"

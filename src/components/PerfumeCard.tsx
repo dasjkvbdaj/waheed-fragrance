@@ -1,74 +1,135 @@
 "use client";
 
-import Link from "next/link";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Perfume } from "@/types";
+import { Perfume, PerfumeSize } from "@/types";
+import { useStore } from "@/lib/store";
 
 interface PerfumeCardProps {
   perfume: Perfume;
 }
 
 export default function PerfumeCard({ perfume }: PerfumeCardProps) {
-  const lowestPrice = perfume.sizes.length > 0 ? Math.min(...perfume.sizes.map((s) => s.price)) : 0;
+  const { addToCart } = useStore();
+
+  // Default to the first size if available
+  const [selectedSize, setSelectedSize] = useState<PerfumeSize | null>(
+    perfume.sizes.length > 0 ? perfume.sizes[0] : null
+  );
+  const [quantity, setQuantity] = useState(1);
+  const [isAdded, setIsAdded] = useState(false);
+
+  // Reset selection if perfume changes (though usually key handles this)
+  useEffect(() => {
+    if (perfume.sizes.length > 0) {
+      setSelectedSize(perfume.sizes[0]);
+      setQuantity(1);
+    }
+  }, [perfume]);
+
+  const handleQuantityChange = (delta: number) => {
+    setQuantity((prev) => Math.max(1, prev + delta));
+  };
+
+  const handleAddToCart = () => {
+    if (!selectedSize) return;
+
+    addToCart(perfume, selectedSize, quantity);
+
+    // Visual feedback
+    setIsAdded(true);
+    setTimeout(() => setIsAdded(false), 2000);
+  };
 
   return (
-    <Link href={`/product/${perfume.id}`}>
-      <div className="group h-full bg-primary-light/30 border border-white/5 rounded-2xl overflow-hidden hover:border-accent-gold/30 hover:shadow-2xl hover:shadow-accent-gold/10 transition-all duration-500 cursor-pointer flex flex-col">
-        <div className="relative h-64 md:h-80 bg-primary-darker overflow-hidden">
-          <Image
-            src={perfume.image}
-            alt={perfume.name}
-            fill
-            className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-          />
-          <div className="absolute top-3 right-3 bg-black/40 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full">
-            <span className="text-white text-[10px] font-bold tracking-widest uppercase">{perfume.category}</span>
-          </div>
-        </div>
-
-        <div className="p-5 flex flex-col flex-grow">
-          <h3 className="text-xl font-serif font-bold mb-2 text-white group-hover:text-accent-gold transition-colors duration-300 line-clamp-1">
-            {perfume.name}
-          </h3>
-
-          <div className="flex flex-wrap gap-2 mb-4">
-            {perfume.sizes.slice(0, 3).map((size) => (
-              <span key={size.size} className="text-gray-400 text-[10px] uppercase tracking-wider border border-white/10 px-2 py-1 rounded-md">
-                {size.size}
-              </span>
-            ))}
-            {perfume.sizes.length > 3 && (
-              <span className="text-gray-400 text-[10px] px-1 py-1">+</span>
-            )}
-          </div>
-
-          <div className="mt-auto flex items-end justify-between">
-            <div className="flex flex-col">
-
-              <span className="text-2xl font-bold text-accent-gold font-serif">
-                ${lowestPrice}
-              </span>
-            </div>
-
-            <div className="w-10 h-10 rounded-full bg-accent-gold/10 flex items-center justify-center group-hover:bg-accent-gold text-accent-gold group-hover:text-primary-dark transition-all duration-300">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </div>
-          </div>
+    <div className="group h-full bg-primary-darker border border-white/5 rounded-2xl overflow-hidden hover:border-accent-gold/30 transition-all duration-500 flex flex-col shadow-xl">
+      {/* Image Section */}
+      <div className="relative h-72 w-full bg-black/20">
+        <Image
+          src={perfume.image}
+          alt={perfume.name}
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+        />
+        <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full">
+          <span className="text-accent-gold text-xs font-bold tracking-widest uppercase">{perfume.category}</span>
         </div>
       </div>
-    </Link>
+
+      {/* Content Section */}
+      <div className="p-6 flex flex-col flex-grow space-y-4">
+        <div>
+          <h3 className="text-2xl font-serif font-bold text-white mb-2">{perfume.name}</h3>
+          {perfume.description && (
+            <p className="text-gray-400 text-sm leading-relaxed mb-3 line-clamp-2">{perfume.description}</p>
+          )}
+        </div>
+
+        {/* Size Selection Pills */}
+        <div className="space-y-2">
+          <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">Select Size</p>
+          <div className="flex flex-wrap gap-2">
+            {perfume.sizes.map((size) => (
+              <button
+                key={size.size}
+                onClick={() => setSelectedSize(size)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border ${selectedSize?.size === size.size
+                    ? "bg-accent-gold text-primary-dark border-accent-gold shadow-lg shadow-accent-gold/20"
+                    : "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10 hover:border-white/20"
+                  }`}
+              >
+                {size.size}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Price and Quantity */}
+        <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+          <div className="flex flex-col">
+            <span className="text-xs text-gray-500 uppercase tracking-wider mb-1">Price</span>
+            <span className="text-2xl font-bold text-accent-gold font-serif">
+              ${selectedSize ? selectedSize.price * quantity : 0}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-3 bg-white/5 rounded-lg p-1 border border-white/10">
+            <button
+              onClick={() => handleQuantityChange(-1)}
+              className="w-8 h-8 rounded-md bg-transparent text-white hover:bg-white/10 flex items-center justify-center transition disabled:opacity-50"
+              disabled={quantity <= 1}
+            >
+              -
+            </button>
+            <span className="w-6 text-center text-white font-bold">{quantity}</span>
+            <button
+              onClick={() => handleQuantityChange(1)}
+              className="w-8 h-8 rounded-md bg-transparent text-white hover:bg-white/10 flex items-center justify-center transition"
+            >
+              +
+            </button>
+          </div>
+        </div>
+
+        <button
+          onClick={handleAddToCart}
+          disabled={!selectedSize || isAdded}
+          className={`w-full py-4 font-bold text-lg rounded-xl shadow-lg transition-all duration-300 mt-4 flex items-center justify-center gap-2 ${isAdded
+              ? "bg-green-600 text-white shadow-green-900/20 scale-100 cursor-default"
+              : "bg-gradient-to-r from-accent-gold to-yellow-600 text-primary-dark shadow-accent-gold/20 hover:shadow-accent-gold/40 hover:scale-[1.02] active:scale-[0.98]"
+            }`}
+        >
+          {isAdded ? (
+            <>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+              Added!
+            </>
+          ) : (
+            "Add to Cart"
+          )}
+        </button>
+      </div>
+    </div>
   );
 }

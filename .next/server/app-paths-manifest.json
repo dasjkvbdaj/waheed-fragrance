@@ -1,6 +1,8 @@
 {
   "/page": "app/page.js",
+  "/shop/page": "app/shop/page.js",
   "/login/page": "app/login/page.js",
-  "/api/auth/logout/route": "app/api/auth/logout/route.js",
-  "/shop/page": "app/shop/page.js"
+  "/api/auth/login/route": "app/api/auth/login/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/page": "app/admin/page.js"
 }
