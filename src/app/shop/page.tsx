@@ -2,6 +2,8 @@
 
 import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 import ShopCatalogClient from "@/components/ShopCatalogClient";
 
 function CatalogContent() {
@@ -13,24 +15,30 @@ function CatalogContent() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchPerfumes() {
+    const fetchPerfumes = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/products');
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch products');
-        }
+        // Get reference to products collection
+        const productsCollection = collection(db, 'products');
 
-        const data = await response.json();
-        setPerfumes(data.perfumes || []);
+        // Fetch all documents from the collection
+        const productsSnapshot = await getDocs(productsCollection);
+
+        // Map documents to include id and all data
+        const productList = productsSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+
+        setPerfumes(productList);
       } catch (err) {
         console.error('Error fetching perfumes:', err);
         setError('Failed to load products. Please try again later.');
       } finally {
         setLoading(false);
       }
-    }
+    };
 
     fetchPerfumes();
   }, []);

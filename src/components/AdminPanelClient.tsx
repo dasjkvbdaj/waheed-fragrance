@@ -2,9 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { Perfume } from '@/types';
+import { db } from '@/lib/firebase';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { uploadImage } from '@/utils/firebaseUtils';
 
 // Helper to create an empty product
-function emptyProduct(): Partial<Perfume & { imageData?: string }> {
+function emptyProduct(): Partial<Perfume & { imageData?: string; imageFile?: File }> {
   return {
     name: '',
     category: 'unisex',
@@ -12,7 +15,8 @@ function emptyProduct(): Partial<Perfume & { imageData?: string }> {
     sizes: [{ size: '100ml', price: 0 }],
     description: '',
     notes: '',
-    imageData: undefined
+    imageData: undefined,
+    imageFile: undefined
   };
 }
 
@@ -24,18 +28,21 @@ const CARD_CLASS = "bg-primary-darker rounded-2xl border border-white/5 shadow-x
 export default function AdminPanelClient() {
   const [items, setItems] = useState<Perfume[]>([]);
   const [loading, setLoading] = useState(false);
-  const [editing, setEditing] = useState<Partial<Perfume & { imageData?: string }> | null>(null);
+  const [editing, setEditing] = useState<Partial<Perfume & { imageData?: string; imageFile?: File }> | null>(null);
   const [creating, setCreating] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<Partial<Perfume> | null>(null);
 
   async function fetchList() {
     setLoading(true);
     try {
-      const res = await fetch('/api/admin/products');
-      const data = await res.json();
-      setItems(data.products || []);
+      const querySnapshot = await getDocs(collection(db, "products"));
+      const products = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as Perfume[];
+      setItems(products);
     } catch (err) {
-      console.error(err);
+      console.error("Error fetching products:", err);
     } finally {
       setLoading(false);
     }
@@ -53,7 +60,9 @@ export default function AdminPanelClient() {
       alert('Please provide name and at least one size with price.');
       return;
     }
-    if (!payload.imageData && (!payload.image || payload.image === '/placeholder.jpg')) {
+
+    // Check if image is selected (either new file or existing placeholder which is not allowed for new products usually)
+    if (!payload.imageFile && (!payload.image || payload.image === '/placeholder.jpg')) {
       alert('Please select an image.');
       return;
     }
@@ -64,14 +73,31 @@ export default function AdminPanelClient() {
       return;
     }
 
-    const res = await fetch('/api/admin/products', { method: 'POST', body: JSON.stringify(payload), headers: { 'content-type': 'application/json' } });
-    if (res.ok) {
+    setLoading(true);
+    try {
+      let imageUrl = payload.image || "";
+      if (payload.imageFile) {
+        imageUrl = await uploadImage(payload.imageFile);
+      }
+
+      // Remove temporary fields
+      const { imageData, imageFile, ...productData } = payload;
+
+      await addDoc(collection(db, "products"), {
+        ...productData,
+        image: imageUrl,
+        createdAt: new Date().toISOString()
+      });
+
       setEditing(null);
       setCreating(false);
       fetchList();
-      try { new BroadcastChannel('admin-products').postMessage('updated'); } catch { }
-    } else {
+      alert('Product added successfully!');
+    } catch (error) {
+      console.error("Error adding product:", error);
       alert('Failed to create product.');
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -89,22 +115,43 @@ export default function AdminPanelClient() {
       return;
     }
 
-    const res = await fetch(`/api/admin/products/${id}`, { method: 'PUT', body: JSON.stringify(editing), headers: { 'content-type': 'application/json' } });
-    if (res.ok) {
+    setLoading(true);
+    try {
+      let imageUrl = editing.image || "";
+      if (editing.imageFile) {
+        imageUrl = await uploadImage(editing.imageFile);
+      }
+
+      // Remove temporary fields and id
+      const { imageData, imageFile, id: _id, ...productData } = editing;
+
+      const productRef = doc(db, "products", id);
+      await updateDoc(productRef, {
+        ...productData,
+        image: imageUrl
+      });
+
       setEditing(null);
       fetchList();
-      try { new BroadcastChannel('admin-products').postMessage('updated'); } catch { }
-    } else {
+      alert('Product updated successfully!');
+    } catch (error) {
+      console.error("Error updating product:", error);
       alert('Failed to update product.');
+    } finally {
+      setLoading(false);
     }
   }
 
   async function handleDelete(id: string | undefined) {
     if (!id) return;
-    const res = await fetch(`/api/admin/products/${id}`, { method: 'DELETE' });
-    if (res.ok) {
+
+    try {
+      await deleteDoc(doc(db, "products", id));
       fetchList();
-      try { new BroadcastChannel('admin-products').postMessage('updated'); } catch { }
+      alert('Product deleted successfully!');
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      alert('Failed to delete product.');
     }
   }
 
@@ -155,8 +202,8 @@ export default function AdminPanelClient() {
                 {/* Image Section (4 cols) */}
                 <div className="lg:col-span-4 space-y-4">
                   <div className="aspect-square rounded-2xl overflow-hidden bg-black/40 border-2 border-dashed border-gray-700 flex items-center justify-center relative group">
-                    {editing?.image ? (
-                      <img src={editing.image} alt="Preview" className="w-full h-full object-cover" />
+                    {editing?.image || editing?.imageData ? (
+                      <img src={editing.imageData || editing.image} alt="Preview" className="w-full h-full object-cover" />
                     ) : (
                       <span className="text-gray-500">No Image</span>
                     )}
@@ -172,7 +219,11 @@ export default function AdminPanelClient() {
                         if (file) {
                           if (file.size > 2 * 1024 * 1024) return alert("Image max 2MB");
                           const reader = new FileReader();
-                          reader.onload = () => setEditing({ ...editing, imageData: reader.result as string, image: reader.result as string });
+                          reader.onload = () => setEditing({
+                            ...editing,
+                            imageData: reader.result as string,
+                            imageFile: file
+                          });
                           reader.readAsDataURL(file);
                         }
                       }}
@@ -289,9 +340,10 @@ export default function AdminPanelClient() {
                   <div className="flex justify-end pt-4">
                     <button
                       type="submit"
-                      className="w-full md:w-auto px-8 py-3 bg-accent-gold text-primary-dark font-bold rounded-xl shadow-lg hover:bg-yellow-400 transition transform hover:scale-[1.02]"
+                      disabled={loading}
+                      className="w-full md:w-auto px-8 py-3 bg-accent-gold text-primary-dark font-bold rounded-xl shadow-lg hover:bg-yellow-400 transition transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {creating ? 'Create Product' : 'Save Changes'}
+                      {loading ? 'Saving...' : (creating ? 'Create Product' : 'Save Changes')}
                     </button>
                   </div>
                 </div>
@@ -304,7 +356,7 @@ export default function AdminPanelClient() {
 
         {/* Mobile Cards (Visible < md) */}
         <div className="md:hidden space-y-6">
-          {loading ? <p className="text-center text-gray-500">Loading...</p> : items.map(p => (
+          {loading && !creating && !editing ? <p className="text-center text-gray-500">Loading...</p> : items.map(p => (
             <div key={p.id} className={`${CARD_CLASS} flex flex-col border-white/10 shadow-lg`}>
               <div className="relative h-48 w-full">
                 <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
@@ -356,7 +408,7 @@ export default function AdminPanelClient() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
-                {loading ? (
+                {loading && !creating && !editing ? (
                   <tr><td colSpan={4} className="p-8 text-center text-gray-500">Loading...</td></tr>
                 ) : items.map(p => (
                   <tr key={p.id} className="hover:bg-white/5 transition duration-150 group">
