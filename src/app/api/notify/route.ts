@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
     try {
-        const { orderId, customerPhone, address, items, totalPrice } = await request.json();
+        const { orderId, customerPhone, address } = await request.json();
 
         // Format the message as requested by the user
         // Note: CallMeBot uses URL encoding for the text
