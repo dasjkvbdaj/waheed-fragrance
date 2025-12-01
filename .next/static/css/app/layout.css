@@ -1680,6 +1680,7 @@ video {
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -1688,6 +1689,7 @@ body {
   font-family: var(--font-inter), system-ui, sans-serif;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+  overflow-x: hidden;
 }
 
 /* Custom scrollbar */

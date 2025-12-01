@@ -12,7 +12,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between gap-8 mb-12">
           {/* Brand */}
           <div className="space-y-3 flex-1">
-            <h3 className="text-xl font-bold text-accent-gold">✨ Waheed Fragrance</h3>
+            <h3 className="text-xl font-bold text-accent-gold">Waheed Fragrance</h3>
             <p className="text-gray-400 text-sm leading-relaxed">
               Discover the finest fragrances curated for every occasion and personality.
             </p>

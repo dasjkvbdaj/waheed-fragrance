@@ -88,7 +88,6 @@ export default function PerfumeCard({ perfume }: PerfumeCardProps) {
         {/* Price and Quantity */}
         <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-xs text-gray-500 uppercase tracking-wider mb-1">Price</span>
             <span className="text-2xl font-bold text-accent-gold font-serif">
               ${selectedSize ? selectedSize.price * quantity : 0}
             </span>
