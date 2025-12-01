@@ -62,7 +62,7 @@ export default function PerfumeCard({ perfume }: PerfumeCardProps) {
         <div>
           <h3 className="text-2xl font-serif font-bold text-white mb-2">{perfume.name}</h3>
           {perfume.description && (
-            <p className="text-gray-400 text-sm leading-relaxed mb-3 line-clamp-2">{perfume.description}</p>
+            <p className="text-gray-400 text-sm leading-relaxed mb-3">{perfume.description}</p>
           )}
         </div>
 
@@ -75,8 +75,8 @@ export default function PerfumeCard({ perfume }: PerfumeCardProps) {
                 key={size.size}
                 onClick={() => setSelectedSize(size)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border ${selectedSize?.size === size.size
-                    ? "bg-accent-gold text-primary-dark border-accent-gold shadow-lg shadow-accent-gold/20"
-                    : "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10 hover:border-white/20"
+                  ? "bg-accent-gold text-primary-dark border-accent-gold shadow-lg shadow-accent-gold/20"
+                  : "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10 hover:border-white/20"
                   }`}
               >
                 {size.size}
@@ -116,8 +116,8 @@ export default function PerfumeCard({ perfume }: PerfumeCardProps) {
           onClick={handleAddToCart}
           disabled={!selectedSize || isAdded}
           className={`w-full py-4 font-bold text-lg rounded-xl shadow-lg transition-all duration-300 mt-4 flex items-center justify-center gap-2 ${isAdded
-              ? "bg-green-600 text-white shadow-green-900/20 scale-100 cursor-default"
-              : "bg-gradient-to-r from-accent-gold to-yellow-600 text-primary-dark shadow-accent-gold/20 hover:shadow-accent-gold/40 hover:scale-[1.02] active:scale-[0.98]"
+            ? "bg-green-600 text-white shadow-green-900/20 scale-100 cursor-default"
+            : "bg-gradient-to-r from-accent-gold to-yellow-600 text-primary-dark shadow-accent-gold/20 hover:shadow-accent-gold/40 hover:scale-[1.02] active:scale-[0.98]"
             }`}
         >
           {isAdded ? (
