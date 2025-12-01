@@ -1,8 +1,9 @@
 {
   "/shop/page": "app/shop/page.js",
   "/page": "app/page.js",
-  "/login/page": "app/login/page.js",
   "/cart/page": "app/cart/page.js",
+  "/login/page": "app/login/page.js",
+  "/api/auth/logout/route": "app/api/auth/logout/route.js",
   "/api/auth/login/route": "app/api/auth/login/route.js",
   "/admin/page": "app/admin/page.js"
 }
