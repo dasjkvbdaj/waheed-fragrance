@@ -203,7 +203,7 @@ export default function AdminPanelClient() {
                 <div className="lg:col-span-4 space-y-4">
                   <div className="aspect-square rounded-2xl overflow-hidden bg-black/40 border-2 border-dashed border-gray-700 flex items-center justify-center relative group">
                     {editing?.image || editing?.imageData ? (
-                      <img src={editing.imageData || editing.image} alt="Preview" className="w-full h-full object-cover" />
+                      <img src={editing.imageData || editing.image} alt="Preview" className="w-full h-full object-cover" loading='lazy' />
                     ) : (
                       <span className="text-gray-500">No Image</span>
                     )}
@@ -359,7 +359,7 @@ export default function AdminPanelClient() {
           {loading && !creating && !editing ? <p className="text-center text-gray-500">Loading...</p> : items.map(p => (
             <div key={p.id} className={`${CARD_CLASS} flex flex-col border-white/10 shadow-lg`}>
               <div className="relative h-48 w-full">
-                <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+                <img src={p.image} alt={p.name} className="w-full h-full object-cover" loading='lazy' />
                 <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-accent-gold border border-accent-gold/20 uppercase">
                   {p.category}
                 </div>
@@ -414,7 +414,7 @@ export default function AdminPanelClient() {
                   <tr key={p.id} className="hover:bg-white/5 transition duration-150 group">
                     <td className="p-4">
                       <div className="flex items-center gap-4">
-                        <img src={p.image} alt={p.name} className="w-16 h-16 rounded-lg object-cover bg-gray-800" />
+                        <img src={p.image} alt={p.name} className="w-16 h-16 rounded-lg object-cover bg-gray-800" loading='lazy' />
                         <div>
                           <p className="font-bold text-white group-hover:text-accent-gold transition">{p.name}</p>
                           <p className="text-xs text-gray-500 truncate max-w-[200px]">{p.description}</p>

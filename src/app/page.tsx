@@ -91,6 +91,7 @@ export default function HomePage() {
               src="/about-us-hero.jpg"
               alt="About Us - Perfume bottles and ingredients"
               className="rounded-lg shadow-xl max-w-sm w-full h-auto"
+              loading="lazy"
             />
           </ScrollReveal>
         </div>
