@@ -9,10 +9,8 @@ export async function POST(request: Request) {
         const message = `New Order Received! \nOrder ID: ${orderId} \nCustomer phone: ${customerPhone} \nAddress: ${address} \nLog in to confirm it`;
 
         // CallMeBot API Configuration
-        // User provided number: +9618190703 (Likely typo, missing '5' based on previous context +961 81 905 703)
-        // I will use the likely correct one: 96181905703. 
-        // If the user really meant 90703, they can correct it in the code or env.
-        const phone = "96181905703";
+        // Updated number: +961 76 919 542 (changed from +961 81 905 703)
+        const phone = "96176919542";
 
         // API Key must be set in .env.local
         const apiKey = process.env.CALLMEBOT_API_KEY;
