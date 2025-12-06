@@ -114,7 +114,7 @@ export default function ShopCatalogClient({ perfumes, initialCategory = null }: 
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 lg:gap-8">
         {filteredPerfumes.length > 0 ? (
           filteredPerfumes.map((perfume) => (
             <div key={perfume.id}>

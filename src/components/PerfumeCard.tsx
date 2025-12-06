@@ -19,7 +19,7 @@ export default function PerfumeCard({ perfume }: PerfumeCardProps) {
   const [quantity, setQuantity] = useState(1);
   const [isAdded, setIsAdded] = useState(false);
 
-  // Reset selection if perfume changes (though usually key handles this)
+  // Reset selection if perfume changes
   useEffect(() => {
     if (perfume.sizes.length > 0) {
       setSelectedSize(perfume.sizes[0]);
@@ -44,39 +44,63 @@ export default function PerfumeCard({ perfume }: PerfumeCardProps) {
   return (
     <div className="group h-full bg-primary-darker border border-white/5 rounded-2xl overflow-hidden hover:border-accent-gold/30 transition-all duration-500 flex flex-col shadow-xl">
       {/* Image Section */}
-      <div className="relative h-72 w-full bg-black/20">
+      <div className="relative h-48 md:h-72 w-full bg-black/20">
         <Image
           src={perfume.image}
           alt={perfume.name}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
         />
-        <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full">
+
+        {/* Category Badge */}
+        <div className="absolute top-2 md:top-4 right-2 md:right-4 bg-black/60 backdrop-blur-md border border-white/10 px-2 md:px-3 py-1 rounded-full">
           <span className="text-accent-gold text-xs font-bold tracking-widest uppercase">{perfume.category}</span>
         </div>
+
+        {/* Circular Cart Button - Mobile Only */}
+        <button
+          onClick={handleAddToCart}
+          disabled={!selectedSize || isAdded}
+          className={`md:hidden absolute bottom-2 right-2 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 z-10 ${isAdded
+              ? "bg-green-600"
+              : "bg-accent-gold hover:bg-yellow-400"
+            }`}
+        >
+          {isAdded ? (
+            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+            </svg>
+          ) : (
+            <svg className="w-4 h-4 text-primary-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+          )}
+        </button>
       </div>
 
       {/* Content Section */}
-      <div className="p-6 flex flex-col flex-grow space-y-4">
+      <div className="p-3 md:p-6 flex flex-col flex-grow space-y-2 md:space-y-4">
         <div>
-          <h3 className="text-2xl font-serif font-bold text-white mb-2">{perfume.name}</h3>
+          <h3 className="text-sm md:text-2xl font-bold md:font-serif text-white line-clamp-2 md:line-clamp-none mb-0 md:mb-2">
+            {perfume.name}
+          </h3>
           {perfume.description && (
-            <p className="text-gray-400 text-sm leading-relaxed mb-3">{perfume.description}</p>
+            <p className="hidden md:block text-gray-400 text-sm leading-relaxed mb-3">{perfume.description}</p>
           )}
         </div>
 
         {/* Size Selection Pills */}
         <div className="space-y-2">
           <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">Select Size</p>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1 md:gap-2">
             {perfume.sizes.map((size) => (
               <button
                 key={size.size}
                 onClick={() => setSelectedSize(size)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border ${selectedSize?.size === size.size
-                  ? "bg-accent-gold text-primary-dark border-accent-gold shadow-lg shadow-accent-gold/20"
-                  : "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10 hover:border-white/20"
+                className={`px-2 md:px-4 py-1 md:py-2 rounded-full text-xs md:text-sm font-medium transition-all duration-200 border ${selectedSize?.size === size.size
+                    ? "bg-accent-gold text-primary-dark border-accent-gold shadow-lg shadow-accent-gold/20"
+                    : "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10 hover:border-white/20"
                   }`}
               >
                 {size.size}
@@ -86,42 +110,45 @@ export default function PerfumeCard({ perfume }: PerfumeCardProps) {
         </div>
 
         {/* Price and Quantity */}
-        <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+        <div className="mt-auto pt-2 md:pt-4 border-t border-white/5 flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-2xl font-bold text-accent-gold font-serif">
+            <span className="text-sm md:text-2xl font-bold text-accent-gold font-serif">
               ${selectedSize ? selectedSize.price * quantity : 0}
             </span>
           </div>
 
-          <div className="flex items-center gap-3 bg-white/5 rounded-lg p-1 border border-white/10">
+          <div className="flex items-center gap-1 md:gap-3 bg-white/5 rounded-lg p-0.5 md:p-1 border border-white/10">
             <button
               onClick={() => handleQuantityChange(-1)}
-              className="w-8 h-8 rounded-md bg-transparent text-white hover:bg-white/10 flex items-center justify-center transition disabled:opacity-50"
+              className="w-5 h-5 md:w-8 md:h-8 text-[10px] md:text-base rounded-md bg-transparent text-white hover:bg-white/10 flex items-center justify-center transition disabled:opacity-50"
               disabled={quantity <= 1}
             >
               -
             </button>
-            <span className="w-6 text-center text-white font-bold">{quantity}</span>
+            <span className="w-3 md:w-6 text-center text-white font-bold text-[10px] md:text-base">{quantity}</span>
             <button
               onClick={() => handleQuantityChange(1)}
-              className="w-8 h-8 rounded-md bg-transparent text-white hover:bg-white/10 flex items-center justify-center transition"
+              className="w-5 h-5 md:w-8 md:h-8 text-[10px] md:text-base rounded-md bg-transparent text-white hover:bg-white/10 flex items-center justify-center transition"
             >
               +
             </button>
           </div>
         </div>
 
+        {/* Desktop Add to Cart Button */}
         <button
           onClick={handleAddToCart}
           disabled={!selectedSize || isAdded}
-          className={`w-full py-4 font-bold text-lg rounded-xl shadow-lg transition-all duration-300 mt-4 flex items-center justify-center gap-2 ${isAdded
-            ? "bg-green-600 text-white shadow-green-900/20 scale-100 cursor-default"
-            : "bg-gradient-to-r from-accent-gold to-yellow-600 text-primary-dark shadow-accent-gold/20 hover:shadow-accent-gold/40 hover:scale-[1.02] active:scale-[0.98]"
+          className={`hidden md:flex w-full py-4 font-bold text-lg rounded-xl shadow-lg transition-all duration-300 mt-4 items-center justify-center gap-2 ${isAdded
+              ? "bg-green-600 text-white shadow-green-900/20 scale-100 cursor-default"
+              : "bg-gradient-to-r from-accent-gold to-yellow-600 text-primary-dark shadow-accent-gold/20 hover:shadow-accent-gold/40 hover:scale-[1.02] active:scale-[0.98]"
             }`}
         >
           {isAdded ? (
             <>
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+              </svg>
               Added!
             </>
           ) : (
