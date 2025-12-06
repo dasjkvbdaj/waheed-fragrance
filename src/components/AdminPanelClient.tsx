@@ -199,19 +199,19 @@ export default function AdminPanelClient() {
 
   // --- Order Handlers ---
 
-  async function handleConfirmOrder(orderId: string, docId: string) {
-    if (!confirm(`Confirm order #${orderId}?`)) return;
+  // async function handleConfirmOrder(orderId: string, docId: string) {
+  //   if (!confirm(`Confirm order #${orderId}?`)) return;
 
-    try {
-      await updateDoc(doc(db, "orders", docId), {
-        status: "confirmed"
-      });
-      fetchOrders();
-    } catch (error) {
-      console.error("Error confirming order:", error);
-      alert("Failed to confirm order");
-    }
-  }
+  //   try {
+  //     await updateDoc(doc(db, "orders", docId), {
+  //       status: "confirmed"
+  //     });
+  //     fetchOrders();
+  //   } catch (error) {
+  //     console.error("Error confirming order:", error);
+  //     alert("Failed to confirm order");
+  //   }
+  // }
 
   return (
     <div className="min-h-screen bg-primary-dark text-white p-4 md:p-8 font-sans">
@@ -566,14 +566,7 @@ export default function AdminPanelClient() {
                   {/* Expanded Details */}
                   {expandedOrder === order.id && (
                     <div className="mt-6 pt-6 border-t border-white/5 animate-fade-in">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                          <h4 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Customer Details</h4>
-                          <div className="space-y-2 text-sm">
-                            <p><span className="text-gray-500">Phone:</span> <span className="text-white ml-2">{order.customerPhone}</span></p>
-                            <p><span className="text-gray-500">Address:</span> <span className="text-white ml-2 block mt-1 p-3 bg-black/20 rounded-lg">{order.fullDeliveryAddress}</span></p>
-                          </div>
-                        </div>
+                      <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
                         <div>
                           <h4 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Order Items</h4>
                           <div className="space-y-3">
@@ -591,7 +584,7 @@ export default function AdminPanelClient() {
                         </div>
                       </div>
 
-                      {order.status === 'new' && (
+                      {/* {order.status === 'new' && (
                         <div className="mt-8 flex justify-end">
                           <button
                             onClick={() => handleConfirmOrder(order.orderId, order.id)}
@@ -600,7 +593,7 @@ export default function AdminPanelClient() {
                             Confirm Order
                           </button>
                         </div>
-                      )}
+                      )} */}
                     </div>
                   )}
                 </div>
