@@ -45,7 +45,7 @@ function CatalogContent() {
 
   return (
     <div className="min-h-screen bg-primary-dark pt-24 pb-20">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-2 md:px-4">
         {/* Header */}
         <div className="mb-12">
           <h1 className="text-5xl md:text-6xl font-bold mb-4">Our Collection</h1>
@@ -84,7 +84,7 @@ export default function CatalogPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-primary-dark pt-24 pb-20">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-2 md:px-4">
           <div className="flex justify-center items-center min-h-[400px]">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold mx-auto mb-4"></div>
