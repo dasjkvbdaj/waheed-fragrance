@@ -26,14 +26,13 @@ export default function CartItemsList({ items }: CartItemsListProps) {
     building: "",
     floor: "",
     details: "",
-    phone: "",
   });
 
   const validItems = items.filter((it) => it && it.perfume && it.selectedSize && typeof it.quantity === "number");
 
   const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.city || !formData.street || !formData.building || !formData.floor || !formData.phone) {
+    if (!formData.city || !formData.street || !formData.building || !formData.floor) {
       alert("Please fill in all required fields");
       return;
     }
@@ -47,7 +46,6 @@ export default function CartItemsList({ items }: CartItemsListProps) {
 
       const orderData = {
         orderId,
-        customerPhone: formData.phone,
         fullDeliveryAddress: fullAddress,
         cartItems: validItems.map(item => ({
           name: item.perfume.name,
@@ -298,18 +296,6 @@ Address: ${addressDetails}
                   onChange={(e) => setFormData({ ...formData, details: e.target.value })}
                   className="w-full p-3 rounded-xl bg-primary-dark border border-white/10 text-white focus:border-accent-gold focus:ring-1 focus:ring-accent-gold/50 outline-none resize-none h-20"
                   placeholder="Near the supermarket..."
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Phone Number</label>
-                <input
-                  required
-                  type="tel"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full p-3 rounded-xl bg-primary-dark border border-white/10 text-white focus:border-accent-gold focus:ring-1 focus:ring-accent-gold/50 outline-none"
-                  placeholder="+961 70 123456"
                 />
               </div>
 
