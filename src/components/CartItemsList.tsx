@@ -65,29 +65,23 @@ export default function CartItemsList({ items }: CartItemsListProps) {
       // 1. Save to Firestore
       await addDoc(collection(db, "orders"), orderData);
 
-      // 2. Trigger Automated WhatsApp (Background)
-      // We don't await this to fail the order if the message fails, but it's good to try.
-      try {
-        await fetch('/api/notify', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            orderId,
-            customerPhone: formData.phone,
-            address: fullAddress,
-            items: validItems.map(item => ({
-              name: item.perfume.name,
-              size: item.selectedSize.size,
-              quantity: item.quantity
-            })),
-            totalPrice
-          })
-        });
-      } catch (err) {
-        console.error("Failed to send automated WhatsApp:", err);
-        // Fallback: Open WhatsApp manually if automation fails? 
-        // For now, we just log it as the user requested "automatically".
-      }
+      // 2. Redirect to WhatsApp
+      const message = `Hello, I would like to order the following items:
+
+${validItems
+          .map(
+            (item) =>
+              `-  ${item.perfume.name} (${item.selectedSize.size}) x${item.quantity}`
+          )
+          .join("\n")}
+
+Address: ${fullAddress}
+`;
+
+
+
+      const whatsappUrl = `https://wa.me/96176919542?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
 
       // 3. Clear Cart and Show Success
       clearCart();
