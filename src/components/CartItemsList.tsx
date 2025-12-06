@@ -19,7 +19,6 @@ export default function CartItemsList({ items }: CartItemsListProps) {
   const clearCart = useStore((state) => state.clearCart);
 
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const [isSuccessOpen, setIsSuccessOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     city: "",
@@ -66,6 +65,8 @@ export default function CartItemsList({ items }: CartItemsListProps) {
       await addDoc(collection(db, "orders"), orderData);
 
       // 2. Redirect to WhatsApp
+      const addressDetails = `City: ${formData.city}, Street: ${formData.street}, Building: ${formData.building}, Floor: ${formData.floor}${formData.details ? `, Additional Details: ${formData.details}` : ''}`;
+
       const message = `Hello, I would like to order the following items:
 
 ${validItems
@@ -75,7 +76,7 @@ ${validItems
           )
           .join("\n")}
 
-Address: ${fullAddress}
+Address: ${addressDetails}
 `;
 
 
@@ -83,10 +84,9 @@ Address: ${fullAddress}
       const whatsappUrl = `https://wa.me/96176919542?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
 
-      // 3. Clear Cart and Show Success
+      // 3. Clear Cart
       clearCart();
       setIsCheckoutOpen(false);
-      setIsSuccessOpen(true);
     } catch (error) {
       console.error("Error placing order:", error);
       alert("Failed to place order. Please try again.");
@@ -95,7 +95,7 @@ Address: ${fullAddress}
     }
   };
 
-  if (validItems.length === 0 && !isSuccessOpen) {
+  if (validItems.length === 0) {
     return (
       <div className="text-center py-20">
         <svg
@@ -126,7 +126,7 @@ Address: ${fullAddress}
   return (
     <div>
       {/* Cart Items */}
-      {!isSuccessOpen && (
+      {validItems.length > 0 && (
         <>
           <div className="space-y-4">
             {validItems.map((item) => (
@@ -334,28 +334,7 @@ Address: ${fullAddress}
         </div>
       )}
 
-      {/* Success Popup */}
-      {isSuccessOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-          <div className="bg-primary-darker border border-accent-gold/20 rounded-2xl p-8 max-w-md w-full shadow-2xl text-center">
-            <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-2">Thank You!</h3>
-            <p className="text-gray-400 mb-6">
-              Your order has been placed. We will contact you soon for delivery.
-            </p>
-            <Link
-              href="/shop"
-              className="inline-block w-full py-3 rounded-xl bg-accent-gold text-primary-dark font-bold hover:bg-yellow-400 transition"
-            >
-              Continue Shopping
-            </Link>
-          </div>
-        </div>
-      )}
+
     </div>
   );
 }
