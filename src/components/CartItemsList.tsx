@@ -130,73 +130,97 @@ Address: ${addressDetails}
             {validItems.map((item) => (
               <div
                 key={`${item.perfume?.id ?? Math.random().toString(36).slice(2)}-${item.selectedSize.size}`}
-                className="bg-primary-light rounded-lg p-4 flex gap-4 items-start hover:bg-primary-light/80 transition"
+                className="bg-primary-light rounded-xl p-4 flex gap-4 items-start relative hover:bg-primary-light/80 transition group"
               >
-                {/* Image */}
-                <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
-                  <Image
-                    src={item.perfume?.image ?? "/Amber_Noir.jpg"}
-                    alt={item.perfume?.name ?? "Unknown product"}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
+                {/* Delete Button - Absolute Top Right */}
+                <button
+                  onClick={() => removeFromCart(item.perfume?.id ?? "", item.selectedSize.size)}
+                  className="absolute top-3 right-3 text-gray-500 hover:text-red-500 transition p-1 hover:bg-primary-dark/50 rounded-full z-10"
+                  aria-label="Remove item"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
+                  </svg>
+                </button>
 
-                {/* Details */}
-                <div className="flex-1">
-                  <div className="flex items-start justify-between mb-2">
-                    <div>
-                      <h3 className="text-lg font-semibold">{item.perfume?.name ?? "Unknown product"}</h3>
-                    </div>
-                    <button
-                      onClick={() => removeFromCart(item.perfume?.id ?? "", item.selectedSize.size)}
-                      className="text-gray-400 hover:text-red-500 transition"
-                    >
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
-                      </svg>
-                    </button>
+                {/* Left Side: Image + Mobile Quantity */}
+                <div className="flex flex-col items-center gap-3">
+                  {/* Image */}
+                  <div className="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-primary-dark">
+                    <Image
+                      src={item.perfume?.image ?? "/Amber_Noir.jpg"}
+                      alt={item.perfume?.name ?? "Unknown product"}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
 
-                  <p className="text-gray-400 text-sm mb-3 font-semibold text-accent-gold">
-                    Size: {item.selectedSize.size}
-                  </p>
+                  {/* Mobile Quantity Selector (Hidden on Desktop) */}
+                  <div className="flex md:hidden items-center border border-accent-gold/30 rounded-md bg-primary-dark overflow-hidden h-7 w-20 shadow-sm">
+                    <button
+                      onClick={() =>
+                        updateQuantity(item.perfume?.id ?? "", item.selectedSize.size, Math.max(1, item.quantity - 1))
+                      }
+                      className="w-6 h-full text-white hover:bg-white/10 transition active:bg-white/20 text-[10px] flex items-center justify-center font-bold"
+                    >
+                      −
+                    </button>
+                    <div className="flex-1 h-full flex items-center justify-center text-white text-xs font-bold border-x border-accent-gold/30 bg-primary-dark/50">
+                      {item.quantity}
+                    </div>
+                    <button
+                      onClick={() =>
+                        updateQuantity(item.perfume?.id ?? "", item.selectedSize.size, item.quantity + 1)
+                      }
+                      className="w-6 h-full text-white hover:bg-white/10 transition active:bg-white/20 text-[10px] flex items-center justify-center font-bold"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
 
-                  {/* Quantity and Price */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center border border-accent-gold/30 rounded-lg bg-primary-dark">
+                {/* Right Side: Details + Desktop Quantity + Price */}
+                <div className="flex-1 min-w-0 flex flex-col justify-between self-stretch pr-6">
+                  <div>
+                    <h3 className="text-lg font-semibold text-white leading-tight mb-1">
+                      {item.perfume?.name ?? "Unknown product"}
+                    </h3>
+                    <p className="text-gray-400 text-sm font-medium">
+                      Size: {item.selectedSize.size}
+                    </p>
+                  </div>
+
+                  {/* Bottom Row: Desktop Quantity + Price */}
+                  <div className="flex items-end justify-end md:justify-between w-full mt-2">
+                    {/* Desktop Quantity Selector (Hidden on Mobile) */}
+                    <div className="hidden md:flex items-center border border-accent-gold/30 rounded-lg bg-primary-dark overflow-hidden h-9">
                       <button
                         onClick={() =>
                           updateQuantity(item.perfume?.id ?? "", item.selectedSize.size, Math.max(1, item.quantity - 1))
                         }
-                        className="px-3 py-1 hover:bg-primary-light transition"
+                        className="px-3 h-full text-white hover:bg-white/10 transition active:bg-white/20"
                       >
                         −
                       </button>
-                      <input
-                        type="number"
-                        value={item.quantity}
-                        onChange={(e) =>
-                          updateQuantity(item.perfume?.id ?? "", item.selectedSize.size, Math.max(1, parseInt(e.target.value) || 1))
-                        }
-                        className="w-12 text-center bg-primary-dark border-x border-accent-gold/30 py-1"
-                        min="1"
-                      />
+                      <div className="w-10 h-full flex items-center justify-center text-white font-medium border-x border-accent-gold/30 py-1">
+                        {item.quantity}
+                      </div>
                       <button
                         onClick={() =>
                           updateQuantity(item.perfume?.id ?? "", item.selectedSize.size, item.quantity + 1)
                         }
-                        className="px-3 py-1 hover:bg-primary-light transition"
+                        className="px-3 h-full text-white hover:bg-white/10 transition active:bg-white/20"
                       >
                         +
                       </button>
                     </div>
 
+                    {/* Price */}
                     <div className="text-right">
-                      <p className="text-sm text-gray-400">
+                      <p className="text-xs text-gray-500 mb-0.5">
                         ${item.selectedSize.price.toFixed(2)} each
                       </p>
-                      <p className="text-lg font-bold text-accent-gold">
+                      <p className="text-xl font-bold text-accent-gold">
                         ${(item.selectedSize.price * item.quantity).toFixed(2)}
                       </p>
                     </div>
