@@ -2191,6 +2191,10 @@ body {
     gap: 1.5rem;
   }
 
+  .md\:gap-4 {
+    gap: 1rem;
+  }
+
   .md\:space-y-4 > :not([hidden]) ~ :not([hidden]) {
     --tw-space-y-reverse: 0;
     margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
@@ -2295,6 +2299,10 @@ body {
 
   .lg\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .lg\:gap-4 {
