@@ -233,13 +233,11 @@ Address: ${addressDetails}
           {/* Summary */}
           <div className="mt-8 bg-primary-light rounded-lg p-6">
             <div className="flex justify-between items-center mb-4">
-              <span className="text-lg">Subtotal:</span>
+              <span className="text-lg">Total:</span>
               <span className="text-2xl font-bold text-accent-gold">
                 ${getTotalPrice().toFixed(2)}
               </span>
             </div>
-            <p className="text-gray-400 text-sm mb-6">Shipping and taxes calculated at checkout</p>
-
             <button
               onClick={() => setIsCheckoutOpen(true)}
               className="w-full bg-accent-gold text-primary-dark py-3 rounded-lg font-semibold hover:bg-yellow-400 transition mb-3 block text-center"
