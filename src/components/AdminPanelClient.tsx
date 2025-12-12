@@ -33,6 +33,7 @@ interface Order {
   totalPrice: number;
   status: string;
   createdAt: string;
+  phoneNumber: string;
   cartItems: {
     name: string;
     size: string;
@@ -583,6 +584,14 @@ export default function AdminPanelClient() {
                           </div>
                         </div>
                       </div>
+
+                      <p className='mt-4'>Full Address: {order.fullDeliveryAddress}
+
+                      </p>
+
+                      <p className='mt-4'>Phone Number: {order.phoneNumber}
+
+                      </p>
 
                       {/* {order.status === 'new' && (
                         <div className="mt-8 flex justify-end">

@@ -26,6 +26,7 @@ export default function CartItemsList({ items }: CartItemsListProps) {
     building: "",
     floor: "",
     details: "",
+    phoneNumber: "",
   });
 
   const validItems = items.filter((it) => it && it.perfume && it.selectedSize && typeof it.quantity === "number");
@@ -56,6 +57,7 @@ export default function CartItemsList({ items }: CartItemsListProps) {
         })),
         totalPrice,
         status: "new",
+        phoneNumber: formData.phoneNumber,
         createdAt: new Date().toISOString(),
       };
 
@@ -312,6 +314,18 @@ Address: ${addressDetails}
               </div>
 
               <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Phone Number</label>
+                <input
+                  required
+                  type="tel"
+                  value={formData.phoneNumber}
+                  onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+                  className="w-full p-3 rounded-xl bg-primary-dark border border-white/10 text-white focus:border-accent-gold focus:ring-1 focus:ring-accent-gold/50 outline-none"
+                  placeholder="+961 00 000 000"
+                />
+              </div>
+
+              <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1">Additional Details (Optional)</label>
                 <textarea
                   value={formData.details}
@@ -320,6 +334,7 @@ Address: ${addressDetails}
                   placeholder="Near the supermarket..."
                 />
               </div>
+
 
               <div className="pt-4 flex gap-3">
                 <button
