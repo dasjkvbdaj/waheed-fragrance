@@ -79,9 +79,13 @@ ${validItems
 Address: ${addressDetails}
 `;
 
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
+      const baseUrl = isMobile
+        ? "https://api.whatsapp.com/send"
+        : "https://web.whatsapp.com/send";
 
-      const whatsappUrl = `https://wa.me/96176919542?text=${encodeURIComponent(message)}`;
+      const whatsappUrl = `${baseUrl}?phone=${96176919542}&text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
 
       // 3. Clear Cart
