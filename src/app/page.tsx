@@ -9,7 +9,7 @@ export default function HomePage() {
   return (
     <div className="bg-primary-dark">
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center pt-24 relative overflow-hidden">
+      <section className="lg:min-h-screen flex items-center justify-center pt-32 pb-16 lg:pt-24 lg:pb-0 relative overflow-hidden">
         {/* Background gradient */}
         <div className="absolute inset-0 opacity-30">
           <div className="absolute top-0 left-0 w-96 h-96 bg-accent-gold/20 rounded-full blur-3xl"></div>
@@ -61,7 +61,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 py-20">
+      <section className="max-w-7xl mx-auto px-4 py-12 lg:py-20">
         <ScrollReveal direction="up">
           <div className="mb-12 text-center">
             <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">About Us</h2>
