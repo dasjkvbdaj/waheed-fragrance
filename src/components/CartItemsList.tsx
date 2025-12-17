@@ -169,6 +169,7 @@ Address: ${addressDetails}
                       fill
                       className="object-cover"
                       sizes="96px"
+                      unoptimized={true}
                     />
                   </div>
 
