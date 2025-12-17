@@ -8,7 +8,7 @@ import ShopCatalogClient from "@/components/ShopCatalogClient";
 
 function CatalogContent() {
   const searchParams = useSearchParams();
-  const initialCategory = searchParams?.get('category') ?? null;
+  const initialCategory = searchParams?.get('category')?.toLowerCase() ?? null;
 
   const [perfumes, setPerfumes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -18,19 +18,12 @@ function CatalogContent() {
     const fetchPerfumes = async () => {
       try {
         setLoading(true);
-
-        // Get reference to products collection
         const productsCollection = collection(db, 'products');
-
-        // Fetch all documents from the collection
         const productsSnapshot = await getDocs(productsCollection);
-
-        // Map documents to include id and all data
         const productList = productsSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data()
         }));
-
         setPerfumes(productList);
       } catch (err) {
         console.error('Error fetching perfumes:', err);
@@ -71,7 +64,7 @@ function CatalogContent() {
           </div>
         )}
 
-        {/* Client-rendered filters and product grid */}
+        {/* Product Grid */}
         {!loading && !error && (
           <ShopCatalogClient perfumes={perfumes} initialCategory={initialCategory} />
         )}
