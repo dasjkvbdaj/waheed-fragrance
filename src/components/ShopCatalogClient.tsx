@@ -1,98 +1,44 @@
 'use client';
 
-import { useEffect, useState, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import ShopCatalogClient from "@/components/ShopCatalogClient";
+type Perfume = {
+  id: string;
+  name: string;
+  price: number | string;
+  image?: string;
+  category?: string;
+};
 
-function CatalogContent() {
-  const searchParams = useSearchParams();
+type ShopCatalogClientProps = {
+  perfumes: Perfume[];
+  initialCategory: string | null;
+};
 
-  // Normalize category to lowercase
-  const initialCategory = searchParams?.get('category')?.toLowerCase() ?? null;
-
-  const [perfumes, setPerfumes] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchPerfumes = async () => {
-      try {
-        setLoading(true);
-
-        const productsCollection = collection(db, 'products');
-        const productsSnapshot = await getDocs(productsCollection);
-
-        const productList = productsSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-
-        setPerfumes(productList);
-      } catch (err) {
-        console.error('Error fetching perfumes:', err);
-        setError('Failed to load products. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPerfumes();
-  }, []);
+const ShopCatalogClient: React.FC<ShopCatalogClientProps> = ({ perfumes, initialCategory }) => {
+  // Filter by category if initialCategory is set
+  const filteredPerfumes = initialCategory
+    ? perfumes.filter(p => p.category?.toLowerCase() === initialCategory.toLowerCase())
+    : perfumes;
 
   return (
-    <div className="min-h-screen bg-primary-dark pt-24 pb-20">
-      <div className="max-w-7xl mx-auto px-2 md:px-4">
-        {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-5xl md:text-6xl font-bold mb-4">Our Collection</h1>
-          <p className="text-gray-400 text-lg">
-            Discover our curated selection of premium fragrances
-          </p>
-        </div>
-
-        {/* Loading State */}
-        {loading && (
-          <div className="flex justify-center items-center min-h-[400px]">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold mx-auto mb-4"></div>
-              <p className="text-gray-400">Loading products...</p>
-            </div>
+    <div>
+      <h2 className="text-2xl font-semibold mb-4">Category: {initialCategory ?? "All"}</h2>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {filteredPerfumes.map((perfume) => (
+          <div key={perfume.id} className="p-4 border rounded-lg shadow-md hover:shadow-xl transition">
+            {perfume.image && (
+              <img
+                src={perfume.image}
+                alt={perfume.name}
+                className="w-full h-40 object-cover mb-2 rounded"
+              />
+            )}
+            <h3 className="font-bold">{perfume.name}</h3>
+            <p className="text-gray-600">{perfume.price} USD</p>
           </div>
-        )}
-
-        {/* Error State */}
-        {error && !loading && (
-          <div className="bg-red-900/20 border border-red-500 text-red-200 px-6 py-4 rounded-lg">
-            {error}
-          </div>
-        )}
-
-        {/* Client-rendered filters and product grid */}
-        {!loading && !error && (
-          <ShopCatalogClient perfumes={perfumes} initialCategory={initialCategory} />
-        )}
+        ))}
       </div>
     </div>
   );
-}
+};
 
-export default function CatalogPage() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-primary-dark pt-24 pb-20">
-        <div className="max-w-7xl mx-auto px-2 md:px-4">
-          <div className="flex justify-center items-center min-h-[400px]">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold mx-auto mb-4"></div>
-              <p className="text-gray-400">Loading...</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    }>
-      <CatalogContent />
-    </Suspense>
-  );
-}
+export default ShopCatalogClient;
