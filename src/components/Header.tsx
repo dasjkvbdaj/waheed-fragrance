@@ -3,15 +3,23 @@
 import Link from "next/link";
 import { useStore } from "@/lib/store";
 import { useRouter } from 'next/navigation';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Header() {
   const items = useStore((state) => state.items);
   const user = useStore((state) => state.user);
   const logout = useStore((state) => state.logout);
+  const hydrated = useStore((state) => state.hydrated);
+  const initializeStore = useStore((state) => state.initializeStore);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setMounted(true);
+    initializeStore();
+  }, [initializeStore]);
 
   const handleLogout = () => {
     try { logout(); } catch { /* ignore */ }
@@ -19,7 +27,8 @@ export default function Header() {
     try { window.location.assign('/login'); } catch { router.push('/login'); }
   };
 
-  const isAdmin = (user?.role || '').toUpperCase() === 'ADMIN';
+  const isAdmin = mounted && hydrated && (user?.role || '').toUpperCase() === 'ADMIN';
+  const showUserItems = mounted && hydrated;
 
   return (
     <header className="fixed top-0 w-full bg-primary-dark/80 backdrop-blur-md border-b border-white/10 z-50 transition-all duration-300">
@@ -46,38 +55,40 @@ export default function Header() {
 
           {/* Right Side Actions */}
           <div className="hidden md:flex items-center gap-4 sm:gap-6">
-            {user ? (
-              <div className="flex items-center gap-4 sm:gap-6">
-                {!isAdmin && (
-                  <div className="flex flex-col items-end">
-                    <span className="text-[9px] sm:text-xs text-gray-400 uppercase tracking-wide">Welcome</span>
-                    <span className="text-xs sm:text-sm font-medium text-white truncate max-w-[150px]">{user.email}</span>
-                  </div>
-                )}
+            {showUserItems && (
+              user ? (
+                <div className="flex items-center gap-4 sm:gap-6">
+                  {!isAdmin && (
+                    <div className="flex flex-col items-end">
+                      <span className="text-[9px] sm:text-xs text-gray-400 uppercase tracking-wide">Welcome</span>
+                      <span className="text-xs sm:text-sm font-medium text-white truncate max-w-[150px]">{user.email}</span>
+                    </div>
+                  )}
 
-                {isAdmin && (
-                  <Link
-                    href="/admin"
-                    className="px-3 sm:px-4 py-1 sm:py-2 bg-accent-gold/10 border border-accent-gold/50 text-accent-gold rounded-full text-xs sm:text-sm font-medium hover:bg-accent-gold hover:text-primary-dark transition-all duration-300"
+                  {isAdmin && (
+                    <Link
+                      href="/admin"
+                      className="px-3 sm:px-4 py-1 sm:py-2 bg-accent-gold/10 border border-accent-gold/50 text-accent-gold rounded-full text-xs sm:text-sm font-medium hover:bg-accent-gold hover:text-primary-dark transition-all duration-300"
+                    >
+                      Admin Panel
+                    </Link>
+                  )}
+
+                  <button
+                    onClick={handleLogout}
+                    className="px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium text-gray-300 hover:text-white transition-colors duration-300"
                   >
-                    Admin Panel
-                  </Link>
-                )}
-
-                <button
-                  onClick={handleLogout}
-                  className="px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium text-gray-300 hover:text-white transition-colors duration-300"
-                >
-                  Logout
-                </button>
-              </div>
-            ) : (
-              <Link href="/login" className="text-xs sm:text-sm font-medium text-gray-300 hover:text-accent-gold transition-colors duration-300 uppercase tracking-wider">
-                Login
-              </Link>
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <Link href="/login" className="text-xs sm:text-sm font-medium text-gray-300 hover:text-accent-gold transition-colors duration-300 uppercase tracking-wider">
+                  Login
+                </Link>
+              )
             )}
 
-            {!isAdmin && (
+            {showUserItems && !isAdmin && (
               <Link
                 href="/cart"
                 className="relative p-2 sm:p-3 text-gray-300 hover:text-accent-gold transition-colors duration-300"
@@ -96,7 +107,7 @@ export default function Header() {
 
           {/* Mobile Actions */}
           <div className="flex items-center gap-1 md:hidden">
-            {isAdmin ? (
+            {showUserItems && isAdmin ? (
               <div className="flex items-center gap-1 sm:gap-2">
                 <Link
                   href="/admin"
@@ -113,7 +124,7 @@ export default function Header() {
                   <svg className="w-5 sm:w-6 h-5 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                 </button>
               </div>
-            ) : (
+            ) : showUserItems ? (
               <>
                 <Link
                   href="/cart"
@@ -142,7 +153,7 @@ export default function Header() {
                   </svg>
                 </button>
               </>
-            )}
+            ) : null}
           </div>
         </div>
       </div>
