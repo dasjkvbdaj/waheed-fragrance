@@ -76,8 +76,8 @@ export default function PerfumeCard({ perfume }: PerfumeCardProps) {
                 key={size.size}
                 onClick={() => setSelectedSize(size)}
                 className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border ${selectedSize?.size === size.size
-                    ? "bg-accent-gold text-primary-dark border-accent-gold"
-                    : "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10"
+                  ? "bg-accent-gold text-primary-dark border-accent-gold"
+                  : "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10"
                   }`}
               >
                 {size.size}
@@ -115,8 +115,8 @@ export default function PerfumeCard({ perfume }: PerfumeCardProps) {
           onClick={handleAddToCart}
           disabled={!selectedSize || isAdded}
           className={`w-full py-3.5 font-bold text-sm rounded-xl transition-all duration-300 items-center justify-center gap-2 flex ${isAdded
-              ? "bg-green-600 text-white"
-              : "bg-gradient-to-r from-accent-gold to-yellow-600 text-primary-dark hover:scale-[1.02] active:scale-[0.98]"
+            ? "bg-green-600 text-white"
+            : "bg-gradient-to-r from-accent-gold to-yellow-600 text-primary-dark hover:scale-[1.02] active:scale-[0.98]"
             }`}
         >
           {isAdded ? (
