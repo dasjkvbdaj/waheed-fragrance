@@ -46,11 +46,12 @@ export default function PerfumeCard({ perfume }: PerfumeCardProps) {
       {/* Image Section */}
       <div className="relative h-64 md:h-80 w-full bg-black/20">
         <Image
-          src={perfume.image}
+          src={perfume.image || "/Amber_Noir.jpg"}
           alt={perfume.name}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+          unoptimized={true}
         />
 
         {/* Category Badge - Top Right */}
