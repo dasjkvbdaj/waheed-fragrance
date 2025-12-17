@@ -7,6 +7,7 @@ import { CartItem } from "@/types";
 import { useStore } from "@/lib/store";
 import { db } from "@/lib/firebase";
 import { collection, addDoc } from "firebase/firestore";
+import { useEffect } from "react";
 
 interface CartItemsListProps {
   items: CartItem[];
@@ -17,9 +18,11 @@ export default function CartItemsList({ items }: CartItemsListProps) {
   const updateQuantity = useStore((state) => state.updateQuantity);
   const getTotalPrice = useStore((state) => state.getTotalPrice);
   const clearCart = useStore((state) => state.clearCart);
+  const initializeStore = useStore((state) => state.initializeStore);
 
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [formData, setFormData] = useState({
     city: "",
     street: "",
@@ -29,7 +32,14 @@ export default function CartItemsList({ items }: CartItemsListProps) {
     phoneNumber: "",
   });
 
+  useEffect(() => {
+    setMounted(true);
+    initializeStore();
+  }, [initializeStore]);
+
   const validItems = items.filter((it) => it && it.perfume && it.selectedSize && typeof it.quantity === "number");
+
+  if (!mounted) return null;
 
   const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,7 +89,7 @@ ${validItems
 Address: ${addressDetails}
 `;
 
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
       const baseUrl = isMobile
         ? "https://api.whatsapp.com/send"
@@ -158,6 +168,7 @@ Address: ${addressDetails}
                       alt={item.perfume?.name ?? "Unknown product"}
                       fill
                       className="object-cover"
+                      sizes="96px"
                     />
                   </div>
 
