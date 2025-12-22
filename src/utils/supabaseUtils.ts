@@ -35,3 +35,36 @@ export const uploadImageToSupabase = async (file: File): Promise<string> => {
         throw new Error("Failed to upload image");
     }
 };
+
+/**
+ * Deletes an image file from Supabase Storage.
+ * @param imageUrl The full public URL of the image to delete.
+ */
+export const deleteImageFromSupabase = async (imageUrl: string): Promise<void> => {
+    if (!imageUrl) return;
+
+    try {
+        // Extract the file path from the URL
+        // Example: https://.../storage/v1/object/public/{bucketName}/{fileName}
+        const urlObj = new URL(imageUrl);
+        const pathParts = urlObj.pathname.split('/');
+        const fileName = pathParts[pathParts.length - 1];
+
+        if (!fileName) {
+            console.warn("Could not extract filename from URL:", imageUrl);
+            return;
+        }
+
+        const { error } = await supabase.storage
+            .from(storageBucket)
+            .remove([fileName]);
+
+        if (error) {
+            console.error("Supabase delete error:", error);
+        } else {
+            console.log("Deleted old image from Supabase:", fileName);
+        }
+    } catch (error) {
+        console.error("Error deleting image from Supabase:", error);
+    }
+};
