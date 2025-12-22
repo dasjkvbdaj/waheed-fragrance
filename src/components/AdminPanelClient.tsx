@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Perfume } from '@/types';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
-import { uploadImageToSupabase, deleteImageFromSupabase } from '@/utils/supabaseUtils';
+import { uploadImageToSupabase } from '@/utils/supabaseUtils';
 
 // Helper to create an empty product
 function emptyProduct(): Partial<Perfume & { imageData?: string; imageFile?: File }> {
@@ -166,10 +166,6 @@ export default function AdminPanelClient() {
         imageUrl = await uploadImageToSupabase(editing.imageFile);
       }
 
-      // Find original product to get old image
-      const oldProduct = items.find(i => i.id === id);
-      const oldImageUrl = oldProduct?.image;
-
       const { imageData, imageFile, id: _id, ...productData } = editing;
 
       const productRef = doc(db, "products", id);
@@ -177,11 +173,6 @@ export default function AdminPanelClient() {
         ...productData,
         image: imageUrl
       });
-
-      // If we uploaded a new image, delete the old one
-      if (editing.imageFile && oldImageUrl && oldImageUrl !== '/placeholder.jpg' && !oldImageUrl.startsWith('/')) {
-        await deleteImageFromSupabase(oldImageUrl);
-      }
 
       setEditing(null);
       fetchList();
