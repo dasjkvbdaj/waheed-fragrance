@@ -4,6 +4,11 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useStore } from '@/lib/store';
 
+// --- NEW IMPORTS START ---
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
+// --- NEW IMPORTS END ---
+
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,7 +21,12 @@ export default function LoginPage() {
     e.preventDefault();
     setError(null);
     setLoading(true);
+
     try {
+      // 1. LOGIN TO FIREBASE SDK (Fixes the Firestore Permission Error)
+      await signInWithEmailAndPassword(auth, email, password);
+
+      // 2. LOGIN TO SERVER API (Sets the Cookie for Next.js)
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -24,22 +34,31 @@ export default function LoginPage() {
       });
 
       const data = await res.json();
+      
       if (!res.ok) {
-        setError(data?.error || 'Invalid credentials');
-        setLoading(false);
-        return;
+        // If the API fails, we throw an error to catch block
+        throw new Error(data?.error || 'Invalid credentials');
       }
 
-      // Save user in client store
+      // 3. Save user in client store
       login(data.user);
 
-      // Redirect based on role. For non-admin users we simply go home and the header will show a welcome.
-      // Redirect based on role. For non-admin users we simply go home and the header will show a welcome.
+      // 4. Redirect based on role
       const role = (data.user.role || '').toUpperCase();
-      if (role !== 'ADMIN') router.push('/shop');
-      else router.push('/admin');
-    } catch (err) {
-      setError('Failed to login');
+      if (role === 'ADMIN') {
+        router.push('/admin');
+      } else {
+        router.push('/shop');
+      }
+
+    } catch (err: any) {
+      console.error("Login Error:", err);
+      // specific error handling for Firebase codes is optional but helpful
+      if (err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
+        setError('Invalid email or password');
+      } else {
+        setError(err.message || 'Failed to login');
+      }
     } finally {
       setLoading(false);
     }
