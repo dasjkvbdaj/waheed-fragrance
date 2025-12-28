@@ -18,51 +18,58 @@ export default function LoginPage() {
   const router = useRouter();
 
   async function submit(e: React.FormEvent) {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
+  e.preventDefault();
+  setError(null);
+  setLoading(true);
 
-    try {
-      // 1. LOGIN TO FIREBASE SDK (Fixes the Firestore Permission Error)
-      await signInWithEmailAndPassword(auth, email, password);
+  try {
+    // 1. LOGIN TO FIREBASE SDK
+    await signInWithEmailAndPassword(auth, email, password);
 
-      // 2. LOGIN TO SERVER API (Sets the Cookie for Next.js)
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
+    // 2. LOGIN TO SERVER API
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
 
-      const data = await res.json();
-      
-      if (!res.ok) {
-        // If the API fails, we throw an error to catch block
-        throw new Error(data?.error || 'Invalid credentials');
-      }
-
-      // 3. Save user in client store
-      login(data.user);
-
-      // 4. Redirect based on role
-      const role = (data.user.role || '').toUpperCase();
-      if (role === 'ADMIN') {
-        router.push('/admin');
-      } else {
-        router.push('/shop');
-      }
-
-    } catch (err: any) {
-      console.error("Login Error:", err);
-      // specific error handling for Firebase codes is optional but helpful
-      if (err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
-        setError('Invalid email or password');
-      } else {
-        setError(err.message || 'Failed to login');
-      }
-    } finally {
-      setLoading(false);
+    const data = await res.json();
+    
+    if (!res.ok) {
+      throw new Error(data?.error || 'Invalid credentials');
     }
+
+    // 3. Save user in client store
+    login(data.user);
+
+    // 4. Redirect based on role
+    const role = (data.user.role || '').toUpperCase();
+    if (role === 'ADMIN') {
+      router.push('/admin');
+    } else {
+      router.push('/shop');
+    }
+
+  } catch (err: any) {
+    // This console log is for YOU (the developer), the user won't see it on the screen
+    console.error("Login Error:", err.code); 
+
+    // --- FIX IS HERE ---
+    // Check for 'auth/invalid-credential' which covers both wrong password and user not found
+    if (
+      err.code === 'auth/invalid-credential' || 
+      err.code === 'auth/user-not-found' || 
+      err.code === 'auth/wrong-password'
+    ) {
+      setError('Invalid credentials');
+    } else {
+      // Fallback for network errors or other issues
+      setError('Failed to login. Please check your connection.');
+    }
+  } finally {
+    setLoading(false);
   }
+}
 
   return (
     <div className="min-h-screen flex flex-col items-center pt-32 bg-gradient-to-br from-primary-dark to-primary-darker p-6">
