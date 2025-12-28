@@ -57,6 +57,7 @@ export default function Header() {
           <div className="hidden md:flex items-center gap-4 sm:gap-6">
             {showUserItems && (
               user ? (
+                // LOGGED IN STATE
                 <div className="flex items-center gap-4 sm:gap-6">
                   {!isAdmin && (
                     <div className="flex flex-col items-end">
@@ -82,9 +83,18 @@ export default function Header() {
                   </button>
                 </div>
               ) : (
-                <Link href="/login" className="text-xs sm:text-sm font-medium text-gray-300 hover:text-accent-gold transition-colors duration-300 uppercase tracking-wider">
-                  Login
-                </Link>
+                // LOGGED OUT STATE
+                <div className="flex items-center gap-4">
+                  <Link href="/login" className="text-xs sm:text-sm font-medium text-gray-300 hover:text-accent-gold transition-colors duration-300 uppercase tracking-wider">
+                    Login
+                  </Link>
+                  <Link 
+                    href="/signup" 
+                    className="px-4 py-2 text-xs sm:text-sm font-medium bg-accent-gold text-primary-dark rounded-full hover:bg-white transition-colors duration-300 uppercase tracking-wider"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
               )
             )}
 
@@ -201,19 +211,27 @@ export default function Header() {
                   </button>
                 </div>
               ) : (
-                <Link
-                  href="/login"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block w-full text-center px-4 py-3 bg-white/10 text-white rounded-lg font-medium hover:bg-white/20 transition-all"
-                >
-                  Login
-                </Link>
+                <div className="pt-4 border-t border-white/10 space-y-3">
+                  <Link
+                    href="/login"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block w-full text-center px-4 py-3 bg-white/10 text-white rounded-lg font-medium hover:bg-white/20 transition-all"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/signup"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block w-full text-center px-4 py-3 bg-accent-gold text-primary-dark rounded-lg font-medium hover:bg-white transition-all"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
               )}
             </nav>
           </motion.div>
         )}
       </AnimatePresence>
     </header>
-
   );
 }
