@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+
+// NOTE: We do not import 'db' or 'getDoc' here to avoid 
+// permission errors from the server side.
 
 export async function POST(request: Request) {
   try {
@@ -13,8 +14,11 @@ export async function POST(request: Request) {
 
     // 1. Check if this is the specific Admin account
     if (email === 'admin@example.com') {
-      // --- ADMIN LOGIN FLOW (Firebase Auth) ---
+      
+      // --- ADMIN LOGIN FLOW (Firebase Auth REST API) ---
+      // This checks the real password against Firebase Authentication
       const FIREBASE_API_KEY = "AIzaSyCUbB-RryWiUw7rBOk7dwirbJBIZTU2mwM";
+      
       const authResponse = await fetch(
         `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_API_KEY}`,
         {
@@ -39,28 +43,19 @@ export async function POST(request: Request) {
 
       const firebaseUid = authData.localId;
 
-      // Ensure Admin Role in Firestore
-      const userDocRef = doc(db, 'users', firebaseUid);
-      const userDoc = await getDoc(userDocRef);
-      let role = 'ADMIN'; // Default to ADMIN for this specific email
-
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        role = userData.role || 'ADMIN';
-      } else {
-        await setDoc(userDocRef, {
-          email: email,
-          role: 'ADMIN',
-        });
-      }
-
+      // --- BYPASS DATABASE READ ---
+      // Since we already verified the email is 'admin@example.com' 
+      // and the password is correct, we can safely assign the role here.
+      
       const adminUser = {
         id: firebaseUid,
         email: email,
-        role: role
+        role: 'ADMIN' 
       };
 
       const res = NextResponse.json({ user: adminUser });
+      
+      // Set the secure cookie
       res.cookies.set('user', JSON.stringify(adminUser), {
         path: '/',
         maxAge: 60 * 60 * 24 * 7, // 7 days
@@ -68,19 +63,21 @@ export async function POST(request: Request) {
         sameSite: 'lax',
         secure: process.env.NODE_ENV === 'production',
       });
+      
       return res;
 
     } else {
-      // --- GUEST LOGIN FLOW (Skip Firebase) ---
+      // --- GUEST LOGIN FLOW ---
       // Any other email is treated as a Guest User immediately
-
+      
       const guestUser = {
         id: 'guest_' + Date.now(),
         email: email,
-        role: 'user' // lowercase 'user' as per previous convention
+        role: 'user' 
       };
 
       const res = NextResponse.json({ user: guestUser });
+      
       res.cookies.set('user', JSON.stringify(guestUser), {
         path: '/',
         maxAge: 60 * 60 * 24 * 7, // 7 days
@@ -88,6 +85,7 @@ export async function POST(request: Request) {
         sameSite: 'lax',
         secure: process.env.NODE_ENV === 'production',
       });
+      
       return res;
     }
 
