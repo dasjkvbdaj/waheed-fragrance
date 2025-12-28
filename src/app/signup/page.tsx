@@ -40,7 +40,7 @@ export default function SignupPage() {
       const user = userCredential.user;
 
       // 2. Create User Document in Firestore
-      // We use setDoc with the UID so it matches your security rules (allow write if auth.uid == userId)
+      // We use setDoc with the UID so it matches your security rules
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
         role: "user", // Default role
@@ -48,9 +48,10 @@ export default function SignupPage() {
       });
 
       // 3. Update Local Store
+      // FIX: Use '|| email' to guarantee it is a string for TypeScript
       login({
         id: user.uid,
-        email: user.email,
+        email: user.email || email, 
         role: "user"
       });
 
