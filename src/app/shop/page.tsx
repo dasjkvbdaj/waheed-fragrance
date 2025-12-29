@@ -2,39 +2,24 @@
 
 import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
 import ShopCatalogClient from "@/components/ShopCatalogClient";
+import { useStore } from '@/lib/store';
 
 function CatalogContent() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams?.get('category')?.toLowerCase() ?? null;
 
-  const [perfumes, setPerfumes] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { products: perfumes, productsLoaded, fetchProducts } = useStore();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPerfumes = async () => {
-      try {
-        setLoading(true);
-        const productsCollection = collection(db, 'products');
-        const productsSnapshot = await getDocs(productsCollection);
-        const productList = productsSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        setPerfumes(productList);
-      } catch (err) {
-        console.error('Error fetching perfumes:', err);
-        setError('Failed to load products. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
+    fetchProducts().catch((err: any) => {
+      console.error('Error fetching perfumes:', err);
+      setError('Failed to load products. Please try again later.');
+    });
+  }, [fetchProducts]);
 
-    fetchPerfumes();
-  }, []);
+  const loading = !productsLoaded;
 
   return (
     <div className="min-h-screen bg-primary-dark pt-24 pb-20">

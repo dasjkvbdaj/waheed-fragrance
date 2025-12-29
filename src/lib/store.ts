@@ -1,5 +1,7 @@
 import { create } from "zustand";
 import { CartItem, Perfume, PerfumeSize } from "@/types";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 interface CartStore {
   items: CartItem[];
@@ -18,7 +20,18 @@ interface AuthStore {
   logout: () => void;
 }
 
-type Store = CartStore & AuthStore;
+interface ProductStore {
+  products: Perfume[];
+  productsLoaded: boolean;
+  productsLastFetched: number | null;
+  fetchProducts: () => Promise<void>;
+  setProducts: (products: Perfume[]) => void;
+  addProduct: (product: Perfume) => void;
+  updateProduct: (product: Perfume) => void;
+  deleteProduct: (productId: string) => void;
+}
+
+type Store = CartStore & AuthStore & ProductStore;
 
 export const useStore = create<Store>((set, get) => ({
   items: [],
@@ -150,4 +163,39 @@ export const useStore = create<Store>((set, get) => ({
     fetch('/api/auth/logout', { method: 'POST' }).catch(() => { });
     try { if (typeof window !== 'undefined') window.location.assign('/login'); } catch (e) { }
   },
+
+  // Product Store
+  products: [],
+  productsLoaded: false,
+  productsLastFetched: null,
+
+  fetchProducts: async () => {
+    const { productsLoaded, productsLastFetched } = get();
+    const now = Date.now();
+    // Cache for 5 minutes (300000ms)
+    // If we have products and they are fresh, do nothing.
+    if (productsLoaded && productsLastFetched && (now - productsLastFetched < 300000)) {
+      return;
+    }
+
+    try {
+      const querySnapshot = await getDocs(collection(db, "products"));
+      const products = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as Perfume[];
+
+      get().setProducts(products);
+    } catch (err) {
+      console.error("Failed to fetch products", err);
+    }
+  },
+  setProducts: (products: Perfume[]) => set({ products, productsLoaded: true, productsLastFetched: Date.now() }),
+  addProduct: (product: Perfume) => set((state) => ({ products: [...state.products, product] })),
+  updateProduct: (updatedProduct: Perfume) => set((state) => ({
+    products: state.products.map((p) => (p.id === updatedProduct.id ? updatedProduct : p)),
+  })),
+  deleteProduct: (productId: string) => set((state) => ({
+    products: state.products.filter((p) => p.id !== productId),
+  })),
 }));

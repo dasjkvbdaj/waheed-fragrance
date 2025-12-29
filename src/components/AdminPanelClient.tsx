@@ -5,6 +5,7 @@ import { Perfume } from '@/types';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
 import { uploadImageToSupabase } from '@/utils/supabaseUtils';
+import { useStore } from '@/lib/store';
 
 // Helper to create an empty product
 function emptyProduct(): Partial<Perfume & { imageData?: string; imageFile?: File }> {
@@ -44,10 +45,19 @@ interface Order {
 }
 
 export default function AdminPanelClient() {
+  const {
+    products,
+    addProduct,
+    updateProduct,
+    deleteProduct,
+    fetchProducts,
+    productsLoaded
+  } = useStore();
+
   const [activeTab, setActiveTab] = useState<'products' | 'orders'>('products');
 
   // Products State
-  const [items, setItems] = useState<Perfume[]>([]);
+  // items state replaced by products from store
   const [editing, setEditing] = useState<Partial<Perfume & { imageData?: string; imageFile?: File }> | null>(null);
   const [creating, setCreating] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<Partial<Perfume> | null>(null);
@@ -59,14 +69,9 @@ export default function AdminPanelClient() {
   const [loading, setLoading] = useState(false);
 
   async function fetchList() {
-    setLoading(true);
+    if (!productsLoaded) setLoading(true);
     try {
-      const querySnapshot = await getDocs(collection(db, "products"));
-      const products = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as Perfume[];
-      setItems(products);
+      await fetchProducts();
     } catch (err) {
       console.error("Error fetching products:", err);
     } finally {
@@ -127,15 +132,17 @@ export default function AdminPanelClient() {
 
       const { imageData, imageFile, ...productData } = payload;
 
-      await addDoc(collection(db, "products"), {
+      const docRef = await addDoc(collection(db, "products"), {
         ...productData,
         image: imageUrl,
         createdAt: new Date().toISOString()
       });
 
+      // Update store
+      addProduct({ id: docRef.id, image: imageUrl, ...productData } as Perfume);
+
       setEditing(null);
       setCreating(false);
-      fetchList();
       alert('Product added successfully!');
     } catch (error) {
       console.error("Error adding product:", error);
@@ -174,8 +181,10 @@ export default function AdminPanelClient() {
         image: imageUrl
       });
 
+      // Update store
+      updateProduct({ id, image: imageUrl, ...productData } as Perfume);
+
       setEditing(null);
-      fetchList();
       alert('Product updated successfully!');
     } catch (error) {
       console.error("Error updating product:", error);
@@ -190,7 +199,7 @@ export default function AdminPanelClient() {
 
     try {
       await deleteDoc(doc(db, "products", id));
-      fetchList();
+      deleteProduct(id);
       alert('Product deleted successfully!');
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -429,7 +438,7 @@ export default function AdminPanelClient() {
 
             {/* --- Product List --- */}
             <div className="md:hidden space-y-6">
-              {loading && !creating && !editing ? <p className="text-center text-gray-500">Loading...</p> : items.map(p => (
+              {loading && !creating && !editing ? <p className="text-center text-gray-500">Loading...</p> : products.map(p => (
                 <div key={p.id} className={`${CARD_CLASS} flex flex-col border-white/10 shadow-lg`}>
                   <div className="relative h-48 w-full">
                     <img src={p.image} alt={p.name} className="w-full h-full object-cover" loading='lazy' />
@@ -480,7 +489,7 @@ export default function AdminPanelClient() {
                   <tbody className="divide-y divide-white/5">
                     {loading && !creating && !editing ? (
                       <tr><td colSpan={4} className="p-8 text-center text-gray-500">Loading...</td></tr>
-                    ) : items.map(p => (
+                    ) : products.map(p => (
                       <tr key={p.id} className="hover:bg-white/5 transition duration-150 group">
                         <td className="p-4">
                           <div className="flex items-center gap-4">
