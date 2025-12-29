@@ -51,7 +51,10 @@ function CatalogContent() {
 
         {/* Product Grid */}
         {!loading && !error && (
-          <ShopCatalogClient perfumes={perfumes} initialCategory={initialCategory} />
+          <ShopCatalogClient
+            perfumes={perfumes}
+            initialCategory={initialCategory}
+          />
         )}
       </div>
     </div>

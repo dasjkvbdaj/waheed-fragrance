@@ -97,7 +97,7 @@ export const getProxiedImageUrl = (url: string) => {
     // Check if the URL matches our Supabase storage project
     // URL found in src/lib/supabase.ts: https://qigrfrfvtlmvymuqodxw.supabase.co
     // Bucket: products
-    const supabaseStorageBase = `https://qigrfrfvtlmvymuqodxw.supabase.co/storage/v1/object/public/${storageBucket}`;
+    const supabaseStorageBase = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${storageBucket}`;
 
     // If it's a direct Supabase URL, create a proxied version
     if (url.startsWith(supabaseStorageBase)) {
@@ -109,3 +109,4 @@ export const getProxiedImageUrl = (url: string) => {
     // Return original URL if it doesn't match criteria
     return url;
 };
+

@@ -18,11 +18,13 @@ const ShopCatalogClient: React.FC<ShopCatalogClientProps> = ({ perfumes, initial
   const filteredPerfumes = useMemo(() => {
     return perfumes.filter((perfume) => {
       const matchesSearch = perfume.name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = activeCategory === 'All' || 
+      const matchesCategory = activeCategory === 'All' ||
         perfume.category?.toLowerCase() === activeCategory.toLowerCase();
       return matchesSearch && matchesCategory;
     });
   }, [perfumes, searchTerm, activeCategory]);
+
+
 
   return (
     <div className="space-y-8">
@@ -58,11 +60,10 @@ const ShopCatalogClient: React.FC<ShopCatalogClientProps> = ({ perfumes, initial
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-6 py-2 rounded-full text-sm font-bold tracking-wider uppercase transition-all duration-300 border ${
-                activeCategory === category
-                  ? "bg-accent-gold text-primary-dark border-accent-gold shadow-lg shadow-accent-gold/20"
-                  : "bg-white/5 text-gray-400 border-white/10 hover:bg-white/10 hover:text-white"
-              }`}
+              className={`px-6 py-2 rounded-full text-sm font-bold tracking-wider uppercase transition-all duration-300 border ${activeCategory === category
+                ? "bg-accent-gold text-primary-dark border-accent-gold shadow-lg shadow-accent-gold/20"
+                : "bg-white/5 text-gray-400 border-white/10 hover:bg-white/10 hover:text-white"
+                }`}
             >
               {category}
             </button>
@@ -82,11 +83,13 @@ const ShopCatalogClient: React.FC<ShopCatalogClientProps> = ({ perfumes, initial
         ))}
       </div>
 
+
+
       {filteredPerfumes.length === 0 && (
         <div className="text-center py-20">
           <p className="text-gray-400 text-xl font-serif">No products found matching your search.</p>
-          <button 
-            onClick={() => {setSearchTerm(''); setActiveCategory('All');}}
+          <button
+            onClick={() => { setSearchTerm(''); setActiveCategory('All'); }}
             className="mt-4 text-accent-gold hover:underline"
           >
             Clear all filters

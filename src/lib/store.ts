@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { CartItem, Perfume, PerfumeSize } from "@/types";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 interface CartStore {
@@ -171,27 +171,33 @@ export const useStore = create<Store>((set, get) => ({
 
   fetchProducts: async () => {
     const { productsLoaded, productsLastFetched } = get();
+
+    // Cache check for initial load
     const now = Date.now();
-    // Cache for 5 minutes (300000ms)
-    // If we have products and they are fresh, do nothing.
     if (productsLoaded && productsLastFetched && (now - productsLastFetched < 300000)) {
       return;
     }
 
     try {
-      const querySnapshot = await getDocs(collection(db, "products"));
-      const products = querySnapshot.docs.map(doc => ({
+      const productsRef = collection(db, "products");
+      const q = query(productsRef, orderBy("createdAt", "desc"));
+      const querySnapshot = await getDocs(q);
+      const newProducts = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       })) as Perfume[];
 
-      get().setProducts(products);
+      set({
+        products: newProducts,
+        productsLoaded: true,
+        productsLastFetched: Date.now(),
+      });
     } catch (err) {
       console.error("Failed to fetch products", err);
     }
   },
   setProducts: (products: Perfume[]) => set({ products, productsLoaded: true, productsLastFetched: Date.now() }),
-  addProduct: (product: Perfume) => set((state) => ({ products: [...state.products, product] })),
+  addProduct: (product: Perfume) => set((state) => ({ products: [product, ...state.products] })),
   updateProduct: (updatedProduct: Perfume) => set((state) => ({
     products: state.products.map((p) => (p.id === updatedProduct.id ? updatedProduct : p)),
   })),
