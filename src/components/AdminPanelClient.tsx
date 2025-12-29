@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Perfume } from '@/types';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
-import { uploadImageToSupabase } from '@/utils/supabaseUtils';
+import { uploadImageToSupabase, deleteImageFromSupabase } from '@/utils/supabaseUtils';
 import { useStore } from '@/lib/store';
 
 // Helper to create an empty product
@@ -170,6 +170,12 @@ export default function AdminPanelClient() {
     try {
       let imageUrl = editing.image || "";
       if (editing.imageFile) {
+        // If there was an old image, delete it from Supabase
+        const oldProduct = products.find(p => p.id === id);
+        if (oldProduct && oldProduct.image && oldProduct.image !== '/placeholder.jpg') {
+          await deleteImageFromSupabase(oldProduct.image);
+        }
+
         imageUrl = await uploadImageToSupabase(editing.imageFile);
       }
 
@@ -198,6 +204,11 @@ export default function AdminPanelClient() {
     if (!id) return;
 
     try {
+      const productToDelete = products.find(p => p.id === id);
+      if (productToDelete && productToDelete.image && productToDelete.image !== '/placeholder.jpg') {
+        await deleteImageFromSupabase(productToDelete.image);
+      }
+
       await deleteDoc(doc(db, "products", id));
       deleteProduct(id);
       alert('Product deleted successfully!');
