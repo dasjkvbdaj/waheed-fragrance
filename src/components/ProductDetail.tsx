@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Perfume, PerfumeSize } from "@/types";
 import { useStore } from "@/lib/store";
 import Image from "next/image";
+import { getProxiedImageUrl } from "@/utils/supabaseUtils";
+import { useMemo } from "react";
 
 interface ProductDetailProps {
   perfume: Perfume;
@@ -24,13 +26,15 @@ export default function ProductDetail({ perfume }: ProductDetailProps) {
   const incrementQuantity = () => setQuantity((q) => q + 1);
   const decrementQuantity = () => setQuantity((q) => (q > 1 ? q - 1 : 1));
 
+  const imageUrl = useMemo(() => getProxiedImageUrl(perfume.image), [perfume.image]);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
       {/* Image Section */}
       <div className="flex items-center justify-center bg-primary-light rounded-lg overflow-hidden">
         <div className="relative w-full aspect-square">
           <Image
-            src={perfume.image}
+            src={imageUrl}
             alt={perfume.name}
             fill
             className="object-cover"
@@ -62,8 +66,8 @@ export default function ProductDetail({ perfume }: ProductDetailProps) {
                 key={size.size}
                 onClick={() => setSelectedSize(size)}
                 className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 ${selectedSize.size === size.size
-                    ? "bg-accent-gold text-primary-dark"
-                    : "bg-primary-light text-gray-300 hover:bg-primary-lighter border border-accent-gold/30"
+                  ? "bg-accent-gold text-primary-dark"
+                  : "bg-primary-light text-gray-300 hover:bg-primary-lighter border border-accent-gold/30"
                   }`}
               >
                 <div className="text-sm">{size.size}</div>
@@ -115,8 +119,8 @@ export default function ProductDetail({ perfume }: ProductDetailProps) {
           <button
             onClick={handleAddToCart}
             className={`w-full py-3 rounded-lg font-semibold transition-all duration-300 ${addedToCart
-                ? "bg-green-600 text-white"
-                : "bg-accent-gold text-primary-dark hover:bg-yellow-400"
+              ? "bg-green-600 text-white"
+              : "bg-accent-gold text-primary-dark hover:bg-yellow-400"
               }`}
           >
             {addedToCart ? "✓ Added to Cart" : "Add to Cart"}

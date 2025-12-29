@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Perfume, PerfumeSize } from "@/types";
 import { useStore } from "@/lib/store";
+import { getProxiedImageUrl } from "@/utils/supabaseUtils";
+import { useMemo } from "react";
 
 interface PerfumeCardProps {
   perfume: Perfume;
@@ -18,6 +20,8 @@ export default function PerfumeCard({ perfume }: PerfumeCardProps) {
   );
   const [quantity, setQuantity] = useState(1);
   const [isAdded, setIsAdded] = useState(false);
+
+  const imageUrl = useMemo(() => getProxiedImageUrl(perfume.image), [perfume.image]);
 
   // Reset selection if perfume changes
   useEffect(() => {
@@ -46,7 +50,7 @@ export default function PerfumeCard({ perfume }: PerfumeCardProps) {
       {/* Image Section */}
       <div className="relative h-64 md:h-80 w-full bg-black/20">
         <Image
-          src={perfume.image || "/Amber_Noir.jpg"}
+          src={imageUrl || "/Amber_Noir.jpg"}
           alt={perfume.name}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"

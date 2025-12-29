@@ -79,3 +79,33 @@ export const deleteImageFromSupabase = async (imageUrl: string): Promise<void> =
         console.error("Error deleting image from Supabase:", error);
     }
 };
+
+/**
+ * Transforms a Supabase Storage URL into a local Vercel proxy URL.
+ * This triggers the Vercel rewrite rule defined in vercel.json, enabling
+ * aggressive browser caching and offloading bandwidth from Supabase to Vercel.
+ */
+export const getProxiedImageUrl = (url: string) => {
+    if (!url) return '';
+
+    // In local development, Vercel rewrites don't work (unless using vercel dev), 
+    // so we return the original URL to ensure images load.
+    if (process.env.NODE_ENV === 'development') {
+        return url;
+    }
+
+    // Check if the URL matches our Supabase storage project
+    // URL found in src/lib/supabase.ts: https://qigrfrfvtlmvymuqodxw.supabase.co
+    // Bucket: products
+    const supabaseStorageBase = `https://qigrfrfvtlmvymuqodxw.supabase.co/storage/v1/object/public/${storageBucket}`;
+
+    // If it's a direct Supabase URL, create a proxied version
+    if (url.startsWith(supabaseStorageBase)) {
+        // Extract the path after the bucket name
+        const path = url.replace(supabaseStorageBase, '');
+        return `/cdn-images${path}`;
+    }
+
+    // Return original URL if it doesn't match criteria
+    return url;
+};

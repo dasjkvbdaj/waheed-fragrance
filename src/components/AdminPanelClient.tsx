@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Perfume } from '@/types';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
-import { uploadImageToSupabase, deleteImageFromSupabase } from '@/utils/supabaseUtils';
+import { uploadImageToSupabase, deleteImageFromSupabase, getProxiedImageUrl } from '@/utils/supabaseUtils';
 import { useStore } from '@/lib/store';
 
 // Helper to create an empty product
@@ -452,7 +452,7 @@ export default function AdminPanelClient() {
               {loading && !creating && !editing ? <p className="text-center text-gray-500">Loading...</p> : products.map(p => (
                 <div key={p.id} className={`${CARD_CLASS} flex flex-col border-white/10 shadow-lg`}>
                   <div className="relative h-48 w-full">
-                    <img src={p.image} alt={p.name} className="w-full h-full object-cover" loading='lazy' />
+                    <img src={getProxiedImageUrl(p.image)} alt={p.name} className="w-full h-full object-cover" loading='lazy' />
                     <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-accent-gold border border-accent-gold/20 uppercase">
                       {p.category}
                     </div>
@@ -504,7 +504,7 @@ export default function AdminPanelClient() {
                       <tr key={p.id} className="hover:bg-white/5 transition duration-150 group">
                         <td className="p-4">
                           <div className="flex items-center gap-4">
-                            <img src={p.image} alt={p.name} className="w-16 h-16 rounded-lg object-cover bg-gray-800" loading='lazy' />
+                            <img src={getProxiedImageUrl(p.image)} alt={p.name} className="w-16 h-16 rounded-lg object-cover bg-gray-800" loading='lazy' />
                             <div>
                               <p className="font-bold text-white group-hover:text-accent-gold transition">{p.name}</p>
                               <p className="text-xs text-gray-500 truncate max-w-[200px]">{p.description}</p>
@@ -593,7 +593,7 @@ export default function AdminPanelClient() {
                           <div className="space-y-3">
                             {order.cartItems.map((item, idx) => (
                               <div key={idx} className="flex items-center gap-3 bg-black/20 p-2 rounded-lg">
-                                <img src={item.image} alt={item.name} className="w-10 h-10 rounded object-cover" />
+                                <img src={getProxiedImageUrl(item.image)} alt={item.name} className="w-10 h-10 rounded object-cover" />
                                 <div className="flex-1">
                                   <p className="text-sm font-bold text-white">{item.name}</p>
                                   <p className="text-xs text-gray-400">{item.size} x {item.quantity}</p>

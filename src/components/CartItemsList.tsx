@@ -8,6 +8,7 @@ import { useStore } from "@/lib/store";
 import { db } from "@/lib/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { useEffect } from "react";
+import { getProxiedImageUrl } from "@/utils/supabaseUtils";
 
 interface CartItemsListProps {
   items: CartItem[];
@@ -164,7 +165,7 @@ Address: ${addressDetails}
                   {/* Image */}
                   <div className="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-primary-dark">
                     <Image
-                      src={item.perfume?.image ?? "/Amber_Noir.jpg"}
+                      src={getProxiedImageUrl(item.perfume?.image ?? "/Amber_Noir.jpg")}
                       alt={item.perfume?.name ?? "Unknown product"}
                       fill
                       className="object-cover"
