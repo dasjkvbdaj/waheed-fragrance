@@ -5,6 +5,7 @@ import { Perfume } from '@/types';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
 import { uploadImageToSupabase, deleteImageFromSupabase, getProxiedImageUrl } from '@/utils/supabaseUtils';
+import { optimizeImage } from '@/utils/imageOptimizer';
 import { useStore } from '@/lib/store';
 
 // Helper to create an empty product
@@ -127,7 +128,8 @@ export default function AdminPanelClient() {
     try {
       let imageUrl = payload.image || "";
       if (payload.imageFile) {
-        imageUrl = await uploadImageToSupabase(payload.imageFile);
+        const optimizedFile = await optimizeImage(payload.imageFile);
+        imageUrl = await uploadImageToSupabase(optimizedFile);
       }
 
       const { imageData, imageFile, ...productData } = payload;
@@ -176,7 +178,8 @@ export default function AdminPanelClient() {
           await deleteImageFromSupabase(oldProduct.image);
         }
 
-        imageUrl = await uploadImageToSupabase(editing.imageFile);
+        const optimizedFile = await optimizeImage(editing.imageFile);
+        imageUrl = await uploadImageToSupabase(optimizedFile);
       }
 
       const { imageData, imageFile, id: _id, ...productData } = editing;
@@ -318,7 +321,7 @@ export default function AdminPanelClient() {
                           onChange={(e) => {
                             const file = e.target.files?.[0];
                             if (file) {
-                              if (file.size > 2 * 1024 * 1024) return alert("Image max 2MB");
+                              // removed 2MB limit check as we now optimize all images
                               const reader = new FileReader();
                               reader.onload = () => setEditing({
                                 ...editing,
@@ -330,7 +333,7 @@ export default function AdminPanelClient() {
                           }}
                         />
                       </div>
-                      <p className="text-xs text-center text-gray-500">Click to upload (Max 2MB)</p>
+                      <p className="text-xs text-center text-gray-500">Click to upload (Optimized automagically ✨)</p>
                     </div>
 
                     {/* Details Section (8 cols) */}
