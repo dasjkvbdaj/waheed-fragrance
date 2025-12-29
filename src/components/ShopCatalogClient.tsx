@@ -26,6 +26,7 @@ const ShopCatalogClient: React.FC<ShopCatalogClientProps> = ({ perfumes, initial
 
 
 
+  
   return (
     <div className="space-y-8">
       {/* Search and Filters */}
