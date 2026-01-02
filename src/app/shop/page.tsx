@@ -11,6 +11,11 @@ function CatalogContent() {
 
   const { products: perfumes, productsLoaded, fetchProducts } = useStore();
   const [error, setError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     fetchProducts().catch((err: any) => {
@@ -19,7 +24,7 @@ function CatalogContent() {
     });
   }, [fetchProducts]);
 
-  const loading = !productsLoaded;
+  const loading = !mounted || !productsLoaded;
 
   return (
     <div className="min-h-screen bg-primary-dark pt-24 pb-20">
