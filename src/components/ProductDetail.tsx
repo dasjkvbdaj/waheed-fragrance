@@ -27,6 +27,8 @@ export default function ProductDetail({ perfume }: ProductDetailProps) {
   const decrementQuantity = () => setQuantity((q) => (q > 1 ? q - 1 : 1));
 
   const imageUrl = useMemo(() => getProxiedImageUrl(perfume.image), [perfume.image]);
+  const [imgError, setImgError] = useState(false);
+  const displayImageUrl = imgError ? (perfume.image || "/Amber_Noir.jpg") : (imageUrl || "/Amber_Noir.jpg");
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -34,11 +36,13 @@ export default function ProductDetail({ perfume }: ProductDetailProps) {
       <div className="flex items-center justify-center bg-primary-light rounded-lg overflow-hidden">
         <div className="relative w-full aspect-square">
           <Image
-            src={imageUrl}
+            src={displayImageUrl}
             alt={perfume.name}
             fill
             className="object-cover"
             priority
+            unoptimized={true}
+            onError={() => { if (!imgError) setImgError(true); }}
           />
         </div>
       </div>

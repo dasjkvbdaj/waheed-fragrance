@@ -21,10 +21,10 @@ export default function Header() {
     initializeStore();
   }, [initializeStore]);
 
-  const handleLogout = () => {
-    try { logout(); } catch { /* ignore */ }
-    // force a full reload to land on a clean /login and ensure CSS/global styles are applied
-    try { window.location.assign('/login'); } catch { router.push('/login'); }
+  const handleLogout = async () => {
+    try { await logout(); } catch { /* ignore */ }
+    router.push('/login');
+    router.refresh();
   };
 
   const isAdmin = mounted && hydrated && (user?.role || '').toUpperCase() === 'ADMIN';

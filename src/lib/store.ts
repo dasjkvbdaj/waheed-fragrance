@@ -17,7 +17,7 @@ interface CartStore {
 interface AuthStore {
   user: { id: string; email: string; role: string } | null;
   login: (user: { id: string; email: string; role: string }) => void;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
 interface ProductStore {
@@ -153,15 +153,16 @@ export const useStore = create<Store>((set, get) => ({
     }
     set({ user });
   },
-  logout: () => {
+  logout: async () => {
     if (typeof window !== "undefined") {
       try {
         localStorage.removeItem("user");
       } catch { }
     }
     set({ user: null });
-    fetch('/api/auth/logout', { method: 'POST' }).catch(() => { });
-    try { if (typeof window !== 'undefined') window.location.assign('/login'); } catch (e) { }
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch { }
   },
 
   // Product Store

@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { Perfume, PerfumeSize } from "@/types";
 import { useStore } from "@/lib/store";
 import { getProxiedImageUrl } from "@/utils/supabaseUtils";
-import { useMemo } from "react";
 
 interface PerfumeCardProps {
   perfume: Perfume;
@@ -20,8 +19,11 @@ export default function PerfumeCard({ perfume }: PerfumeCardProps) {
   );
   const [quantity, setQuantity] = useState(1);
   const [isAdded, setIsAdded] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
-  const imageUrl = useMemo(() => getProxiedImageUrl(perfume.image), [perfume.image]);
+  // Try proxied URL first; on error, fall back to the original (raw) URL
+  const proxiedUrl = useMemo(() => getProxiedImageUrl(perfume.image), [perfume.image]);
+  const imageUrl = imgError ? (perfume.image || "/Amber_Noir.jpg") : (proxiedUrl || "/Amber_Noir.jpg");
 
   // Reset selection if perfume changes
   useEffect(() => {
@@ -50,13 +52,14 @@ export default function PerfumeCard({ perfume }: PerfumeCardProps) {
       {/* Image Section */}
       <div className="relative h-64 md:h-80 w-full bg-black/20">
         <Image
-          src={imageUrl || "/Amber_Noir.jpg"}
+          src={imageUrl}
           alt={perfume.name}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
           unoptimized={true}
           loading="lazy"
+          onError={() => { if (!imgError) setImgError(true); }}
         />
 
         {/* Category Badge - Top Right */}

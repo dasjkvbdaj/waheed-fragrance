@@ -81,12 +81,29 @@ export const deleteImageFromSupabase = async (imageUrl: string): Promise<void> =
 };
 
 /**
+ * Checks whether a URL points to Firebase Storage.
+ */
+export const isFirebaseStorageUrl = (url: string): boolean => {
+    if (!url) return false;
+    return url.includes('firebasestorage.googleapis.com');
+};
+
+/**
  * Transforms a Supabase Storage URL into a local Vercel proxy URL.
- * This triggers the Vercel rewrite rule defined in vercel.json, enabling
+ * This triggers the Vercel rewrite rule defined in next.config.js, enabling
  * aggressive browser caching and offloading bandwidth from Supabase to Vercel.
+ *
+ * For Firebase Storage URLs (old products), the original URL is returned
+ * directly since they cannot be proxied through the CDN rewrite.
  */
 export const getProxiedImageUrl = (url: string) => {
     if (!url) return '';
+
+    // Firebase Storage URLs (old products) — return as-is.
+    // These contain download tokens and must be fetched directly.
+    if (isFirebaseStorageUrl(url)) {
+        return url;
+    }
 
     // In local development, Vercel rewrites don't work (unless using vercel dev), 
     // so we return the original URL to ensure images load.

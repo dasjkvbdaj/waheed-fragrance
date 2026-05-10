@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import ProductDetail from "@/components/ProductDetail";
 import Link from "next/link";
-import Image from "next/image";
 
 export default function ProductPage() {
   const params = useParams();
@@ -111,11 +110,12 @@ export default function ProductPage() {
                 className="group bg-primary-light rounded-lg overflow-hidden hover:shadow-2xl hover:shadow-accent-gold/20 transition-all duration-300 hover:scale-105 block"
               >
                 <div className="aspect-square bg-primary-darker overflow-hidden relative">
-                  <Image
+                  <img
                     src={p.image}
                     alt={p.name}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                    onError={(e) => { (e.target as HTMLImageElement).src = '/Amber_Noir.jpg'; }}
                   />
                 </div>
                 <div className="p-4">
